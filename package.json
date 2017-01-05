@@ -1,13 +1,13 @@
 {
-  "name": "quotes",
+  "name": "captain-staffing",
   "version": "0.0.1",
   "repository": {
     "type" : "git",
-    "url" : "https://github.com/LeBenLeBen/quotes.git"
+    "url" : "https://github.com/theodo/captain-staffing.git"
   },
-  "homepage": "https://lebenleben.github.io/quotes",
+  "homepage": "https://theodo.github.io/captain-staffing",
   "license": "MIT",
-  "author": "Benoît Burgener",
+  "author": "Nicolas Girault",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.2.1"
