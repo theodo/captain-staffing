@@ -6,6 +6,7 @@ import { hash } from '../helpers/utils';
 import * as ls from '../helpers/localStorage';
 
 import Alert from './Alert';
+import SomeoneStaffing from './SomeoneStaffing';
 
 class App extends Component {
 
@@ -13,7 +14,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      people: []
+      peopleStaffing: null
     }
   }
 
@@ -42,11 +43,11 @@ class App extends Component {
   /**
    * Once staffing have been loaded from the spreadsheet
    */
-  onLoad(data, error) {
-    if (data) {
+  onLoad(peopleStaffing, error) {
+    if (peopleStaffing) {
 
       this.setState({
-        people: [1]
+        peopleStaffing: peopleStaffing
       });
     }
     else {
@@ -73,9 +74,18 @@ class App extends Component {
         <button onClick={ this.authenticate.bind(this) } className="btn">Connect with Google</button>
       );
     }
-    else if (this.state.people.length !== null) {
+    else if (this.state.peopleStaffing !== null) {
       return (
         <div className="page">
+          { this.state.peopleStaffing.map((someoneStaffing, i) => {
+              return (
+                <SomeoneStaffing
+                  key={ i }
+                  header={ someoneStaffing.name }
+                  values={ someoneStaffing.values } />
+              );
+            })
+          }
         </div>
       );
     }
