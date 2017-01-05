@@ -4,6 +4,7 @@ import HeaderCell from './HeaderCell';
 import StaffingCell from './StaffingCell';
 
 import { tail } from 'lodash';
+import moment from 'moment';
 
 import style from 'fixed-data-table/dist/fixed-data-table.css';
 
@@ -32,7 +33,7 @@ export default class StaffingTable extends React.Component {
               <Column
                 key={ i }
                 header={
-                  <Cell>{ header }</Cell>
+                  <Cell>{ moment(header, 'DD/MM/YYYY').format('DD/MM') }</Cell>
                 }
                 cell={
                   <StaffingCell
@@ -40,7 +41,7 @@ export default class StaffingTable extends React.Component {
                     index={ i }
                   />
                 }
-                width={80}
+                width={60}
               />
             );
           })
