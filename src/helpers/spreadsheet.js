@@ -1,6 +1,4 @@
-import { orderBy } from 'lodash';
-import { hash } from './utils';
-import { get } from './localStorage';
+import { tail } from 'lodash';
 
 import config from '../config';
 
@@ -23,17 +21,19 @@ export function load(callback) {
   window.gapi.client.load('sheets', 'v4', () => {
     window.gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: config.spreadsheetId,
-      range: 'Availability!A2:A23'
+      range: 'Availability!A1:V23'
     }).then((response) => {
-      const peopleValues = response.result.values || [];
+      const rows = response.result.values || [];
+      const headers = rows[0];
 
-      let peopleStaffing = peopleValues.map((peopleValue, i) => {
+      let peopleStaffing = tail(rows).map((row, i) => {
         return {
-          name: peopleValue[0]
+          name: row[0],
+          values: tail(row),
         }
       });
 
-      callback(peopleStaffing);
+      callback(headers, peopleStaffing);
     }, (response) => {
       callback(false, response.result.error);
     });

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { orderBy } from 'lodash';
 
-import { checkAuth, load, updateCell } from '../helpers/spreadsheet';
-import { hash } from '../helpers/utils';
-import * as ls from '../helpers/localStorage';
+import { checkAuth, load } from '../helpers/spreadsheet';
 
 import Alert from './Alert';
-import SomeoneStaffing from './SomeoneStaffing';
+import StaffingTable from './StaffingTable';
 
 class App extends Component {
 
@@ -43,11 +40,11 @@ class App extends Component {
   /**
    * Once staffing have been loaded from the spreadsheet
    */
-  onLoad(peopleStaffing, error) {
+  onLoad(header, peopleStaffing, error) {
     if (peopleStaffing) {
-
       this.setState({
-        peopleStaffing: peopleStaffing
+        headers: header,
+        peopleStaffing: peopleStaffing,
       });
     }
     else {
@@ -77,15 +74,9 @@ class App extends Component {
     else if (this.state.peopleStaffing !== null) {
       return (
         <div className="page">
-          { this.state.peopleStaffing.map((someoneStaffing, i) => {
-              return (
-                <SomeoneStaffing
-                  key={ i }
-                  header={ someoneStaffing.name }
-                  values={ someoneStaffing.values } />
-              );
-            })
-          }
+          <StaffingTable
+            peopleStaffing={this.state.peopleStaffing}
+            headers={this.state.headers} />
         </div>
       );
     }

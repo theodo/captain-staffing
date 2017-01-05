@@ -15,7 +15,7 @@ body {
 }
   @media (min-width: 37.5em) {
     body {
-      padding: 40px;
+      padding: 40px 0px;
     }
   }
 
@@ -130,21 +130,4 @@ hr {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-}
-
-/**
-  * TABLE
-  */
-.row {
-  display: flex;
-  flex-direction: row;
-  border-bottom: #DAEBEE solid 1px;
-}
-
-.cell {
-  padding: 5px;
-}
-
-.header {
-  font-weight: bold;
 }
