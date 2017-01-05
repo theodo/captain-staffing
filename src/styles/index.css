@@ -131,3 +131,20 @@ hr {
     transform: rotate(360deg);
   }
 }
+
+/**
+  * TABLE
+  */
+.row {
+  display: flex;
+  flex-direction: row;
+  border-bottom: #DAEBEE solid 1px;
+}
+
+.cell {
+  padding: 5px;
+}
+
+.header {
+  font-weight: bold;
+}

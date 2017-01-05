@@ -9,9 +9,9 @@ export default class SomeoneStaffing extends React.Component {
 
   render() {
     return (
-      <p className="header">
-        <span>{ this.props.header }</span>
-      </p>
+      <div className="row">
+        <div className="header cell">{ this.props.header }</div>
+      </div>
     );
   }
 
