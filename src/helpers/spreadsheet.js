@@ -35,7 +35,7 @@ export function load(callback) {
 
       callback(headers, peopleStaffing);
     }, (response) => {
-      callback(false, response.result.error);
+      callback(null, null, response.result.error);
     });
   });
 }
