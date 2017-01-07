@@ -1,6 +1,7 @@
-import { tail } from 'lodash';
+import { tail, head } from 'lodash';
 
 import config from '../config';
+import { buildStaffing } from './formatter';
 
 /**
  * Get the user authentication status
@@ -17,23 +18,17 @@ export function checkAuth(immediate, callback) {
  * Load the content from the spreadsheet
  */
 export function load(callback) {
-
   window.gapi.client.load('sheets', 'v4', () => {
     window.gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: config.spreadsheetId,
-      range: 'Availability!A1:V23'
+      range: 'People!A1:V86'
     }).then((response) => {
       const rows = response.result.values || [];
-      const headers = rows[0];
+      const weeks = tail(tail(head(rows)));
 
-      let peopleStaffing = tail(rows).map((row, i) => {
-        return {
-          name: row[0],
-          values: tail(row),
-        }
-      });
+      let peopleStaffing = buildStaffing(response.result.values);
 
-      callback(headers, peopleStaffing);
+      callback(weeks, peopleStaffing);
     }, (response) => {
       callback(null, null, response.result.error);
     });

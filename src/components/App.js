@@ -40,10 +40,10 @@ class App extends Component {
   /**
    * Once staffing have been loaded from the spreadsheet
    */
-  onLoad(header, peopleStaffing, error) {
+  onLoad(weeks, peopleStaffing, error) {
     if (peopleStaffing) {
       this.setState({
-        headers: header,
+        weeks: weeks,
         peopleStaffing: peopleStaffing,
       });
     }
@@ -76,7 +76,7 @@ class App extends Component {
         <div className="page">
           <StaffingTable
             peopleStaffing={this.state.peopleStaffing}
-            headers={this.state.headers} />
+            weeks={this.state.weeks} />
         </div>
       );
     }

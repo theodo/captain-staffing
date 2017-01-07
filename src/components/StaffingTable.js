@@ -3,7 +3,6 @@ import { Table, Column, Cell } from 'fixed-data-table';
 import HeaderCell from './HeaderCell';
 import StaffingCell from './StaffingCell';
 
-import { tail } from 'lodash';
 import moment from 'moment';
 
 import style from 'fixed-data-table/dist/fixed-data-table.css';
@@ -28,17 +27,17 @@ export default class StaffingTable extends React.Component {
           fixed={true}
         />
         {
-          tail(this.props.headers).map((header, i) => {
+          this.props.weeks.map((week, i) => {
             return (
               <Column
                 key={ i }
                 header={
-                  <Cell>{ moment(header, 'DD/MM/YYYY').format('DD/MM') }</Cell>
+                  <Cell>{ moment(week, 'DD/MM/YYYY').format('DD/MM') }</Cell>
                 }
                 cell={
                   <StaffingCell
                     data={ this.props.peopleStaffing }
-                    index={ i }
+                    week={ moment(week, 'DD/MM/YYYY').format('DD/MM') }
                   />
                 }
                 width={60}
