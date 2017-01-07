@@ -1,5 +1,8 @@
 node_modules
 .DS_Store
-npm-debug.log
 src/config.js
 build
+
+# Errors
+npm-debug.log
+yarn-error.log
