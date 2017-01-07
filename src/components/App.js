@@ -22,7 +22,7 @@ class App extends Component {
   }
 
   /**
-   * Check user authenification status and set app state accordingly
+   * Check user authentication status and set app state accordingly
    */
   handleAuth(authResult) {
     if (authResult && !authResult.error) {
@@ -65,7 +65,6 @@ class App extends Component {
   }
 
   renderContent() {
-
     if (this.state.authenticated === false) {
       return (
         <button onClick={ this.authenticate.bind(this) } className="btn">Connect with Google</button>
@@ -76,7 +75,8 @@ class App extends Component {
         <div className="page">
           <StaffingTable
             peopleStaffing={this.state.peopleStaffing}
-            weeks={this.state.weeks} />
+            weeks={this.state.weeks}
+          />
         </div>
       );
     }
@@ -93,7 +93,7 @@ class App extends Component {
   }
 
   /**
-   * Request Google authentification
+   * Request Google authentication
    */
   authenticate(e) {
     e.preventDefault();

@@ -5,9 +5,15 @@ import StaffingCell from './StaffingCell';
 
 import moment from 'moment';
 
-import style from 'fixed-data-table/dist/fixed-data-table.css';
+import 'fixed-data-table/dist/fixed-data-table.css';
 
 export default class StaffingTable extends React.Component {
+
+  static propTypes = {
+    weeks: React.PropTypes.array.isRequired,
+    peopleStaffing: React.PropTypes.array.isRequired
+  };
+
   render() {
     return (
       <Table

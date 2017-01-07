@@ -26,7 +26,7 @@ export function load(callback) {
       const rows = response.result.values || [];
       const weeks = tail(tail(head(rows)));
 
-      let peopleStaffing = buildStaffing(response.result.values);
+      const peopleStaffing = buildStaffing(response.result.values);
 
       callback(weeks, peopleStaffing);
     }, (response) => {
