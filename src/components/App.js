@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { checkAuth, load } from '../helpers/spreadsheet';
 import { toggleByPeopleId } from '../helpers/edit'
+import { checkTrelloAuth } from '../helpers/trello'
 
 import Alert from './Alert';
 import StaffingTable from './StaffingTable';
@@ -20,6 +21,11 @@ class App extends Component {
   }
 
   componentDidMount() {
+    checkTrelloAuth((authenticated) => {
+      this.setState({
+        trelloAuthenticated: authenticated
+      });
+    })
     window.gapi.load('client', () => {
       checkAuth(true, this.handleAuth.bind(this));
     });
@@ -76,16 +82,17 @@ class App extends Component {
     })
   }
 
-
   render() {
     return (
       <div className="app">
         <h1 className="brand">Captain Staffing</h1>
         <h2>He staffs in less than a minute</h2>
-        { this.renderGoogle() }
-        { this.renderContent() }
-        { this.renderTrello() }
-        { this.renderProjects() }
+        <div className="content">
+          { this.renderGoogle() }
+          { this.renderStaffing() }
+          { this.renderTrello() }
+          { this.renderProjects() }
+        </div>
       </div>
     );
   }
@@ -117,7 +124,7 @@ class App extends Component {
     }
   }
 
-  renderContent() {
+  renderStaffing() {
     if (this.state.peopleStaffing !== null) {
       return (
         <div className="page">
@@ -134,7 +141,7 @@ class App extends Component {
         <Alert error={ this.state.error } />
       );
     }
-    else {
+    else if (this.state.authenticated) {
       return (
         <div className="loader" />
       );
