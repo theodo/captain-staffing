@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { checkAuth, load } from '../helpers/spreadsheet';
+import { toggleByPeopleId } from '../helpers/edit'
 
 import Alert from './Alert';
 import StaffingTable from './StaffingTable';
@@ -54,6 +55,13 @@ class App extends Component {
     }
   }
 
+  onHeaderClick(peopleId) {
+    this.setState({
+      peopleStaffing: toggleByPeopleId(peopleId, this.state.peopleStaffing),
+    })
+  }
+
+
   render() {
     return (
       <div className="app">
@@ -75,6 +83,7 @@ class App extends Component {
         <div className="page">
           <StaffingTable
             peopleStaffing={this.state.peopleStaffing}
+            onHeaderClick={this.onHeaderClick.bind(this)}
             weeks={this.state.weeks}
           />
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Column, Cell } from 'fixed-data-table';
 import HeaderCell from './HeaderCell';
 import StaffingCell from './StaffingCell';
+import ProjectCell from './ProjectCell'
 
 import moment from 'moment';
 
@@ -11,7 +12,8 @@ export default class StaffingTable extends React.Component {
 
   static propTypes = {
     weeks: React.PropTypes.array.isRequired,
-    peopleStaffing: React.PropTypes.array.isRequired
+    peopleStaffing: React.PropTypes.array.isRequired,
+    onHeaderClick: React.PropTypes.func,
   };
 
   render() {
@@ -26,7 +28,18 @@ export default class StaffingTable extends React.Component {
           cell={
             <HeaderCell
               data={this.props.peopleStaffing}
+              onClick={this.props.onHeaderClick}
               field="name"
+            />
+          }
+          width={120}
+          fixed={true}
+        />
+        <Column
+          cell={
+            <ProjectCell
+              data={this.props.peopleStaffing}
+              field="project"
             />
           }
           width={120}
