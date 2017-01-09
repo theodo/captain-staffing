@@ -20,15 +20,6 @@ const getFloat = (string) => {
   return 0;
 }
 
-export function getTooltipContent(weekStaffing) {
-  return map(weekStaffing, (value, projectName) => {
-    if (projectName === '_total') {
-      return undefined;
-    }
-    return projectName + ': ' + value + 'J';
-  }).join('\n');
-}
-
 export function buildStaffing(peopleResponse) {
   var weeks = tail(tail(head(peopleResponse)))
   const staffingArray = unMergeCells(tail(peopleResponse), 0);
@@ -36,7 +27,8 @@ export function buildStaffing(peopleResponse) {
     return someoneStaffing[0]
   });
   return map(staffingByName, (rows, name) => {
-    var staffing = {};
+    var staffing = {}
+    var projects = map(rows, row => row[1])
     forEach(weeks, (week, weekIndex) => {
       var weekStaffing = {};
       var total = 0;
@@ -50,7 +42,8 @@ export function buildStaffing(peopleResponse) {
     });
     return {
       name: name,
-      staffing: staffing
+      staffing: staffing,
+      projects: projects,
     }
   });
 }

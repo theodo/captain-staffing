@@ -1,8 +1,11 @@
 import React from 'react';
 import { Cell } from 'fixed-data-table';
-import { getTooltipContent } from '../helpers/formatter';
 
-const getColor = (staffedDaysString) => {
+const getColor = (row, week) => {
+  if (row.project) {
+    return null
+  }
+  const staffedDaysString = row.staffing[week]._total
   if (!staffedDaysString) {
     return null;
   }
@@ -22,7 +25,14 @@ const getColor = (staffedDaysString) => {
   return '#E53935';   // Strong red
 };
 
-
+const getValue = (row, week) => {
+  if(row.project) {
+    return row.staffing[week][row.project]
+  }
+  else {
+    return row.staffing[week]._total
+  }
+}
 
 export default class StaffingCell extends React.Component {
 
@@ -35,16 +45,14 @@ export default class StaffingCell extends React.Component {
   render() {
     const {rowIndex, week, data, ...props} = this.props;
     const style = {
-      backgroundColor: getColor(data[rowIndex].staffing[week]._total),
+      backgroundColor: getColor(data[rowIndex], week),
     };
     return (
       <Cell
         {...props}
         style={style}
       >
-        <div title={ getTooltipContent(data[rowIndex].staffing[week]) }>
-          { data[rowIndex].staffing[week]._total }
-        </div>
+        { getValue(data[rowIndex], week) }
       </Cell>
     );
   }
