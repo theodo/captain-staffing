@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 
 import { checkAuth, load } from '../helpers/spreadsheet';
 import { toggleByPeopleId } from '../helpers/edit'
+import { checkTrelloAuth } from '../helpers/trello'
 
 import Alert from './Alert';
 import StaffingTable from './StaffingTable';
+import CaptainTrello from './CaptainTrello'
+import Projects from './Projects'
 
 class App extends Component {
 
@@ -12,11 +15,17 @@ class App extends Component {
     super(props);
 
     this.state = {
-      peopleStaffing: null
+      peopleStaffing: null,
+      trelloAuthenticated: null,
     }
   }
 
   componentDidMount() {
+    checkTrelloAuth((authenticated) => {
+      this.setState({
+        trelloAuthenticated: authenticated
+      });
+    })
     window.gapi.load('client', () => {
       checkAuth(true, this.handleAuth.bind(this));
     });
@@ -61,24 +70,62 @@ class App extends Component {
     })
   }
 
+  onTrelloSuccess() {
+    this.setState({
+      trelloAuthenticated: true,
+    })
+  }
+
+  onTrelloFailure() {
+    this.setState({
+      trelloAuthenticated: false,
+    })
+  }
 
   render() {
     return (
       <div className="app">
         <h1 className="brand">Captain Staffing</h1>
         <h2>He staffs in less than a minute</h2>
-        { this.renderContent() }
+        <div className="content">
+          { this.renderGoogle() }
+          { this.renderStaffing() }
+          { this.renderTrello() }
+          { this.renderProjects() }
+        </div>
       </div>
     );
   }
 
-  renderContent() {
+  renderGoogle() {
     if (this.state.authenticated === false) {
       return (
         <button onClick={ this.authenticate.bind(this) } className="btn">Connect with Google</button>
       );
     }
-    else if (this.state.peopleStaffing !== null) {
+  }
+
+  renderTrello() {
+    if (!this.state.trelloAuthenticated) {
+      return (
+        <CaptainTrello
+          onSuccess={this.onTrelloSuccess.bind(this)}
+          onFailure={this.onTrelloFailure.bind(this)}
+        />
+      );
+    }
+  }
+
+  renderProjects() {
+    if (this.state.trelloAuthenticated) {
+      return (
+        <Projects />
+      );
+    }
+  }
+
+  renderStaffing() {
+    if (this.state.peopleStaffing !== null) {
       return (
         <div className="page">
           <StaffingTable
@@ -94,7 +141,7 @@ class App extends Component {
         <Alert error={ this.state.error } />
       );
     }
-    else {
+    else if (this.state.authenticated) {
       return (
         <div className="loader" />
       );
