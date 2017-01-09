@@ -5,6 +5,8 @@ import { toggleByPeopleId } from '../helpers/edit'
 
 import Alert from './Alert';
 import StaffingTable from './StaffingTable';
+import CaptainTrello from './CaptainTrello'
+import Projects from './Projects'
 
 class App extends Component {
 
@@ -12,7 +14,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      peopleStaffing: null
+      peopleStaffing: null,
+      trelloAuthenticated: null,
     }
   }
 
@@ -61,24 +64,61 @@ class App extends Component {
     })
   }
 
+  onTrelloSuccess() {
+    this.setState({
+      trelloAuthenticated: true,
+    })
+  }
+
+  onTrelloFailure() {
+    this.setState({
+      trelloAuthenticated: false,
+    })
+  }
+
 
   render() {
     return (
       <div className="app">
         <h1 className="brand">Captain Staffing</h1>
         <h2>He staffs in less than a minute</h2>
+        { this.renderGoogle() }
         { this.renderContent() }
+        { this.renderTrello() }
+        { this.renderProjects() }
       </div>
     );
   }
 
-  renderContent() {
+  renderGoogle() {
     if (this.state.authenticated === false) {
       return (
         <button onClick={ this.authenticate.bind(this) } className="btn">Connect with Google</button>
       );
     }
-    else if (this.state.peopleStaffing !== null) {
+  }
+
+  renderTrello() {
+    if (!this.state.trelloAuthenticated) {
+      return (
+        <CaptainTrello
+          onSuccess={this.onTrelloSuccess.bind(this)}
+          onFailure={this.onTrelloFailure.bind(this)}
+        />
+      );
+    }
+  }
+
+  renderProjects() {
+    if (this.state.trelloAuthenticated) {
+      return (
+        <Projects />
+      );
+    }
+  }
+
+  renderContent() {
+    if (this.state.peopleStaffing !== null) {
       return (
         <div className="page">
           <StaffingTable
