@@ -1,7 +1,7 @@
-import { tail, head } from 'lodash';
+import { tail, head } from 'lodash'
 
-import config from '../config';
-import { buildStaffing } from './formatter';
+import config from '../config'
+import { buildStaffing } from './formatter'
 
 /**
  * Get the user authentication status
@@ -11,7 +11,7 @@ export function checkAuth(immediate, callback) {
     'client_id': config.clientId,
     'scope': config.scope,
     'immediate': immediate
-  }, callback);
+  }, callback)
 }
 
 /**
@@ -23,16 +23,16 @@ export function load(callback) {
       spreadsheetId: config.spreadsheetId,
       range: 'People!A1:V86'
     }).then((response) => {
-      const rows = response.result.values || [];
-      const weeks = tail(tail(head(rows)));
+      const rows = response.result.values || []
+      const weeks = tail(tail(head(rows)))
 
-      const peopleStaffing = buildStaffing(response.result.values);
+      const peopleStaffing = buildStaffing(response.result.values)
 
-      callback(weeks, peopleStaffing);
+      callback(weeks, peopleStaffing)
     }, (response) => {
-      callback(null, null, response.result.error);
-    });
-  });
+      callback(null, null, response.result.error)
+    })
+  })
 }
 
 /**
@@ -44,5 +44,5 @@ export function updateCell(column, row, value, successCallback, errorCallback) {
     range: 'Sheet1!' + column + row,
     valueInputOption: 'USER_ENTERED',
     values: [ [value] ]
-  }).then(successCallback, errorCallback);
+  }).then(successCallback, errorCallback)
 }

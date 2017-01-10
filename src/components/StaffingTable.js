@@ -1,12 +1,12 @@
-import React from 'react';
-import { Table, Column, Cell } from 'fixed-data-table';
-import HeaderCell from './HeaderCell';
-import StaffingCell from './StaffingCell';
+import React from 'react'
+import { Table, Column, Cell } from 'fixed-data-table'
+import HeaderCell from './HeaderCell'
+import StaffingCell from './StaffingCell'
 import ProjectCell from './ProjectCell'
 
-import moment from 'moment';
+import moment from 'moment'
 
-import 'fixed-data-table/dist/fixed-data-table.css';
+import 'fixed-data-table/dist/fixed-data-table.css'
 
 export default class StaffingTable extends React.Component {
 
@@ -14,7 +14,7 @@ export default class StaffingTable extends React.Component {
     weeks: React.PropTypes.array.isRequired,
     peopleStaffing: React.PropTypes.array.isRequired,
     onHeaderClick: React.PropTypes.func,
-  };
+  }
 
   render() {
     return (
@@ -61,10 +61,10 @@ export default class StaffingTable extends React.Component {
                 }
                 width={60}
               />
-            );
+            )
           })
         }
       </Table>
-    );
+    )
   }
 }

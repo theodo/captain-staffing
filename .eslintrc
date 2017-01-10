@@ -6,5 +6,8 @@
     "es6": true
   },
   "extends": "airbnb",
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": [2, "never"]
+  }
 }

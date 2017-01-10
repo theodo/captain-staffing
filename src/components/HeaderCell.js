@@ -8,10 +8,10 @@ export default class HeaderCell extends React.Component {
     field: React.PropTypes.string,
     rowIndex: React.PropTypes.number,
     onClick: React.PropTypes.func,
-  };
+  }
 
   render() {
-    const {rowIndex, field, data, ...props} = this.props;
+    const {rowIndex, field, data, ...props} = this.props
     return (
       <Cell
         {...props}

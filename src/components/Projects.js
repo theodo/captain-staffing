@@ -5,10 +5,10 @@ import { tail } from 'lodash'
 
 export default class Projects extends React.Component {
 
-  static propTypes = {};
+  static propTypes = {}
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       projects: [],
@@ -20,7 +20,7 @@ export default class Projects extends React.Component {
       this.setState({
         projects: tail(cards)
       })
-    );
+    )
   }
 
   render() {

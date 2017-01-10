@@ -5,7 +5,7 @@ export default class CaptainTrello extends React.Component {
   static propTypes = {
     onSuccess: React.PropTypes.func.isRequired,
     onFailure: React.PropTypes.func.isRequired,
-  };
+  }
 
   onClick() {
     window.Trello.authorize({
@@ -17,7 +17,7 @@ export default class CaptainTrello extends React.Component {
       expiration: 'never',
       success: this.props.onSuccess,
       error: this.props.onFailure,
-    });
+    })
   }
 
   render() {

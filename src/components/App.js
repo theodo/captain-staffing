@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import { checkAuth, load } from '../helpers/spreadsheet';
+import { checkAuth, load } from '../helpers/spreadsheet'
 import { toggleByPeopleId } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
 
-import Alert from './Alert';
-import StaffingTable from './StaffingTable';
+import Alert from './Alert'
+import StaffingTable from './StaffingTable'
 import CaptainTrello from './CaptainTrello'
 import Projects from './Projects'
 
 class App extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       peopleStaffing: null,
@@ -24,11 +24,11 @@ class App extends Component {
     checkTrelloAuth((authenticated) => {
       this.setState({
         trelloAuthenticated: authenticated
-      });
+      })
     })
     window.gapi.load('client', () => {
-      checkAuth(true, this.handleAuth.bind(this));
-    });
+      checkAuth(true, this.handleAuth.bind(this))
+    })
   }
 
   /**
@@ -38,7 +38,7 @@ class App extends Component {
     if (authResult && !authResult.error) {
       this.setState({
         authenticated: true
-      });
+      })
       load(this.onLoad.bind(this))
     } else {
       this.setState({
@@ -55,7 +55,7 @@ class App extends Component {
       this.setState({
         weeks: weeks,
         peopleStaffing: peopleStaffing,
-      });
+      })
     }
     else {
       this.setState({
@@ -94,14 +94,14 @@ class App extends Component {
           { this.renderProjects() }
         </div>
       </div>
-    );
+    )
   }
 
   renderGoogle() {
     if (this.state.authenticated === false) {
       return (
         <button onClick={ this.authenticate.bind(this) } className="btn">Connect with Google</button>
-      );
+      )
     }
   }
 
@@ -112,7 +112,7 @@ class App extends Component {
           onSuccess={this.onTrelloSuccess.bind(this)}
           onFailure={this.onTrelloFailure.bind(this)}
         />
-      );
+      )
     }
   }
 
@@ -120,7 +120,7 @@ class App extends Component {
     if (this.state.trelloAuthenticated) {
       return (
         <Projects />
-      );
+      )
     }
   }
 
@@ -134,17 +134,17 @@ class App extends Component {
             weeks={this.state.weeks}
           />
         </div>
-      );
+      )
     }
     else if (this.state.error) {
       return (
         <Alert error={ this.state.error } />
-      );
+      )
     }
     else if (this.state.authenticated) {
       return (
         <div className="loader" />
-      );
+      )
     }
   }
 
@@ -152,9 +152,9 @@ class App extends Component {
    * Request Google authentication
    */
   authenticate(e) {
-    e.preventDefault();
-    checkAuth(false, this.handleAuth.bind(this));
+    e.preventDefault()
+    checkAuth(false, this.handleAuth.bind(this))
   }
 }
 
-export default App;
+export default App
