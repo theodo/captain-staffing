@@ -23,8 +23,9 @@ export default class CaptainTrello extends React.Component {
   render() {
     return (
       <button
-        onClick={ this.onClick.bind(this) }
-        className="btn">
+        onClick={this.onClick.bind(this)}
+        className="btn"
+      >
         Connect with Trello
       </button>
     )

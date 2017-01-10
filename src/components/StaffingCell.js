@@ -26,12 +26,11 @@ const getColor = (row, week) => {
 }
 
 const getValue = (row, week) => {
-  if(row.project) {
+  if (row.project) {
     return row.staffing[week][row.project]
   }
-  else {
-    return row.staffing[week]._total
-  }
+
+  return row.staffing[week]._total
 }
 
 export default class StaffingCell extends React.Component {
@@ -43,7 +42,7 @@ export default class StaffingCell extends React.Component {
   }
 
   render() {
-    const {rowIndex, week, data, ...props} = this.props
+    const { rowIndex, week, data, ...props } = this.props
     const style = {
       backgroundColor: getColor(data[rowIndex], week),
     }

@@ -16,11 +16,11 @@ export default class Projects extends React.Component {
   }
 
   componentDidMount() {
-    window.Trello.get('/lists/' + config.trelloListId + '/cards', (cards) =>
+    window.Trello.get(`/lists/${config.trelloListId}/cards`, (cards) => {
       this.setState({
-        projects: tail(cards)
+        projects: tail(cards),
       })
-    )
+    })
   }
 
   render() {

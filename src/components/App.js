@@ -23,7 +23,7 @@ class App extends Component {
   componentDidMount() {
     checkTrelloAuth((authenticated) => {
       this.setState({
-        trelloAuthenticated: authenticated
+        trelloAuthenticated: authenticated,
       })
     })
     window.gapi.load('client', () => {
@@ -37,12 +37,12 @@ class App extends Component {
   handleAuth(authResult) {
     if (authResult && !authResult.error) {
       this.setState({
-        authenticated: true
+        authenticated: true,
       })
       load(this.onLoad.bind(this))
     } else {
       this.setState({
-        authenticated: false
+        authenticated: false,
       })
     }
   }
@@ -53,13 +53,12 @@ class App extends Component {
   onLoad(weeks, peopleStaffing, error) {
     if (peopleStaffing) {
       this.setState({
-        weeks: weeks,
-        peopleStaffing: peopleStaffing,
+        weeks,
+        peopleStaffing,
       })
-    }
-    else {
+    } else {
       this.setState({
-        error: error
+        error,
       })
     }
   }
@@ -100,9 +99,10 @@ class App extends Component {
   renderGoogle() {
     if (this.state.authenticated === false) {
       return (
-        <button onClick={ this.authenticate.bind(this) } className="btn">Connect with Google</button>
+        <button onClick={this.authenticate.bind(this)} className="btn">Connect with Google</button>
       )
     }
+    return null
   }
 
   renderTrello() {
@@ -114,6 +114,7 @@ class App extends Component {
         />
       )
     }
+    return null
   }
 
   renderProjects() {
@@ -122,6 +123,7 @@ class App extends Component {
         <Projects />
       )
     }
+    return null
   }
 
   renderStaffing() {
@@ -135,17 +137,16 @@ class App extends Component {
           />
         </div>
       )
-    }
-    else if (this.state.error) {
+    } else if (this.state.error) {
       return (
-        <Alert error={ this.state.error } />
+        <Alert error={this.state.error} />
       )
-    }
-    else if (this.state.authenticated) {
+    } else if (this.state.authenticated) {
       return (
         <div className="loader" />
       )
     }
+    return null
   }
 
   /**

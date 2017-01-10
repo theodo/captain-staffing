@@ -23,7 +23,8 @@ export default class StaffingTable extends React.Component {
         rowsCount={this.props.peopleStaffing.length}
         rowHeight={35}
         maxHeight={1300}
-        headerHeight={40} >
+        headerHeight={40}
+      >
         <Column
           cell={
             <HeaderCell
@@ -33,7 +34,7 @@ export default class StaffingTable extends React.Component {
             />
           }
           width={120}
-          fixed={true}
+          fixed
         />
         <Column
           cell={
@@ -43,20 +44,20 @@ export default class StaffingTable extends React.Component {
             />
           }
           width={120}
-          fixed={true}
+          fixed
         />
         {
           this.props.weeks.map((week, i) => {
             return (
               <Column
-                key={ i }
+                key={i}
                 header={
                   <Cell>{ moment(week, 'DD/MM/YYYY').format('DD/MM') }</Cell>
                 }
                 cell={
                   <StaffingCell
-                    data={ this.props.peopleStaffing }
-                    week={ moment(week, 'DD/MM/YYYY').format('DD/MM') }
+                    data={this.props.peopleStaffing}
+                    week={moment(week, 'DD/MM/YYYY').format('DD/MM')}
                   />
                 }
                 width={60}

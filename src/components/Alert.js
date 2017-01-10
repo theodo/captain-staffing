@@ -3,13 +3,14 @@ import React from 'react'
 export default class Alert extends React.Component {
 
   static propTypes = {
-    error: React.PropTypes.object.isRequired
+    error: React.PropTypes.object.isRequired,
   }
 
   render() {
-    let message, icon
+    let message
+    let icon
 
-    switch(this.props.error.code) {
+    switch (this.props.error.code) {
       case 403:
         icon = '⛔️'
         message = 'You don’t have permission to access this Spreadsheet.'
@@ -30,5 +31,4 @@ export default class Alert extends React.Component {
       </p>
     )
   }
-
 }

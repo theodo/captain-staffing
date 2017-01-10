@@ -11,12 +11,12 @@ export default class HeaderCell extends React.Component {
   }
 
   render() {
-    const {rowIndex, field, data, ...props} = this.props
+    const { rowIndex, field, data, ...props } = this.props
     return (
       <Cell
         {...props}
         onClick={this.props.onClick.bind(this, data[rowIndex][field])}
-        className='clickable'
+        className="clickable"
       >
         { data[rowIndex][field] }
       </Cell>

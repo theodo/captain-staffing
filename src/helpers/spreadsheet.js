@@ -8,9 +8,9 @@ import { buildStaffing } from './formatter'
  */
 export function checkAuth(immediate, callback) {
   window.gapi.auth.authorize({
-    'client_id': config.clientId,
-    'scope': config.scope,
-    'immediate': immediate
+    client_id: config.clientId,
+    scope: config.scope,
+    immediate,
   }, callback)
 }
 
@@ -21,7 +21,7 @@ export function load(callback) {
   window.gapi.client.load('sheets', 'v4', () => {
     window.gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: config.spreadsheetId,
-      range: 'People!A1:V86'
+      range: 'People!A1:V86',
     }).then((response) => {
       const rows = response.result.values || []
       const weeks = tail(tail(head(rows)))
@@ -41,8 +41,8 @@ export function load(callback) {
 export function updateCell(column, row, value, successCallback, errorCallback) {
   window.gapi.client.sheets.spreadsheets.values.update({
     spreadsheetId: config.spreadsheetId,
-    range: 'Sheet1!' + column + row,
+    range: `Sheet1!${column}${row}`,
     valueInputOption: 'USER_ENTERED',
-    values: [ [value] ]
+    values: [[value]],
   }).then(successCallback, errorCallback)
 }
