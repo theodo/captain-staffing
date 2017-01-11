@@ -1,17 +1,17 @@
-import { tail, head } from 'lodash';
+import { tail, head } from 'lodash'
 
-import config from '../config';
-import { buildStaffing } from './formatter';
+import config from '../config'
+import { buildStaffing } from './formatter'
 
 /**
  * Get the user authentication status
  */
 export function checkAuth(immediate, callback) {
   window.gapi.auth.authorize({
-    'client_id': config.clientId,
-    'scope': config.scope,
-    'immediate': immediate
-  }, callback);
+    client_id: config.clientId,
+    scope: config.scope,
+    immediate,
+  }, callback)
 }
 
 /**
@@ -21,18 +21,18 @@ export function load(callback) {
   window.gapi.client.load('sheets', 'v4', () => {
     window.gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: config.spreadsheetId,
-      range: 'People!A1:V86'
+      range: 'People!A1:V86',
     }).then((response) => {
-      const rows = response.result.values || [];
-      const weeks = tail(tail(head(rows)));
+      const rows = response.result.values || []
+      const weeks = tail(tail(head(rows)))
 
-      const peopleStaffing = buildStaffing(response.result.values);
+      const peopleStaffing = buildStaffing(response.result.values)
 
-      callback(weeks, peopleStaffing);
+      callback(weeks, peopleStaffing)
     }, (response) => {
-      callback(null, null, response.result.error);
-    });
-  });
+      callback(null, null, response.result.error)
+    })
+  })
 }
 
 /**
@@ -41,8 +41,8 @@ export function load(callback) {
 export function updateCell(column, row, value, successCallback, errorCallback) {
   window.gapi.client.sheets.spreadsheets.values.update({
     spreadsheetId: config.spreadsheetId,
-    range: 'Sheet1!' + column + row,
+    range: `Sheet1!${column}${row}`,
     valueInputOption: 'USER_ENTERED',
-    values: [ [value] ]
-  }).then(successCallback, errorCallback);
+    values: [[value]],
+  }).then(successCallback, errorCallback)
 }

@@ -7,10 +7,10 @@ export default class ProjectCell extends React.Component {
     data: React.PropTypes.array.isRequired,
     field: React.PropTypes.string,
     rowIndex: React.PropTypes.number,
-  };
+  }
 
   render() {
-    const {rowIndex, field, data, ...props} = this.props;
+    const { rowIndex, field, data, ...props } = this.props
     return (
       <Cell {...props}>
         { data[rowIndex][field] }

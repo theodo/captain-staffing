@@ -34,3 +34,16 @@ npm run build
 ```
 npm run deploy
 ```
+
+## Commit emoji
+
+Commit Type            | Emoji
+-----------------------|--------------
+New Feature            | :sparkles: `:sparkles:`
+Bugfix                 | :bug: `:bug:`
+Refactoring            | :package: `:package:`
+Documentation          | :books: `:books:`
+Cosmetic               | :lipstick: `:lipstick:`
+Tooling                | :wrench: `:wrench:`
+Tests                  | :rotating_light: `:rotating_light:`
+Work In Progress (WIP) | :construction: `:construction:`

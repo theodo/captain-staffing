@@ -5,7 +5,7 @@ export default class CaptainTrello extends React.Component {
   static propTypes = {
     onSuccess: React.PropTypes.func.isRequired,
     onFailure: React.PropTypes.func.isRequired,
-  };
+  }
 
   onClick() {
     window.Trello.authorize({
@@ -17,14 +17,15 @@ export default class CaptainTrello extends React.Component {
       expiration: 'never',
       success: this.props.onSuccess,
       error: this.props.onFailure,
-    });
+    })
   }
 
   render() {
     return (
       <button
-        onClick={ this.onClick.bind(this) }
-        className="btn">
+        onClick={this.onClick.bind(this)}
+        className="btn"
+      >
         Connect with Trello
       </button>
     )

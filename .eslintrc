@@ -5,5 +5,32 @@
     "jest": true,
     "es6": true
   },
-  "extends": "./node_modules/react-scripts/config/eslint.js"
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    "arrow-body-style": [2, "always"],
+    "comma-dangle": [2, "always-multiline"],
+    "import/prefer-default-export": 0,
+    "import/first": 0,
+    "no-param-reassign": 0,
+    "no-underscore-dangle": 0,
+    "semi": [2, "never"],
+    "react/jsx-filename-extension": 0,
+    "react/jsx-no-bind": 0,
+    "react/forbid-prop-types": 0,
+    "react/sort-comp": 0,
+    "react/no-array-index-key": 0,
+    "react/prefer-stateless-function": 0,
+    "react/require-default-props": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [
+          "node_modules",
+          "src"
+        ]
+      }
+    }
+  }
 }
