@@ -39,6 +39,7 @@ export default class StaffingCell extends React.Component {
     data: React.PropTypes.array.isRequired,
     week: React.PropTypes.string,
     rowIndex: React.PropTypes.number,
+    onClick: React.PropTypes.func,
   }
 
   render() {
@@ -49,7 +50,9 @@ export default class StaffingCell extends React.Component {
     return (
       <Cell
         {...props}
+        onClick={this.props.onClick.bind(this, data[rowIndex])}
         style={style}
+        className="clickable"
       >
         { getValue(data[rowIndex], week) }
       </Cell>

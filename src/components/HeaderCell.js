@@ -15,7 +15,7 @@ export default class HeaderCell extends React.Component {
     return (
       <Cell
         {...props}
-        onClick={this.props.onClick.bind(this, data[rowIndex][field])}
+        onClick={this.props.onClick.bind(this, data[rowIndex])}
         className="clickable"
       >
         { data[rowIndex][field] }
