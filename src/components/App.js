@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { checkAuth, load } from '../helpers/spreadsheet'
-import { toggleByPeopleId } from '../helpers/edit'
+import { toggleByPeopleRow } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
 
 import Alert from './Alert'
@@ -63,9 +63,17 @@ class App extends Component {
     }
   }
 
-  onHeaderClick(peopleId) {
+  /**
+   * Request Google authentication
+   */
+  authenticate(e) {
+    e.preventDefault()
+    checkAuth(false, this.handleAuth.bind(this))
+  }
+
+  onStaffingTableRowClick(peopleRow) {
     this.setState({
-      peopleStaffing: toggleByPeopleId(peopleId, this.state.peopleStaffing),
+      peopleStaffing: toggleByPeopleRow(peopleRow, this.state.peopleStaffing),
     })
   }
 
@@ -105,6 +113,29 @@ class App extends Component {
     return null
   }
 
+  renderStaffing() {
+    if (this.state.peopleStaffing !== null) {
+      return (
+        <div className="page">
+          <StaffingTable
+            peopleStaffing={this.state.peopleStaffing}
+            onRowClick={this.onStaffingTableRowClick.bind(this)}
+            weeks={this.state.weeks}
+          />
+        </div>
+      )
+    } else if (this.state.error) {
+      return (
+        <Alert error={this.state.error} />
+      )
+    } else if (this.state.authenticated) {
+      return (
+        <div className="loader" />
+      )
+    }
+    return null
+  }
+
   renderTrello() {
     if (!this.state.trelloAuthenticated) {
       return (
@@ -124,37 +155,6 @@ class App extends Component {
       )
     }
     return null
-  }
-
-  renderStaffing() {
-    if (this.state.peopleStaffing !== null) {
-      return (
-        <div className="page">
-          <StaffingTable
-            peopleStaffing={this.state.peopleStaffing}
-            onHeaderClick={this.onHeaderClick.bind(this)}
-            weeks={this.state.weeks}
-          />
-        </div>
-      )
-    } else if (this.state.error) {
-      return (
-        <Alert error={this.state.error} />
-      )
-    } else if (this.state.authenticated) {
-      return (
-        <div className="loader" />
-      )
-    }
-    return null
-  }
-
-  /**
-   * Request Google authentication
-   */
-  authenticate(e) {
-    e.preventDefault()
-    checkAuth(false, this.handleAuth.bind(this))
   }
 }
 
