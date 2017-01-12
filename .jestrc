@@ -1,3 +1,7 @@
 {
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/*/**/*.js"
+  ],
   "modulePaths": ["<rootDir>/src"]
 }
