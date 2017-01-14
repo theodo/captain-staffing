@@ -1,8 +1,9 @@
 import { tail, forEach, head, map, groupBy } from 'lodash'
 import moment from 'moment'
 
-const unMergeCells = (data, columnIndex) => {
+export function unMergeCells(data, columnIndex) {
   let buffer = null
+
   forEach(data, (row) => {
     if (row[columnIndex]) {
       buffer = row[columnIndex]
@@ -10,14 +11,32 @@ const unMergeCells = (data, columnIndex) => {
       row[columnIndex] = buffer
     }
   })
+
   return data
 }
 
-const getFloat = (string) => {
+export function getFloat(string) {
   if (string) {
     return parseFloat(string.replace(',', '.'))
   }
-  return 0
+  return null
+}
+
+export function buildWeekStaffing(rows, weekIndex) {
+  const weekStaffing = {}
+  let total = null
+
+  forEach(rows, (row) => {
+    const projectStaffing = getFloat(row[weekIndex + 2])
+    weekStaffing[row[1]] = projectStaffing
+
+    if (projectStaffing !== null) {
+      total += projectStaffing
+    }
+  })
+
+  weekStaffing._total = total
+  return weekStaffing
 }
 
 export function buildStaffing(peopleResponse) {
@@ -26,20 +45,18 @@ export function buildStaffing(peopleResponse) {
   const staffingByName = groupBy(staffingArray, (someoneStaffing) => {
     return someoneStaffing[0]
   })
+
   return map(staffingByName, (rows, name) => {
     const staffing = {}
-    const projects = map(rows, (row) => { return row[1] })
     forEach(weeks, (week, weekIndex) => {
-      const weekStaffing = {}
-      let total = 0
-      forEach(rows, (row) => {
-        weekStaffing[row[1]] = getFloat(row[weekIndex + 2])
-        total += getFloat(row[weekIndex + 2])
-      })
-      weekStaffing._total = total
       const weekString = moment(week, 'DD/MM/YYYY').format('DD/MM')
-      staffing[weekString] = weekStaffing
+      staffing[weekString] = buildWeekStaffing(rows, weekIndex)
     })
+
+    const projects = map(rows, (row) => {
+      return row[1]
+    })
+
     return {
       name,
       staffing,
