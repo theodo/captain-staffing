@@ -1,8 +1,9 @@
 import { tail, forEach, head, map, groupBy } from 'lodash'
 import moment from 'moment'
 
-const unMergeCells = (data, columnIndex) => {
+export function unMergeCells(data, columnIndex) {
   let buffer = null
+
   forEach(data, (row) => {
     if (row[columnIndex]) {
       buffer = row[columnIndex]
@@ -10,17 +11,18 @@ const unMergeCells = (data, columnIndex) => {
       row[columnIndex] = buffer
     }
   })
+
   return data
 }
 
-const getFloat = (string) => {
+export function getFloat(string) {
   if (string) {
     return parseFloat(string.replace(',', '.'))
   }
   return null
 }
 
-const buildWeekStaffing = (week, weekIndex, rows) => {
+export function buildWeekStaffing(rows, weekIndex) {
   const weekStaffing = {}
   let total = null
 
@@ -48,7 +50,7 @@ export function buildStaffing(peopleResponse) {
     const staffing = {}
     forEach(weeks, (week, weekIndex) => {
       const weekString = moment(week, 'DD/MM/YYYY').format('DD/MM')
-      staffing[weekString] = buildWeekStaffing(week, weekIndex, rows)
+      staffing[weekString] = buildWeekStaffing(rows, weekIndex)
     })
 
     const projects = map(rows, (row) => {
