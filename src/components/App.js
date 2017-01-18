@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
-import { checkAuth, load } from '../helpers/spreadsheet'
 import { toggleByPeopleRow } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
 
 import Alert from './Alert'
 import StaffingTable from './StaffingTable'
+import CaptainGoogle from './CaptainGoogle'
 import CaptainTrello from './CaptainTrello'
 import Projects from './Projects'
 
@@ -15,6 +15,7 @@ class App extends Component {
     super(props)
 
     this.state = {
+      googleAuthenticated: null,
       peopleStaffing: null,
       trelloAuthenticated: null,
     }
@@ -26,31 +27,21 @@ class App extends Component {
         trelloAuthenticated: authenticated,
       })
     })
-    window.gapi.load('client', () => {
-      checkAuth(true, this.handleAuth.bind(this))
+  }
+
+  onGoogleSuccess() {
+    this.setState({
+      googleAuthenticated: true,
     })
   }
 
-  /**
-   * Check user authentication status and set app state accordingly
-   */
-  handleAuth(authResult) {
-    if (authResult && !authResult.error) {
-      this.setState({
-        authenticated: true,
-      })
-      load(this.onLoad.bind(this))
-    } else {
-      this.setState({
-        authenticated: false,
-      })
-    }
+  onGoogleFailure() {
+    this.setState({
+      googleAuthenticated: false,
+    })
   }
 
-  /**
-   * Once staffing have been loaded from the spreadsheet
-   */
-  onLoad(weeks, peopleStaffing, error) {
+  onGoogleLoad(weeks, peopleStaffing, error) {
     if (peopleStaffing) {
       this.setState({
         weeks,
@@ -61,14 +52,6 @@ class App extends Component {
         error,
       })
     }
-  }
-
-  /**
-   * Request Google authentication
-   */
-  authenticate(e) {
-    e.preventDefault()
-    checkAuth(false, this.handleAuth.bind(this))
   }
 
   onStaffingTableRowClick(peopleRow) {
@@ -105,9 +88,13 @@ class App extends Component {
   }
 
   renderGoogle() {
-    if (this.state.authenticated === false) {
+    if (!this.state.googleAuthenticated) {
       return (
-        <button onClick={this.authenticate.bind(this)} className="btn">Connect with Google</button>
+        <CaptainGoogle
+          onSuccess={this.onGoogleSuccess.bind(this)}
+          onFailure={this.onGoogleFailure.bind(this)}
+          onLoad={this.onGoogleLoad.bind(this)}
+        />
       )
     }
     return null
@@ -128,7 +115,7 @@ class App extends Component {
       return (
         <Alert error={this.state.error} />
       )
-    } else if (this.state.authenticated) {
+    } else if (this.state.googleAuthenticated) {
       return (
         <div className="loader" />
       )
