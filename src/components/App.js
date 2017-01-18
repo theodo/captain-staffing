@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { toggleByPeopleRow } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
+import { loadLocalStorageItem, saveLocaleStorageItem } from '../helpers/localStorage'
 
 import Alert from './Alert'
 import StaffingTable from './StaffingTable'
@@ -16,7 +17,8 @@ class App extends Component {
 
     this.state = {
       googleAuthenticated: null,
-      peopleStaffing: null,
+      weeks: loadLocalStorageItem('weeks'),
+      peopleStaffing: loadLocalStorageItem('peopleStaffing'),
       trelloAuthenticated: null,
     }
   }
@@ -47,6 +49,8 @@ class App extends Component {
         weeks,
         peopleStaffing,
       })
+      saveLocaleStorageItem('weeks', weeks)
+      saveLocaleStorageItem('peopleStaffing', peopleStaffing)
     } else {
       this.setState({
         error,
@@ -88,7 +92,7 @@ class App extends Component {
   }
 
   renderGoogle() {
-    if (!this.state.googleAuthenticated) {
+    if (!this.state.googleAuthenticated && !this.state.peopleStaffing) {
       return (
         <CaptainGoogle
           onSuccess={this.onGoogleSuccess.bind(this)}
@@ -101,7 +105,7 @@ class App extends Component {
   }
 
   renderStaffing() {
-    if (this.state.peopleStaffing !== null) {
+    if (this.state.peopleStaffing) {
       return (
         <div className="page">
           <StaffingTable
