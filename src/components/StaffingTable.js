@@ -57,6 +57,7 @@ export default class StaffingTable extends React.Component {
                     { moment(week, 'DD/MM/YYYY').format('DD/MM') }
                   </Cell>
                 }
+                headerClassName={`staffingHeaderCell staffingHeaderCell--${i}`}
                 cell={
                   <StaffingCell
                     data={this.props.peopleStaffing}
@@ -64,6 +65,7 @@ export default class StaffingTable extends React.Component {
                     week={moment(week, 'DD/MM/YYYY').format('DD/MM')}
                   />
                 }
+                cellClassName={`staffingCell staffingCell--${i}`}
                 width={60}
               />
             )
