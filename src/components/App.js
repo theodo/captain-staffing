@@ -92,8 +92,8 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1 className="brand">Captain Staffing</h1>
-        <h2>He staffs in less than a minute</h2>
+        <h1 className="brand">
+          Captain Staffing</h1>
         <div className="content">
           { this.renderGoogle() }
           { this.renderStaffing() }
@@ -116,13 +116,11 @@ class App extends Component {
   renderStaffing() {
     if (this.state.peopleStaffing !== null) {
       return (
-        <div className="page">
-          <StaffingTable
-            peopleStaffing={this.state.peopleStaffing}
-            onRowClick={this.onStaffingTableRowClick.bind(this)}
-            weeks={this.state.weeks}
-          />
-        </div>
+        <StaffingTable
+          peopleStaffing={this.state.peopleStaffing}
+          onRowClick={this.onStaffingTableRowClick.bind(this)}
+          weeks={this.state.weeks}
+        />
       )
     } else if (this.state.error) {
       return (
