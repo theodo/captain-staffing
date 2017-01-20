@@ -7,7 +7,8 @@ export default class CaptainTrello extends React.Component {
     onFailure: React.PropTypes.func.isRequired,
   }
 
-  onClick() {
+  onClick(e) {
+    e.preventDefault()
     window.Trello.authorize({
       type: 'popup',
       name: 'Captain Staffing',
