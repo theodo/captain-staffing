@@ -82,8 +82,8 @@ class App extends Component {
         <h1 className="brand">
           Captain Staffing</h1>
         <div className="content">
-          { this.renderGoogle() }
           { this.renderStaffing() }
+          { this.renderGoogle() }
           { this.renderTrello() }
           { this.renderProjects() }
         </div>
@@ -92,7 +92,7 @@ class App extends Component {
   }
 
   renderGoogle() {
-    if (!this.state.googleAuthenticated && !this.state.peopleStaffing) {
+    if (!this.state.googleAuthenticated) {
       return (
         <CaptainGoogle
           onSuccess={this.onGoogleSuccess.bind(this)}
