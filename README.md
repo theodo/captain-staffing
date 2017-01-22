@@ -8,14 +8,15 @@ Node v4+
 
 ## Config
 
-Copy the example config file:
+Copy the dev config file:
 
 ```
-cp src/config.example.js src/config.js
+npm run env:dev
 ```
 
-Fill-in the fields with your own settings (or use the provided ones). You can create an app and generate a
-Client-ID on [console.developers.google.com/apis](https://console.developers.google.com/apis/).
+You can fill-in the fields with your own settings.
+You need to create an app and generate a Client-ID on
+[console.developers.google.com/apis](https://console.developers.google.com/apis/).
 
 ## Work
 

@@ -1,6 +1,6 @@
 import { tail, head } from 'lodash'
 
-import config from '../config'
+import config from '../configs/config'
 import { buildStaffing } from './formatter'
 
 /**

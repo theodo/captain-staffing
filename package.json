@@ -37,6 +37,10 @@
     "react-dom": "^15.4.2"
   },
   "scripts": {
+    "env:dev": "cp src/configs/config.dev.js src/configs/config.js",
+    "env:prod": "cp src/configs/config.prod.js src/configs/config.js",
+    "env:save": "cp src/configs/config.js src/configs/config.save.js",
+    "env:restore": "cp src/configs/config.save.js src/configs/config.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
