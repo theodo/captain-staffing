@@ -1,4 +1,5 @@
 import * as formatter from 'helpers/formatter'
+import moment from 'moment'
 
 describe('formatter.js', () => {
   describe('unMergeCells', () => {
@@ -70,6 +71,21 @@ describe('formatter.js', () => {
         'Projet 2': null,
         _total: null,
       })
+    })
+  })
+
+  describe('removePastWeeks', () => {
+    it('should remove only full past weeks', () => {
+      // Let's say we are Friday
+      const previousMonday = moment().subtract(11, 'days').format('DD/MM/YYYY')
+      const lastMonday = moment().subtract(4, 'days').format('DD/MM/YYYY')
+      const nextMonday = moment().add(3, 'days').format('DD/MM/YYYY')
+
+      expect(formatter.removePastWeeks(
+        [previousMonday, lastMonday, nextMonday]
+      )).toEqual(
+        [lastMonday, nextMonday]
+      )
     })
   })
 })

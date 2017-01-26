@@ -1,4 +1,4 @@
-import { tail, forEach, head, map, groupBy } from 'lodash'
+import { tail, forEach, head, map, groupBy, filter } from 'lodash'
 import moment from 'moment'
 
 export function unMergeCells(data, columnIndex) {
@@ -62,5 +62,11 @@ export function buildStaffing(peopleResponse) {
       staffing,
       projects,
     }
+  })
+}
+
+export function removePastWeeks(weeks) {
+  return filter(weeks, (week) => {
+    return moment(week, 'DD/MM/YYYY') > moment().subtract(7, 'days')
   })
 }
