@@ -1,17 +1,20 @@
 import { tail, head } from 'lodash'
 
 import config from '../configs/config'
-import { buildStaffing } from './formatter'
+import { buildStaffing, removePastWeeks } from './formatter'
 
 /**
  * Get the user authentication status
  */
 export function checkAuth(immediate, callback) {
-  window.gapi.auth.authorize({
-    client_id: config.clientId,
-    scope: config.scope,
-    immediate,
-  }, callback)
+  window.gapi.auth.authorize(
+    {
+      client_id: config.clientId,
+      scope: config.scope,
+      immediate,
+    },
+    callback
+  )
 }
 
 /**
@@ -19,19 +22,25 @@ export function checkAuth(immediate, callback) {
  */
 export function load(callback) {
   window.gapi.client.load('sheets', 'v4', () => {
-    window.gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: config.spreadsheetId,
-      range: 'People!A1:V86',
-    }).then((response) => {
-      const rows = response.result.values || []
-      const weeks = tail(tail(head(rows)))
+    window.gapi.client.sheets.spreadsheets.values.get(
+      {
+        spreadsheetId: config.spreadsheetId,
+        range: 'People!A1:V86',
+      }
+    ).then(
+      (response) => {
+        const rows = response.result.values || []
+        let weeks = tail(tail(head(rows)))
+        const peopleStaffing = buildStaffing(response.result.values)
 
-      const peopleStaffing = buildStaffing(response.result.values)
+        weeks = removePastWeeks(weeks)
 
-      callback(weeks, peopleStaffing)
-    }, (response) => {
-      callback(null, null, response.result.error)
-    })
+        callback(weeks, peopleStaffing)
+      },
+      (response) => {
+        callback(null, null, response.result.error)
+      }
+    )
   })
 }
 
