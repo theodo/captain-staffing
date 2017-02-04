@@ -1,4 +1,4 @@
-exports[`Alert should handle 403 error  1`] = `
+exports[`Alert should handle 403 error 1`] = `
 <p
   className="alert">
   <span
@@ -9,7 +9,7 @@ exports[`Alert should handle 403 error  1`] = `
 </p>
 `;
 
-exports[`Alert should handle 404 error  1`] = `
+exports[`Alert should handle 404 error 1`] = `
 <p
   className="alert">
   <span
@@ -20,7 +20,7 @@ exports[`Alert should handle 404 error  1`] = `
 </p>
 `;
 
-exports[`Alert should handle default error  1`] = `
+exports[`Alert should handle default error 1`] = `
 <p
   className="alert">
   <span

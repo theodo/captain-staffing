@@ -1,0 +1,18 @@
+exports[`Header should render a title and a trello link 1`] = `
+<div>
+  <a
+    className="trelloLink"
+    href="https://trello.com/b/4p4llsMz/captain-staffing"
+    rel="noopener noreferrer"
+    target="_blank">
+    <img
+      alt="trello"
+      className="trelloLink__img"
+      src="fileMock" />
+  </a>
+  <h1
+    className="brand">
+    Captain Staffing
+  </h1>
+</div>
+`;
