@@ -33,6 +33,17 @@ const getValue = (row, week) => {
   return row.staffing[week]._total
 }
 
+const getClass = (row, week) => {
+  const classes = ['clickable']
+  if (row.project) {
+    classes.push('selectable')
+  }
+  if (row.project && row.staffing[week]._selected === row.project) {
+    classes.push('selected')
+  }
+  return classes.join(' ')
+}
+
 export default class StaffingCell extends React.Component {
 
   static propTypes = {
@@ -50,9 +61,9 @@ export default class StaffingCell extends React.Component {
     return (
       <Cell
         {...props}
-        onClick={this.props.onClick.bind(this, data[rowIndex])}
+        onClick={this.props.onClick.bind(this, data[rowIndex], week, rowIndex)}
         style={style}
-        className="clickable"
+        className={getClass(data[rowIndex], week)}
       >
         { getValue(data[rowIndex], week) }
       </Cell>

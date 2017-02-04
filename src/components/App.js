@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-
 import { isEqual } from 'lodash'
-import { toggleByPeopleRow } from '../helpers/edit'
+import { toggleByPeopleRow, select, edit, reset } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
 import { loadLocalStorageItem, saveLocaleStorageItem } from '../helpers/localStorage'
 
@@ -30,6 +29,36 @@ class App extends Component {
       this.setState({
         trelloAuthenticated: authenticated,
       })
+    })
+  }
+
+  componentWillMount() {
+    document.addEventListener('keypress', this._handleKeyPress.bind(this), false)
+    document.addEventListener('keydown', this._handleKeyPress.bind(this), false)
+  }
+
+
+  componentWillUnmount() {
+    document.removeEventListener('keypress', this._handleKeyPress.bind(this), false)
+    document.removeEventListener('keydown', this._handleKeyPress.bind(this), false)
+  }
+
+  _handleKeyPress(event) {
+    if (event.type === 'keydown' && event.key !== 'Backspace') {
+      return null
+    }
+
+    if (event.key === 'Enter') {
+      return this.setState({
+        peopleStaffing: reset(this.state.peopleStaffing),
+      })
+    }
+
+    return this.setState({
+      peopleStaffing: edit(
+        this.state.peopleStaffing,
+        event.key
+      ),
     })
   }
 
@@ -62,9 +91,21 @@ class App extends Component {
     }
   }
 
-  onStaffingTableRowClick(peopleRow) {
-    this.setState({
-      peopleStaffing: toggleByPeopleRow(peopleRow, this.state.peopleStaffing),
+  onStaffingTableRowClick(peopleRow, week, rowIndex) {
+    if (peopleRow.project) {
+      return this.setState({
+        peopleStaffing: select(
+          week,
+          rowIndex,
+          this.state.peopleStaffing
+        ),
+      })
+    }
+    return this.setState({
+      peopleStaffing: toggleByPeopleRow(
+        peopleRow,
+        this.state.peopleStaffing
+      ),
     })
   }
 
