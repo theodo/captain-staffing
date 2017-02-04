@@ -4,28 +4,6 @@
   text-align: center;
 }
 
-.brand {
-  font-family: Bungee Shade, sans-serif;
-  font-size: 30px;
-
-  margin: 0 0 20px;
-}
-  @media (min-width: 768px) {
-    .brand {
-      font-size: 40px;
-    }
-  }
-  @media (min-width: 992px) {
-    .brand {
-      font-size: 50px;
-    }
-  }
-  @media (min-width: 1200px) {
-    .brand {
-      font-size: 60px;
-    }
-  }
-
 .content {
   display: flex;
   flex-direction: column;

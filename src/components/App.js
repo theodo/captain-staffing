@@ -5,6 +5,7 @@ import { checkTrelloAuth } from '../helpers/trello'
 import { loadLocalStorageItem, saveLocaleStorageItem } from '../helpers/localStorage'
 
 import Alert from './Alert'
+import Header from './Header'
 import StaffingTable from './StaffingTable'
 import CaptainGoogle from './CaptainGoogle'
 import CaptainTrello from './CaptainTrello'
@@ -79,8 +80,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1 className="brand">
-          Captain Staffing</h1>
+        <Header />
         <div className="content">
           { this.renderStaffing() }
           { this.renderGoogle() }
