@@ -46,13 +46,15 @@ class App extends Component {
   }
 
   onGoogleLoad(weeks, peopleStaffing, error) {
-    if (weeks && peopleStaffing && !isEqual(
-      [loadLocalStorageItem('weeks'), loadLocalStorageItem('peopleStaffing')],
-      [weeks, peopleStaffing]
-    )) {
-      this.setState({ weeks, peopleStaffing })
-      saveLocaleStorageItem('weeks', weeks)
-      saveLocaleStorageItem('peopleStaffing', peopleStaffing)
+    if (weeks && peopleStaffing) {
+      if (!isEqual(
+        [loadLocalStorageItem('weeks'), loadLocalStorageItem('peopleStaffing')],
+        [weeks, peopleStaffing]
+      )) {
+        this.setState({ weeks, peopleStaffing })
+        saveLocaleStorageItem('weeks', weeks)
+        saveLocaleStorageItem('peopleStaffing', peopleStaffing)
+      }
     } else {
       this.setState({
         error,
