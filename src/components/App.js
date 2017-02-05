@@ -48,9 +48,12 @@ class App extends Component {
   }
 
   _handleKeyPress(event) {
-    event.preventDefault()
     if (event.type === 'keydown' && event.key !== 'Backspace') {
       return null
+    }
+
+    if (event.type === 'keydown' && event.key === 'Backspace') {
+      event.preventDefault()
     }
 
     if (event.key === 'Enter') {
