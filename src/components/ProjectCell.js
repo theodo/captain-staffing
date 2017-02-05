@@ -11,15 +11,30 @@ export default class ProjectCell extends React.Component {
     onChange: React.PropTypes.func,
   }
 
-  onChange(data, rowIndex, field, event) {
-    this.props.onChange(data, rowIndex, data[rowIndex][field], event.target.value)
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: '',
+    }
+  }
+
+  onBlur(data, rowIndex, field) {
+    this.props.onChange(data, rowIndex, data[rowIndex][field], this.state.value)
+  }
+
+  onChange(event) {
+    this.setState({
+      value: event.target.value,
+    })
   }
 
   renderContent(data, rowIndex, field) {
     if (data[rowIndex]._editable) {
       return (<input
-        value={data[rowIndex][field]}
-        onChange={this.onChange.bind(this, data, rowIndex, field)}
+        type="text"
+        value={this.state.value}
+        onBlur={this.onBlur.bind(this, data, rowIndex, field)}
+        onChange={this.onChange.bind(this)}
       />)
     }
     return data[rowIndex][field]
