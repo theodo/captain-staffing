@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { isEqual } from 'lodash'
 import { toggleByPeopleRow, select, edit, reset } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
-import { loadLocalStorageItem, saveLocaleStorageItem } from '../helpers/localStorage'
 import { update } from '../helpers/spreadsheet'
 
 import Alert from './Alert'
@@ -20,8 +19,8 @@ class App extends Component {
 
     this.state = {
       googleAuthenticated: null,
-      weeks: loadLocalStorageItem('weeks'),
-      peopleStaffing: loadLocalStorageItem('peopleStaffing'),
+      weeks: [],
+      peopleStaffing: null,
       trelloAuthenticated: null,
       isSaving: false,
       saveSuccess: false,
@@ -100,15 +99,11 @@ class App extends Component {
   }
 
   onGoogleLoad(weeks, peopleStaffing, error) {
-    if (weeks && peopleStaffing) {
-      if (!isEqual(
-        [loadLocalStorageItem('weeks'), loadLocalStorageItem('peopleStaffing')],
-        [weeks, peopleStaffing]
-      )) {
-        this.setState({ weeks, peopleStaffing })
-        saveLocaleStorageItem('weeks', weeks)
-        saveLocaleStorageItem('peopleStaffing', peopleStaffing)
-      }
+    if (peopleStaffing) {
+      this.setState({
+        weeks,
+        peopleStaffing,
+      })
     } else {
       this.setState({
         error,
