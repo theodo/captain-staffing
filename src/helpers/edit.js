@@ -49,7 +49,7 @@ export function select(week, rowIndex, data, shiftKey, ctrlKey) {
     sortBy((w) => { return w }),
     mapPartial((w) => {
       return moment(w)
-    }),
+    })
   )(Object.keys(data[rowIndex].staffing))
 
   if (shiftKey) {
