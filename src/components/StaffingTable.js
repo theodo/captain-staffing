@@ -14,6 +14,7 @@ export default class StaffingTable extends React.Component {
     weeks: React.PropTypes.array.isRequired,
     peopleStaffing: React.PropTypes.array.isRequired,
     onRowClick: React.PropTypes.func,
+    onProjectChange: React.PropTypes.func,
   }
 
   render() {
@@ -40,7 +41,7 @@ export default class StaffingTable extends React.Component {
           cell={
             <ProjectCell
               data={this.props.peopleStaffing}
-              onClick={this.props.onRowClick}
+              onChange={this.props.onProjectChange}
               field="project"
             />
           }

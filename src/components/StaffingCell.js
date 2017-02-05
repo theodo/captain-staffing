@@ -2,7 +2,7 @@ import React from 'react'
 import { Cell } from 'fixed-data-table'
 
 const getColor = (row, week) => {
-  if (row.project) {
+  if (row.project !== undefined) {
     return null
   }
   const staffedDaysString = row.staffing[week]._total
@@ -26,7 +26,7 @@ const getColor = (row, week) => {
 }
 
 const getValue = (row, week) => {
-  if (row.project) {
+  if (row.project !== undefined) {
     return row.staffing[week][row.project]
   }
 
@@ -35,10 +35,10 @@ const getValue = (row, week) => {
 
 const getClass = (row, week) => {
   const classes = ['clickable']
-  if (row.project) {
+  if (row.project !== undefined) {
     classes.push('selectable')
   }
-  if (row.project && row.staffing[week]._selected === row.project) {
+  if (row.project !== undefined && row.staffing[week]._selected === row.project) {
     classes.push('selected')
   }
   return classes.join(' ')

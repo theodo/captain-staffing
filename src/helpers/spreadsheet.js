@@ -1,7 +1,8 @@
-import { tail, head, concat, unionBy, forEach } from 'lodash'
+import { tail, head, concat, unionBy, forEach, range, map } from 'lodash'
+import moment from 'moment'
 
 import config from '../configs/config'
-import { buildStaffing, removePastWeeks } from './formatter'
+import { buildStaffing } from './formatter'
 
 /**
  * Get the user authentication status
@@ -25,16 +26,16 @@ export function load(callback) {
     window.gapi.client.sheets.spreadsheets.values.get(
       {
         spreadsheetId: config.spreadsheetId,
-        range: 'People!A:V',
+        range: 'Staffing list!A:D',
       }
     ).then(
       (response) => {
         const rows = response.result.values || []
 
-        let weeks = tail(tail(head(rows)))
-        const peopleStaffing = buildStaffing(response.result.values)
-
-        weeks = removePastWeeks(weeks)
+        const weeks = map(range(0, 19), (i) => {
+          return moment().add(i, 'week').startOf('isoweek').format('DD/MM/YYYY')
+        })
+        const peopleStaffing = buildStaffing(rows)
 
         callback(weeks, peopleStaffing)
       },
@@ -76,6 +77,7 @@ export function update(peopleStaffing, callback) {
       }
     )
     const localList = peopleStaffingToList(peopleStaffing)
+
     promise.then(
       (response) => {
         const rows = response.result.values || []

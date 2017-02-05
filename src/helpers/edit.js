@@ -26,6 +26,7 @@ export function toggleByPeopleRow(peopleRow, data) {
           _name: data[index].name,
         }
       })
+      newRows[newRows.length - 1]._editable = true
 
       data[index].isOpen = true
       data.splice(index + 1, 0, ...newRows)
