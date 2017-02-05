@@ -10,6 +10,7 @@ import Header from './Header'
 import StaffingTable from './StaffingTable'
 import CaptainGoogle from './CaptainGoogle'
 import CaptainTrello from './CaptainTrello'
+import Notifications from './Notifications'
 import Projects from './Projects'
 
 class App extends Component {
@@ -22,6 +23,9 @@ class App extends Component {
       weeks: loadLocalStorageItem('weeks'),
       peopleStaffing: loadLocalStorageItem('peopleStaffing'),
       trelloAuthenticated: null,
+      isSaving: false,
+      saveSuccess: false,
+      saveError: null,
     }
   }
 
@@ -50,10 +54,28 @@ class App extends Component {
     }
 
     if (event.key === 'Enter') {
-      return update(this.state.peopleStaffing, () => {
-        return this.setState({
-          peopleStaffing: reset(this.state.peopleStaffing),
-        })
+      this.setState({
+        isSaving: true,
+      })
+      return update(this.state.peopleStaffing, (error) => {
+        if (error) {
+          this.setState({
+            saveError: error,
+            isSaving: false,
+          })
+        } else {
+          this.setState({
+            peopleStaffing: reset(this.state.peopleStaffing),
+            saveSuccess: true,
+            isSaving: false,
+          })
+        }
+        return window.setTimeout(() => {
+          return this.setState({
+            saveSuccess: false,
+            saveError: null,
+          })
+        }, 2000)
       })
     }
 
@@ -128,6 +150,11 @@ class App extends Component {
     return (
       <div className="app">
         <Header />
+        <Notifications
+          isSaving={this.state.isSaving}
+          saveSuccess={this.state.saveSuccess}
+          saveError={this.state.saveError}
+        />
         <div className="content">
           { this.renderStaffing() }
           { this.renderGoogle() }

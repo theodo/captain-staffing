@@ -54,9 +54,6 @@ const peopleStaffingToList = (peopleStaffing) => {
     forEach(someoneStaffing.staffing, (weekStaffing, week) => {
       forEach(weekStaffing, (projectStaffing, projectName) => {
         if (projectName[0] !== '_' && projectStaffing !== undefined) {
-          // if (someoneStaffing.name === 'jeanremib') {
-          //   console.log(projectName, weekStaffing)
-          // }
           lines.push([
             someoneStaffing.name,
             projectName,
@@ -75,7 +72,7 @@ export function update(peopleStaffing, callback) {
     const promise = window.gapi.client.sheets.spreadsheets.values.get(
       {
         spreadsheetId: config.spreadsheetId,
-        range: 'Staffing list!A:D',
+        range: 'Staffing list validation captain staffing!A:D',
       }
     )
     const localList = peopleStaffingToList(peopleStaffing)
@@ -89,15 +86,22 @@ export function update(peopleStaffing, callback) {
         return window.gapi.client.sheets.spreadsheets.values.update(
           {
             spreadsheetId: config.spreadsheetId,
-            range: 'Staffing list!A:D',
+            range: 'Staffing list validation captain staffing!A:D',
             majorDimension: response.result.majorDimension,
             valueInputOption: 'USER_ENTERED',
             values: concat([head(rows)], values),
           }
+        ).then(
+          (res) => {
+            callback(null, res)
+          },
+          (res) => {
+            callback(res.result.error)
+          }
         )
       },
-      (response) => {
-        callback(null, null, response.result.error)
+      (res) => {
+        callback(res.result.error)
       }
     )
   })
