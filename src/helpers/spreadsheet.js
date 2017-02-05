@@ -72,7 +72,7 @@ export function update(peopleStaffing, callback) {
     const promise = window.gapi.client.sheets.spreadsheets.values.get(
       {
         spreadsheetId: config.spreadsheetId,
-        range: 'Staffing list validation captain staffing!A:D',
+        range: 'Staffing list!A:D',
       }
     )
     const localList = peopleStaffingToList(peopleStaffing)
@@ -86,7 +86,7 @@ export function update(peopleStaffing, callback) {
         return window.gapi.client.sheets.spreadsheets.values.update(
           {
             spreadsheetId: config.spreadsheetId,
-            range: 'Staffing list validation captain staffing!A:D',
+            range: 'Staffing list!A:D',
             majorDimension: response.result.majorDimension,
             valueInputOption: 'USER_ENTERED',
             values: concat([head(rows)], values),
