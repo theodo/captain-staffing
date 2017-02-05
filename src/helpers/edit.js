@@ -40,6 +40,19 @@ export function select(week, rowIndex, data) {
   return data
 }
 
+const computeSum = (weekStaffing) => {
+  return reduce(weekStaffing, (total, value, key) => {
+    if (key[0] === '_') {
+      return total
+    }
+    const float = parseFloat(value)
+    if (float) {
+      total += float
+    }
+    return total
+  }, 0)
+}
+
 export function edit(data, key) {
   return map(data, (row) => {
     row.staffing = reduce(row.staffing, (aggregator, info, week) => {
@@ -51,6 +64,7 @@ export function edit(data, key) {
         } else {
           info[info._selected] = key
         }
+        info._total = computeSum(info)
         aggregator[week] = info
       } else {
         aggregator[week] = info

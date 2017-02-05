@@ -3,6 +3,7 @@ import { isEqual } from 'lodash'
 import { toggleByPeopleRow, select, edit, reset } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
 import { loadLocalStorageItem, saveLocaleStorageItem } from '../helpers/localStorage'
+import { update } from '../helpers/spreadsheet'
 
 import Alert from './Alert'
 import Header from './Header'
@@ -49,8 +50,10 @@ class App extends Component {
     }
 
     if (event.key === 'Enter') {
-      return this.setState({
-        peopleStaffing: reset(this.state.peopleStaffing),
+      return update(this.state.peopleStaffing, () => {
+        return this.setState({
+          peopleStaffing: reset(this.state.peopleStaffing),
+        })
       })
     }
 

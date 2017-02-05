@@ -1,4 +1,4 @@
-import { tail, forEach, head, map, groupBy, filter } from 'lodash'
+import { tail, forEach, head, map, groupBy, filter, isNumber } from 'lodash'
 import moment from 'moment'
 
 export function unMergeCells(data, columnIndex) {
@@ -19,23 +19,25 @@ export function getFloat(string) {
   if (string) {
     return parseFloat(string.replace(',', '.'))
   }
-  return null
+  return undefined
 }
 
 export function buildWeekStaffing(rows, weekIndex) {
   const weekStaffing = {}
-  let total = null
+  let total = 0
+  let isStaffed = false
 
   forEach(rows, (row) => {
     const projectStaffing = getFloat(row[weekIndex + 2])
     weekStaffing[row[1]] = projectStaffing
 
-    if (projectStaffing !== null) {
+    if (isNumber(projectStaffing)) {
+      isStaffed = true
       total += projectStaffing
     }
   })
 
-  weekStaffing._total = total
+  weekStaffing._total = isStaffed ? total : null
   return weekStaffing
 }
 
@@ -49,7 +51,7 @@ export function buildStaffing(peopleResponse) {
   return map(staffingByName, (rows, name) => {
     const staffing = {}
     forEach(weeks, (week, weekIndex) => {
-      const weekString = moment(week, 'DD/MM/YYYY').format('DD/MM')
+      const weekString = moment(week, 'DD/MM/YYYY').format('DD/MM/YYYY')
       staffing[weekString] = buildWeekStaffing(rows, weekIndex)
     })
 
