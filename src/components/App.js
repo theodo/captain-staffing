@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-
+import { forEach } from 'lodash'
 import { toggleByPeopleRow, select, edit, reset } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
 import { update } from '../helpers/spreadsheet'
-
 import Alert from './Alert'
 import Header from './Header'
 import StaffingTable from './StaffingTable'
@@ -116,7 +115,7 @@ class App extends Component {
   }
 
   onStaffingTableRowClick(peopleRow, week, rowIndex, event) {
-    if (peopleRow.project) {
+    if (peopleRow.project !== undefined) {
       return this.setState({
         peopleStaffing: select(
           week,
@@ -132,6 +131,23 @@ class App extends Component {
         peopleRow,
         this.state.peopleStaffing
       ),
+    })
+  }
+
+  onProjectChange(data, rowIndex, oldName, newName) {
+    if (!newName) {
+      return
+    }
+    event.preventDefault()
+    data[rowIndex].project = newName
+    forEach(data[rowIndex].staffing, (weekStaffing, week) => {
+      data[rowIndex].staffing[week][newName] =
+        data[rowIndex].staffing[week][oldName]
+      delete data[rowIndex].staffing[week][oldName]
+    })
+
+    this.setState({
+      peopleStaffing: data,
     })
   }
 
@@ -185,6 +201,7 @@ class App extends Component {
         <StaffingTable
           peopleStaffing={this.state.peopleStaffing}
           onRowClick={this.onStaffingTableRowClick.bind(this)}
+          onProjectChange={this.onProjectChange.bind(this)}
           weeks={this.state.weeks}
         />
       )

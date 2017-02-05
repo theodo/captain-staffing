@@ -8,6 +8,21 @@ export default class ProjectCell extends React.Component {
     field: React.PropTypes.string,
     rowIndex: React.PropTypes.number,
     onClick: React.PropTypes.func,
+    onChange: React.PropTypes.func,
+  }
+
+  onChange(data, rowIndex, field, event) {
+    this.props.onChange(data, rowIndex, data[rowIndex][field], event.target.value)
+  }
+
+  renderContent(data, rowIndex, field) {
+    if (data[rowIndex]._editable) {
+      return (<input
+        value={data[rowIndex][field]}
+        onChange={this.onChange.bind(this, data, rowIndex, field)}
+      />)
+    }
+    return data[rowIndex][field]
   }
 
   render() {
@@ -15,10 +30,9 @@ export default class ProjectCell extends React.Component {
     return (
       <Cell
         {...props}
-        onClick={this.props.onClick.bind(this, data[rowIndex])}
         className="clickable"
       >
-        { data[rowIndex][field] }
+        {this.renderContent(data, rowIndex, field)}
       </Cell>
     )
   }

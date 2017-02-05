@@ -1,4 +1,4 @@
-import { findIndex, map, isString, reduce, forEach } from 'lodash'
+import { findIndex, map, isString, reduce, forEach, concat } from 'lodash'
 import mapPartial from 'lodash/fp/map'
 import sortBy from 'lodash/fp/sortBy'
 import flow from 'lodash/fp/flow'
