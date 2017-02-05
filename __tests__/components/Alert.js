@@ -19,6 +19,20 @@ describe('Alert', () => {
     expect(toJSON(alert)).toMatchSnapshot()
   })
 
+  it('should handle 400 error', () => {
+    const error = { code: 400, message: 'error' }
+    const alert = shallow(<Alert error={error} />)
+
+    expect(toJSON(alert)).toMatchSnapshot()
+  })
+
+  it('should handle 503 error', () => {
+    const error = { code: 503 }
+    const alert = shallow(<Alert error={error} />)
+
+    expect(toJSON(alert)).toMatchSnapshot()
+  })
+
   it('should handle default error', () => {
     const error = { code: 0 }
     const alert = shallow(<Alert error={error} />)

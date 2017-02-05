@@ -25,8 +25,8 @@ describe('formatter.js', () => {
       expect(formatter.getFloat('10,2')).toBe(10.2)
     })
 
-    it('should return null if no value is given', () => {
-      expect(formatter.getFloat('')).toBe(null)
+    it('should return undefined if no value is given', () => {
+      expect(formatter.getFloat('')).toBe(undefined)
     })
   })
 
@@ -36,22 +36,9 @@ describe('formatter.js', () => {
       ['Monsieur X', 'Projet 2', '1', '0', ''],
     ]
 
-    beforeEach(() => {
-      // We only mock '', 0 and 1 values
-      formatter.getFloat = jest.fn((value) => {
-        if (value === 0) { return 0 }
-        if (value === 1) { return 1 }
-        return null
-      })
-    })
-
-    afterEach(() => {
-      formatter.getFloat.mockClear()
-    })
-
     it('should build the first week staffing', () => {
       expect(formatter.buildWeekStaffing(data, 0)).toEqual({
-        'Projet 1': null,
+        'Projet 1': undefined,
         'Projet 2': 1,
         _total: 1,
       })
@@ -67,8 +54,8 @@ describe('formatter.js', () => {
 
     it('should build the third week staffing', () => {
       expect(formatter.buildWeekStaffing(data, 2)).toEqual({
-        'Projet 1': null,
-        'Projet 2': null,
+        'Projet 1': undefined,
+        'Projet 2': undefined,
         _total: null,
       })
     })
