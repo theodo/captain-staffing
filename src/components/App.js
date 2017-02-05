@@ -116,13 +116,15 @@ class App extends Component {
     }
   }
 
-  onStaffingTableRowClick(peopleRow, week, rowIndex) {
+  onStaffingTableRowClick(peopleRow, week, rowIndex, event) {
     if (peopleRow.project) {
       return this.setState({
         peopleStaffing: select(
           week,
           rowIndex,
-          this.state.peopleStaffing
+          this.state.peopleStaffing,
+          event.shiftKey,
+          event.ctrlKey,
         ),
       })
     }
