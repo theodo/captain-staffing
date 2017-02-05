@@ -13,3 +13,11 @@ body {
 .clickable {
   cursor: pointer;
 }
+.editable .public_fixedDataTableCell_cellContent {
+  padding: 0;
+}
+
+.editable input {
+  width: 110px;
+  height: 20px;
+}

@@ -1,4 +1,4 @@
-import { findIndex, map, isString, reduce, forEach, concat } from 'lodash'
+import { findIndex, map, isString, reduce, forEach } from 'lodash'
 import mapPartial from 'lodash/fp/map'
 import sortBy from 'lodash/fp/sortBy'
 import flow from 'lodash/fp/flow'
@@ -26,6 +26,7 @@ export function toggleByPeopleRow(peopleRow, data) {
           _name: data[index].name,
         }
       })
+      newRows[newRows.length - 1]._editable = true
 
       data[index].isOpen = true
       data.splice(index + 1, 0, ...newRows)

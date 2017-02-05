@@ -30,7 +30,7 @@ export default class ProjectCell extends React.Component {
     return (
       <Cell
         {...props}
-        className="clickable"
+        className={data[rowIndex]._editable ? 'editable' : null}
       >
         {this.renderContent(data, rowIndex, field)}
       </Cell>

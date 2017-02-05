@@ -3,7 +3,6 @@ import moment from 'moment'
 
 import config from '../configs/config'
 import { buildStaffing } from './formatter'
-import staffing from './staffing'
 
 /**
  * Get the user authentication status
