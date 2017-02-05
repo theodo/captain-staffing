@@ -1,0 +1,26 @@
+.error-notification {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.90);
+  padding: 5px;
+  max-width: 40%;
+  -webkit-box-shadow: -8px 9px 25px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: -8px 9px 25px 0px rgba(0,0,0,0.75);
+  box-shadow: -8px 9px 25px 0px rgba(0,0,0,0.75);
+}
+
+.error-notification .alert {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.error-notification .alert__icon {
+  font-size: 50px;
+  margin: 0;
+}
+.error-notification .alert__message {
+  padding: 5px;
+}

@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-
 import { isEqual } from 'lodash'
-import { toggleByPeopleRow } from '../helpers/edit'
+import { toggleByPeopleRow, select, edit, reset } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
-import { loadLocalStorageItem, saveLocaleStorageItem } from '../helpers/localStorage'
+import { update } from '../helpers/spreadsheet'
 
 import Alert from './Alert'
 import Header from './Header'
 import StaffingTable from './StaffingTable'
 import CaptainGoogle from './CaptainGoogle'
 import CaptainTrello from './CaptainTrello'
+import Notifications from './Notifications'
 import Projects from './Projects'
 
 class App extends Component {
@@ -19,9 +19,12 @@ class App extends Component {
 
     this.state = {
       googleAuthenticated: null,
-      weeks: loadLocalStorageItem('weeks'),
-      peopleStaffing: loadLocalStorageItem('peopleStaffing'),
+      weeks: [],
+      peopleStaffing: null,
       trelloAuthenticated: null,
+      isSaving: false,
+      saveSuccess: false,
+      saveError: null,
     }
   }
 
@@ -30,6 +33,60 @@ class App extends Component {
       this.setState({
         trelloAuthenticated: authenticated,
       })
+    })
+  }
+
+  componentWillMount() {
+    document.addEventListener('keypress', this._handleKeyPress.bind(this), false)
+    document.addEventListener('keydown', this._handleKeyPress.bind(this), false)
+  }
+
+
+  componentWillUnmount() {
+    document.removeEventListener('keypress', this._handleKeyPress.bind(this), false)
+    document.removeEventListener('keydown', this._handleKeyPress.bind(this), false)
+  }
+
+  _handleKeyPress(event) {
+    if (event.type === 'keydown' && event.key !== 'Backspace') {
+      return null
+    }
+
+    if (event.type === 'keydown' && event.key === 'Backspace') {
+      event.preventDefault()
+    }
+
+    if (event.key === 'Enter') {
+      this.setState({
+        isSaving: true,
+      })
+      return update(this.state.peopleStaffing, (error) => {
+        if (error) {
+          this.setState({
+            saveError: error,
+            isSaving: false,
+          })
+        } else {
+          this.setState({
+            peopleStaffing: reset(this.state.peopleStaffing),
+            saveSuccess: true,
+            isSaving: false,
+          })
+        }
+        return window.setTimeout(() => {
+          return this.setState({
+            saveSuccess: false,
+            saveError: null,
+          })
+        }, 2000)
+      })
+    }
+
+    return this.setState({
+      peopleStaffing: edit(
+        this.state.peopleStaffing,
+        event.key
+      ),
     })
   }
 
@@ -46,15 +103,11 @@ class App extends Component {
   }
 
   onGoogleLoad(weeks, peopleStaffing, error) {
-    if (weeks && peopleStaffing) {
-      if (!isEqual(
-        [loadLocalStorageItem('weeks'), loadLocalStorageItem('peopleStaffing')],
-        [weeks, peopleStaffing]
-      )) {
-        this.setState({ weeks, peopleStaffing })
-        saveLocaleStorageItem('weeks', weeks)
-        saveLocaleStorageItem('peopleStaffing', peopleStaffing)
-      }
+    if (peopleStaffing) {
+      this.setState({
+        weeks,
+        peopleStaffing,
+      })
     } else {
       this.setState({
         error,
@@ -62,9 +115,23 @@ class App extends Component {
     }
   }
 
-  onStaffingTableRowClick(peopleRow) {
-    this.setState({
-      peopleStaffing: toggleByPeopleRow(peopleRow, this.state.peopleStaffing),
+  onStaffingTableRowClick(peopleRow, week, rowIndex, event) {
+    if (peopleRow.project) {
+      return this.setState({
+        peopleStaffing: select(
+          week,
+          rowIndex,
+          this.state.peopleStaffing,
+          event.shiftKey,
+          event.ctrlKey,
+        ),
+      })
+    }
+    return this.setState({
+      peopleStaffing: toggleByPeopleRow(
+        peopleRow,
+        this.state.peopleStaffing
+      ),
     })
   }
 
@@ -84,6 +151,11 @@ class App extends Component {
     return (
       <div className="app">
         <Header />
+        <Notifications
+          isSaving={this.state.isSaving}
+          saveSuccess={this.state.saveSuccess}
+          saveError={this.state.saveError}
+        />
         <div className="content">
           { this.renderStaffing() }
           { this.renderGoogle() }

@@ -1,4 +1,4 @@
-import { tail, head } from 'lodash'
+import { tail, head, concat, unionBy, forEach } from 'lodash'
 
 import config from '../configs/config'
 import { buildStaffing, removePastWeeks } from './formatter'
@@ -30,6 +30,7 @@ export function load(callback) {
     ).then(
       (response) => {
         const rows = response.result.values || []
+
         let weeks = tail(tail(head(rows)))
         const peopleStaffing = buildStaffing(response.result.values)
 
@@ -44,14 +45,64 @@ export function load(callback) {
   })
 }
 
-/**
- * Update a single cell value
- */
-export function updateCell(column, row, value, successCallback, errorCallback) {
-  window.gapi.client.sheets.spreadsheets.values.update({
-    spreadsheetId: config.spreadsheetId,
-    range: `Sheet1!${column}${row}`,
-    valueInputOption: 'USER_ENTERED',
-    values: [[value]],
-  }).then(successCallback, errorCallback)
+const peopleStaffingToList = (peopleStaffing) => {
+  const lines = []
+  forEach(peopleStaffing, (someoneStaffing) => {
+    if (someoneStaffing.name === '' && someoneStaffing.name !== 'Total général') {
+      return
+    }
+    forEach(someoneStaffing.staffing, (weekStaffing, week) => {
+      forEach(weekStaffing, (projectStaffing, projectName) => {
+        if (projectName[0] !== '_' && projectStaffing !== undefined) {
+          lines.push([
+            someoneStaffing.name,
+            projectName,
+            week,
+            projectStaffing || '',
+          ])
+        }
+      })
+    })
+  })
+  return lines
+}
+
+export function update(peopleStaffing, callback) {
+  window.gapi.client.load('sheets', 'v4', () => {
+    const promise = window.gapi.client.sheets.spreadsheets.values.get(
+      {
+        spreadsheetId: config.spreadsheetId,
+        range: 'Staffing list!A:D',
+      }
+    )
+    const localList = peopleStaffingToList(peopleStaffing)
+    promise.then(
+      (response) => {
+        const rows = response.result.values || []
+        const values = unionBy(localList, tail(rows), (line) => {
+          return `${line[0]}-${line[1]}-${line[2]}`
+        })
+
+        return window.gapi.client.sheets.spreadsheets.values.update(
+          {
+            spreadsheetId: config.spreadsheetId,
+            range: 'Staffing list!A:D',
+            majorDimension: response.result.majorDimension,
+            valueInputOption: 'USER_ENTERED',
+            values: concat([head(rows)], values),
+          }
+        ).then(
+          (res) => {
+            callback(null, res)
+          },
+          (res) => {
+            callback(res.result.error)
+          }
+        )
+      },
+      (res) => {
+        callback(res.result.error)
+      }
+    )
+  })
 }

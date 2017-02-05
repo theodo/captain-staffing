@@ -19,6 +19,14 @@ export default class Alert extends React.Component {
         icon = '❓'
         message = 'Spreadsheet not found.'
         break
+      case 503:
+        icon = '⌚'
+        message = 'Service unavailable.'
+        break
+      case 400:
+        icon = '☹'
+        message = this.props.error.message
+        break
       default:
         icon = '💀'
         message = 'Doh, I couldn’t load the data.'
@@ -27,7 +35,7 @@ export default class Alert extends React.Component {
     return (
       <p className="alert">
         <span className="alert__icon">{ icon }</span>
-        { message }
+        <span className="alert__message">{ message }</span>
       </p>
     )
   }
