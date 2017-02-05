@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { isEqual } from 'lodash'
+
 import { toggleByPeopleRow, select, edit, reset } from '../helpers/edit'
 import { checkTrelloAuth } from '../helpers/trello'
 import { update } from '../helpers/spreadsheet'
@@ -123,7 +123,7 @@ class App extends Component {
           rowIndex,
           this.state.peopleStaffing,
           event.shiftKey,
-          event.ctrlKey,
+          event.ctrlKey
         ),
       })
     }

@@ -1,3 +1,17 @@
+exports[`Alert should handle 400 error 1`] = `
+<p
+  className="alert">
+  <span
+    className="alert__icon">
+    ☹
+  </span>
+  <span
+    className="alert__message">
+    error
+  </span>
+</p>
+`;
+
 exports[`Alert should handle 403 error 1`] = `
 <p
   className="alert">
@@ -5,7 +19,10 @@ exports[`Alert should handle 403 error 1`] = `
     className="alert__icon">
     ⛔️
   </span>
-  You don’t have permission to access this Spreadsheet.
+  <span
+    className="alert__message">
+    You don’t have permission to access this Spreadsheet.
+  </span>
 </p>
 `;
 
@@ -16,7 +33,24 @@ exports[`Alert should handle 404 error 1`] = `
     className="alert__icon">
     ❓
   </span>
-  Spreadsheet not found.
+  <span
+    className="alert__message">
+    Spreadsheet not found.
+  </span>
+</p>
+`;
+
+exports[`Alert should handle 503 error 1`] = `
+<p
+  className="alert">
+  <span
+    className="alert__icon">
+    ⌚
+  </span>
+  <span
+    className="alert__message">
+    Service unavailable.
+  </span>
 </p>
 `;
 
@@ -27,6 +61,9 @@ exports[`Alert should handle default error 1`] = `
     className="alert__icon">
     💀
   </span>
-  Doh, I couldn’t load the data.
+  <span
+    className="alert__message">
+    Doh, I couldn’t load the data.
+  </span>
 </p>
 `;
