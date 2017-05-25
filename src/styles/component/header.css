@@ -1,24 +1,8 @@
 .brand {
   font-family: Bungee Shade, sans-serif;
   font-size: 30px;
-
   margin: 0 0 20px;
 }
-  @media (min-width: 768px) {
-    .brand {
-      font-size: 40px;
-    }
-  }
-  @media (min-width: 992px) {
-    .brand {
-      font-size: 50px;
-    }
-  }
-  @media (min-width: 1200px) {
-    .brand {
-      font-size: 60px;
-    }
-  }
 
 .trelloLink {
   position: absolute;
@@ -27,12 +11,6 @@
   @media (max-width: 768px) {
     .trelloLink {
       display: none;
-    }
-  }
-  @media (min-width: 768px) {
-    .trelloLink {
-      right: 10px;
-      top: 10px;
     }
   }
   @media (min-width: 992px) {
@@ -59,12 +37,6 @@
   @media (max-width: 768px) {
     .helper {
       display: none;
-    }
-  }
-  @media (min-width: 768px) {
-    .helper {
-      left: 10px;
-      top: 10px;
     }
   }
   @media (min-width: 992px) {
