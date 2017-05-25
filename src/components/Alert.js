@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class Alert extends React.Component {
 
   static propTypes = {
-    error: React.PropTypes.object.isRequired,
+    error: PropTypes.object.isRequired,
   }
 
   render() {

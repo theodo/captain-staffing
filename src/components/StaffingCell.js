@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Cell } from 'fixed-data-table'
 
 const getColor = (row, week) => {
@@ -47,10 +48,10 @@ const getClass = (row, week) => {
 export default class StaffingCell extends React.Component {
 
   static propTypes = {
-    data: React.PropTypes.array.isRequired,
-    week: React.PropTypes.string,
-    rowIndex: React.PropTypes.number,
-    onClick: React.PropTypes.func.isRequired,
+    data: PropTypes.array.isRequired,
+    week: PropTypes.string,
+    rowIndex: PropTypes.number,
+    onClick: PropTypes.func.isRequired,
   }
 
   render() {

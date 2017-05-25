@@ -1,14 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Cell } from 'fixed-data-table'
 
 export default class ProjectCell extends React.Component {
 
   static propTypes = {
-    data: React.PropTypes.array.isRequired,
-    field: React.PropTypes.string,
-    rowIndex: React.PropTypes.number,
-    onClick: React.PropTypes.func,
-    onChange: React.PropTypes.func,
+    data: PropTypes.array.isRequired,
+    field: PropTypes.string,
+    rowIndex: PropTypes.number,
+    onClick: PropTypes.func,
+    onChange: PropTypes.func,
   }
 
   constructor(props) {

@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class CaptainTrello extends React.Component {
 
   static propTypes = {
-    onSuccess: React.PropTypes.func.isRequired,
-    onFailure: React.PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired,
+    onFailure: PropTypes.func.isRequired,
   }
 
   onClick(e) {

@@ -1,12 +1,13 @@
 import React from 'react'
 import Alert from './Alert'
+import PropTypes from 'prop-types'
 
 export default class Notifications extends React.Component {
 
   static propTypes = {
-    isSaving: React.PropTypes.bool,
-    saveSuccess: React.PropTypes.bool,
-    saveError: React.PropTypes.object,
+    isSaving: PropTypes.bool,
+    saveSuccess: PropTypes.bool,
+    saveError: PropTypes.object,
   }
 
   render() {

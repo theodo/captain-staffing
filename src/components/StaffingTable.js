@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Table, Column, Cell } from 'fixed-data-table'
 import HeaderCell from './HeaderCell'
 import StaffingCell from './StaffingCell'
@@ -11,10 +12,10 @@ import 'fixed-data-table/dist/fixed-data-table.css'
 export default class StaffingTable extends React.Component {
 
   static propTypes = {
-    weeks: React.PropTypes.array.isRequired,
-    peopleStaffing: React.PropTypes.array.isRequired,
-    onRowClick: React.PropTypes.func,
-    onProjectChange: React.PropTypes.func,
+    weeks: PropTypes.array.isRequired,
+    peopleStaffing: PropTypes.array.isRequired,
+    onRowClick: PropTypes.func,
+    onProjectChange: PropTypes.func,
   }
 
   render() {

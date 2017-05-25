@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class SomeoneStaffing extends React.Component {
 
   static propTypes = {
-    header: React.PropTypes.string.isRequired,
+    header: PropTypes.string.isRequired,
   }
 
   render() {

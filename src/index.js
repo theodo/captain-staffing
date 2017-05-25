@@ -8,5 +8,5 @@ import './styles/main.css'
 
 ReactDOM.render(
   <App />,
-  document.body
+  document.getElementById('app')
 )

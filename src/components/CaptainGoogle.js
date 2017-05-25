@@ -1,13 +1,13 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import { checkAuth, load } from '../helpers/spreadsheet'
 
-export default class CaptainTrello extends React.Component {
+export default class CaptainGoogle extends React.Component {
 
   static propTypes = {
-    onSuccess: React.PropTypes.func.isRequired,
-    onFailure: React.PropTypes.func.isRequired,
-    onLoad: React.PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired,
+    onFailure: PropTypes.func.isRequired,
+    onLoad: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
