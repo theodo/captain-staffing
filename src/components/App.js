@@ -165,7 +165,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div>
         <Header />
         <Notifications
           isSaving={this.state.isSaving}

@@ -4,11 +4,15 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1 className="brand">
-          Captain Staffing
-        </h1>
-      </div>
+      <nav className="nav">
+        <div className="container">
+          <div className="nav-left">
+            <a className="nav-item brand">
+              Captain Staffing
+            </a>
+          </div>
+        </div>
+      </nav>
     )
   }
 }
