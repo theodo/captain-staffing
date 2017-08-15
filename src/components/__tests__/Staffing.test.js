@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount, render } from 'enzyme'
+import { shallow } from 'enzyme'
 import moment from 'moment'
 
 import Staffing from '../Staffing'
@@ -32,7 +32,7 @@ describe('Staffing test suites', () => {
         expect(staffing.is('.scrollable-wrapper')).toBe(true)
     })
 
-    it('should return the x and y positions of a task', () => {
+    it('should return the x and y offsets of a task', () => {
         const task = {
             startDate: moment('07/08/2017', 'DD/MM/YYYY'),
             endDate: moment('13/08/2017', 'DD/MM/YYYY')
@@ -80,7 +80,7 @@ describe('Staffing test suites', () => {
         expect(staffing.instance()._calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition)
     })
 
-    it('should  return the x and y positions of a task overlaping two other tasks', () => {
+    it('should  return the x and y offsets of a task overlaping two other tasks', () => {
         const overlapedPositions = {
             33: 2,
             34: 2
