@@ -94,9 +94,9 @@ class Staffing extends Component {
     }
 
     _calculateTaskWidth(task) {
-        const taskLength = moment(task.endDate, 'DD-MM-YYYY').diff(moment(task.startDate, 'DD-MM-YYYY'), 'week')
+        const taskLength = moment(task.endDate, 'DD-MM-YYYY').diff(moment(task.startDate, 'DD-MM-YYYY'), 'days')
         
-        return taskLength * Staffing.WEEK_WIDTH - 10;
+        return taskLength * Staffing.DAY_WIDTH - 10;
     }
 
     render() {
@@ -132,9 +132,9 @@ Staffing.propTypes = {
 }
 
 Staffing.WEEK_WIDTH = 244 // todo: calculate it from the DOM node?
+Staffing.DAY_WIDTH = Staffing.WEEK_WIDTH / 7
 Staffing.TASK_HEIGHT = 35
 Staffing.PLANNING_ROW_PADDING = 5
-Staffing.DAY_WIDTH = Staffing.WEEK_WIDTH / 7
 Staffing.VISIBLE_WEEKS = 20
 Staffing.CURRENT_WEEK_INDEX = 4
 Staffing.NEXT_5_WEEK_INDEX  = Staffing.CURRENT_WEEK_INDEX + 5
