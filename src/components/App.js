@@ -57,15 +57,6 @@ const timeline = [
         endDate: "15/08/2017"
     },
     {
-        id: 9,
-        userId: 2,
-        project: "Echoline",
-        client: "Echoline",
-        leave: false,
-        startDate: "15/05/2017",
-        endDate: "11/08/2017"
-    },
-    {
         id: 2,
         userId: 1,
         project: "Ask'IT",
@@ -73,6 +64,15 @@ const timeline = [
         leave: false,
         startDate: "16/08/2017",
         endDate: "01/09/2017"
+    },
+    {
+        id: 9,
+        userId: 2,
+        project: "Echoline",
+        client: "Echoline",
+        leave: false,
+        startDate: "15/05/2017",
+        endDate: "11/08/2017"
     },
     {
         id: 3,
