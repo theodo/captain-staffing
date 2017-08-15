@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import App from './components/App'
 
-import 'bulma/css/bulma.css'
+import 'bootstrap/dist/css/bootstrap.css'
 import './styles/main.css'
 
 ReactDOM.render(

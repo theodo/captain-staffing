@@ -1,0 +1,144 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import moment from 'moment'
+import Planning from './Planning'
+import TopBar from './TopBar'
+import LeftBar from './LeftBar'
+
+class Staffing extends Component {
+    state = {
+        ticking: false,
+        planningYOffset: 0,
+        planningXOffset: Staffing.CURRENT_WEEK_INDEX * Staffing.WEEK_WIDTH * -1,
+        planningWidth: Staffing.VISIBLE_WEEKS * Staffing.WEEK_WIDTH,
+        currentWeek: moment().startOf('week'),
+        crisisWeek: moment().startOf('week').add(5, 'w'),
+        alertWeek: moment().startOf('week').add(10, 'w'),
+        rows: []
+    }
+
+    constructor(props) {
+        super(props)
+
+        this._handleScroll = this._handleScroll.bind(this)
+    }
+
+    _handleScroll(event) {
+        if (!this.state.ticking) {
+            window.requestAnimationFrame(() => {
+                this.setState({
+                    planningYOffset: event.target.scrollTop * -1,
+                    planningXOffset: event.target.scrollLeft * -1,
+                })
+                this.ticking = false;
+            });
+        }
+        this.ticking = true;
+    }
+
+    componentWillMount() {
+        this.setState({ rows: this._createRows() })
+    }
+
+    _createRows() {
+        const rows = []
+        this.props.users.forEach((user) => {
+            const userTimeline = this.props.timeline.filter((task) => task.userId === user.id)
+            const weeklyTasksCount = {}
+            let maxWeeklyTasksCount = 0
+        
+            const tasks = userTimeline.map((timelineTask) => {
+                let { xoffset, yoffset } = this._calculateTaskOffsets(timelineTask, weeklyTasksCount)
+
+                return { timelineTask, xoffset, yoffset, width: this._calculateTaskWidth(timelineTask) }
+            })
+
+            maxWeeklyTasksCount = Math.max(...Object.values(weeklyTasksCount))
+
+            rows.push({ user, tasks, maxWeeklyTasksCount, weeklyTasksCount })
+        })
+
+        return rows
+    }
+
+    _getWeekOffset(week) {
+        return Staffing.WEEK_WIDTH * (week - this.props.weeks[0].format('w'))
+    }
+
+    _calculateTaskOffsets(task, weeklyTasks) {
+        const startDate = moment(task.startDate, 'DD/MM/YYYY')
+        const endDate = moment(task.endDate, 'DD/MM/YYYY').startOf('week')
+
+        const xoffset = this._calculateXOffset(task)
+        let yoffset = Staffing.PLANNING_ROW_PADDING
+        if (weeklyTasks.hasOwnProperty(startDate.format('w'))) {
+            yoffset = weeklyTasks[startDate.format('w')] * Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING
+        }
+
+        let date = startDate.clone()
+        while (date <= endDate) {
+            if (!weeklyTasks.hasOwnProperty(date.format('w'))) {
+                weeklyTasks[date.format('w')] = 1
+            } else {
+                weeklyTasks[date.format('w')] += 1
+            }
+
+            date.add(1, 'w')
+        }
+
+        return { xoffset, yoffset }
+    }
+
+    _calculateXOffset(task) {
+        return this._getWeekOffset(moment(task.startDate, 'DD/MM/YYYY').format('w'))
+    }
+
+    _calculateTaskWidth(task) {
+        const taskLength = moment(task.endDate, 'DD-MM-YYYY').diff(moment(task.startDate, 'DD-MM-YYYY'), 'week')
+        
+        return taskLength * Staffing.WEEK_WIDTH - 10;
+    }
+
+    render() {
+        return (
+        <div className="scrollable-wrapper">
+            <TopBar 
+                xoffset={this.state.planningXOffset} 
+                currentWeek={this.state.currentWeek} 
+                crisisWeek={this.state.crisisWeek} 
+                alertWeek={this.state.alertWeek} 
+                weeks={this.props.weeks} />
+            <LeftBar yoffset={this.state.planningYOffset} users={this.props.users} rows={this.state.rows} />
+            <Planning 
+                xoffset={this.state.planningXOffset}
+                yoffset={this.state.planningYOffset}
+                width={this.state.planningWidth}
+                rows={this.state.rows}
+                weeks={this.props.weeks} 
+                currentWeek={this.state.currentWeek} 
+                crisisWeek={this.state.crisisWeek} 
+                alertWeek={this.state.alertWeek} 
+                handleScroll={this._handleScroll}
+            />
+        </div>
+        )
+    }
+}
+
+Staffing.propTypes = {
+    users: PropTypes.array.isRequired,
+    timeline: PropTypes.array.isRequired,
+    weeks: PropTypes.array.isRequired
+}
+
+Staffing.WEEK_WIDTH = 244 // todo: calculate it from the DOM node?
+Staffing.TASK_HEIGHT = 35
+Staffing.PLANNING_ROW_PADDING = 5
+Staffing.DAY_WIDTH = Staffing.WEEK_WIDTH / 7
+Staffing.VISIBLE_WEEKS = 20
+Staffing.CURRENT_WEEK_INDEX = 4
+Staffing.NEXT_5_WEEK_INDEX  = Staffing.CURRENT_WEEK_INDEX + 5
+Staffing.NEXT_10_WEEK_INDEX = Staffing.NEXT_5_WEEK_INDEX + 5
+
+
+export default Staffing

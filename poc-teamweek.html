@@ -11,10 +11,11 @@
       .leftbar {
         position: absolute;
         left: 0;
-        top: 0;
-        width: 64px;
-        height: 500px;
-        background: linear-gradient(to bottom, red, yellow);
+        top: 0px;
+        padding-top: 64px;
+        width: 100px;
+        height: 1000px;
+        background-color: #fff;
       }
 
       .topbar {
@@ -23,19 +24,58 @@
         top: 0;
         width: 7000px;
         height: 64px;
-        background: linear-gradient(to right, yellow, red);
+        padding-left: 100px;
+        display: flex;
+        flex-wrap: nowrap;
+        background-color: #fff;
       }
 
       .scrollable-content {
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom right, yellow, red);
         overflow: scroll;
       }
 
       .content {
+        position: relative;
+        margin: 64px 0 0 100px;
         width: 7000px;
         height:1000px;
+        background-image: url('./planning-background.png');
+        background-size: 189px 20px;
+      }
+
+      .planning-row {
+        height: 40px;
+        display: flex;
+        position: relative;
+        box-shadow: inset 0 1px 0 0 #CCC;
+      }
+
+      .planning-cell {
+        width: 188px;
+        border-right: 1px solid #CCC;
+        flex: 0 0 auto;
+      }
+
+      .planning-column {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+      }
+
+      .current-week {
+        background-color: #edf5fd;
+      }
+
+      .task {
+        padding: 5px;
+        background-color: #65d006;
+      }
+
+      .leave {
+        background-color: #EEE;
       }
 
     </style>
@@ -47,32 +87,120 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-    <script type="text/babel">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
-      var TopBar = React.createClass({
+    <script type="text/babel">
+      moment.locale('fr', {
+        week: {
+          dow: 1
+        }
+      });
+      const theodoers = [
+        {
+          id: 1,
+          username: "jonathanb",
+        },
+        {
+          username: "maximet"
+        },
+        {
+          username: "stanislasb"
+        },
+        {
+          username: "clementrp"
+        }
+      ];
+
+      const timeline = [
+        { 
+          id: 1,
+          userId: 1,
+          project: null,
+          client: null,
+          leave: true,
+          startDate: "31/07/2017",
+          endDate: "15/08/2017"
+        },
+        {
+          id: 2,
+          userId: 1,
+          project: "Ask'IT",
+          client: "BNP ITG - Boost IT",
+          leave: false,
+          startDate: "16/08/2017",
+          endDate: "01/09/2017"
+        }
+      ]
+
+      const weeks = [];
+      for (let i = -5; i <= 15; i++) {
+        if (i < 0) {
+          weeks.push(moment().subtract(i * -1, 'w').startOf('week'));
+        } else {
+          weeks.push(moment().add(i, 'w').startOf('week'));
+        }
+      }
+
+      const User = React.createClass({
+        render: function () {
+          return (
+            <div className="planning-row">{this.props.user.username}</div>
+          );
+        }
+      });
+
+      const TopBar = React.createClass({
         render: function () {
           const style = {
             transform: `translate3D(${this.props.xoffset}px, 0px, 0px)`
           }
 
           return (
-            <div className="topbar" style={style}></div>
+            <div className="topbar" style={style}>
+              {this.props.weeks.map(function (week) {
+                let classNames = ['planning-cell'];
+
+                if (week.isSame(this.props.currentWeek)) {
+                  classNames.push('current-week');
+                }
+
+                return <div key={week.format('X')} className={classNames.join(' ')}>{week.format('DD/MM/YYYY')}</div>
+              }, this)}
+            </div>
           )
         }
       });
 
-      var LeftBar = React.createClass({
+      const LeftBar = React.createClass({
         render: function () {
           const style = {
             transform: `translate3D(0px, ${this.props.yoffset}px, 0px)`
           }
+
           return (
-            <div className="leftbar" style={style}></div>
+            <div className="leftbar" style={style}>
+              {
+                this.props.users.map(function (user) {
+                  return (<User key={user.username} user={user} />)
+                })
+              }
+            </div>
           )
         }
       });
 
-      var Planning = React.createClass({
+      const Planning = React.createClass({
+        getInitialState: function () {
+          return {
+            todayXOffset: 0
+          }
+        },
+
+        componentWillMount: function () {
+          this.setState({todayXOffset: 5 * Staffing.WEEK_WIDTH });
+        },
+
         componentDidMount: function () {
           const planning = ReactDOM.findDOMNode(this.refs.planning);
           planning.addEventListener('scroll', this.props.handleScroll);
@@ -81,22 +209,82 @@
         render: function () {
           return (
             <div ref="planning" className="scrollable-content">
-              <div className="content"></div>
+              <div className="content">
+                {
+                  this.props.users.map(function (user) {
+                    return (<PlanningRow 
+                      key={user.username} 
+                      user={user} 
+                      currentWeek={this.props.currentWeek} 
+                      weeks={this.props.weeks} 
+                      timeline={this.props.timeline}
+                    />)
+                  }, this)
+                }
+                <TodayCell currentWeek={this.state.currentWeek} xoffset={this.state.todayXOffset} />
+              </div>
+            </div>
+          )
+        }
+      }); 
+
+      const PlanningRow = React.createClass({        
+        _getUsersTimeline: function () {
+          return this.props.timeline.filter(function (task) {
+            return task.userId == this.props.user.id;
+          }, this);
+        },
+
+        render: function () {
+          return (
+            <div className="planning-row">
+              {this._getUsersTimeline().map(function (task) {
+                if (task.hasOwnProperty('leave') && task.leave == true) {
+                  return <Leave key={task.id} leave={task} />
+                }
+                return <Task key={task.id} task={task} />;
+              }, this)}
             </div>
           )
         }
       });
 
-      var Staffing = React.createClass({
+      const Task = React.createClass({
+        render: function () {
+          const weekLength = moment(this.props.task.endDate, 'DD-MM-YYYY').diff(moment(this.props.task.startDate, 'DD-MM-YYYY'), 'week');
+          const style = {
+            width: `${weekLength * Staffing.WEEK_WIDTH}px`
+          };
+
+          return (
+            <div className="task" style={style}>{this.props.task.project} {this.props.task.client} ({weekLength})</div>
+          );
+        }
+      });
+
+      const Leave = React.createClass({
+        render: function () {
+          const weekLength = moment(this.props.leave.endDate, 'DD-MM-YYYY').diff(moment(this.props.leave.startDate, 'DD-MM-YYYY'), 'week');
+          const style = {
+            width: `${weekLength * Staffing.WEEK_WIDTH}px`
+          };
+
+          return (
+            <div className="task leave" style={style}>Leave ({weekLength})</div>
+          );
+        }
+      })
+
+      const Staffing = React.createClass({
         getInitialState: function () {
           return {
             topBarXOffset: 0,
-            leftBarYOffset: 0
+            leftBarYOffset: 0,
+            currentWeek: moment().startOf('week')
           };
         },
         
         _handleScroll: function (event) {
-          console.log(event);
           this.setState({
             leftBarYOffset: event.target.scrollTop * -1,
             topBarXOffset: event.target.scrollLeft * -1,
@@ -106,15 +294,29 @@
         render: function () {
           return (
             <div className="scrollable-wrapper">
-              <TopBar xoffset={this.state.topBarXOffset} />
-              <LeftBar yoffset={this.state.leftBarYOffset} />
-              <Planning handleScroll={this._handleScroll} />
+              <Planning users={this.props.users} currentWeek={this.state.currentWeek} weeks={weeks} timeline={this.props.timeline} handleScroll={this._handleScroll} />
+              <TopBar xoffset={this.state.topBarXOffset} currentWeek={this.state.currentWeek} weeks={weeks} />
+              <LeftBar users={this.props.users} yoffset={this.state.leftBarYOffset} />
             </div>
           );
         }
       });
 
-      ReactDOM.render(<Staffing />, document.getElementById('app'));
+      Staffing.WEEK_WIDTH = 189;
+
+      const TodayCell = React.createClass({
+        render: function () {
+          const style = {
+            transform: `translateX(${this.props.xoffset}px)`
+          };
+
+          return (
+            <div className="planning-column planning-cell current-week" style={style}></div>
+          )
+        }
+      });
+
+      ReactDOM.render(<Staffing users={theodoers} timeline={timeline} />, document.getElementById('app'));
     </script>
   </body>
 </html>

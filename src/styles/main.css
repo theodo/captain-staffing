@@ -1,13 +1,1 @@
-@import 'index.css';
-
-@import 'component/alert.css';
-@import 'component/app.css';
-@import 'component/header.css';
-@import 'component/projects.css';
-@import 'component/staffingTable.css';
-
-@import 'generic/btn.css';
-@import 'generic/loader.css';
-@import 'generic/success.css';
-@import 'generic/error-notification.css';
-@import 'generic/popup.css';
+@import 'components/staffing.css';
