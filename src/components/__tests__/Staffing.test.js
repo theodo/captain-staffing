@@ -48,7 +48,23 @@ describe('Staffing test suites', () => {
         expect(staffing.instance()._calculateTaskOffsets(task, weeklyTasks)).toMatchObject(expectedPosition)
     })
 
-    it('should return the x and y positions of a task overlaping another one', () => {
+    it('should return the x an y offsets of task starting on tuesday', () => {
+        const task = {
+            startDate: moment('08/08/2017', 'DD/MM/YYYY'),
+            endDate: moment('13/08/2017', 'DD/MM/YYYY')
+        }
+
+        const weeklyTasks = {}
+
+        const expectedPosition = {
+            xoffset: Staffing.DAY_WIDTH,
+            yoffset: Staffing.PLANNING_ROW_PADDING
+        }
+
+        expect(staffing.instance()._calculateTaskOffsets(task, weeklyTasks)).toMatchObject(expectedPosition)
+    })
+
+    it('should return the x and y offsets of a task overlaping another one', () => {
         const overlapingTask = {
             startDate: moment('07/08/2017', 'DD/MM/YYYY'),
             endDate: moment('21/08/2017', 'DD/MM/YYYY')

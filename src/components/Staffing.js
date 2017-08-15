@@ -90,7 +90,7 @@ class Staffing extends Component {
     }
 
     _calculateXOffset(task) {
-        return this._getWeekOffset(moment(task.startDate, 'DD/MM/YYYY').format('w'))
+        return moment(task.startDate, 'DD/MM/YYYY').diff(this.props.weeks[0], 'days') * Staffing.DAY_WIDTH
     }
 
     _calculateTaskWidth(task) {
