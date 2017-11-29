@@ -4,7 +4,7 @@ import moment from 'moment'
 
 export default class Task extends Component {
     _getTaskLabel(task) {
-        let label = `(${moment(task.endDate, 'DD/MM/YYYY').diff(moment(task.startDate, 'DD/MM/YYYY'), 'weeks')} weeks)`
+        let label = `(${moment(task.endDate).diff(moment(task.startDate), 'weeks')} weeks)`
 
         if (!task.hasOwnProperty('leave') || !task.leave) {
             label = `${task.project} ${task.client} ${label}`

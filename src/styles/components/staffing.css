@@ -69,12 +69,17 @@
     height: 5px;
 }
 
-.standard {
+.weekly-standard {
     flex: 0 0 auto;
+    display: flex;
     z-index: 3;
 }
 
-.standard.error {
+.daily-standard {
+    flex: 1 0 auto;
+}
+
+.error {
     background-color: red;
 }
 

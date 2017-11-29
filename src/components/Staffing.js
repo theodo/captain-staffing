@@ -51,7 +51,7 @@ class Staffing extends Component {
                 let { xoffset, yoffset } = this._calculateTaskOffsets(timelineTask, weeklyTasksCount)
 
                 return { timelineTask, xoffset, yoffset, width: this._calculateTaskWidth(timelineTask) }
-            })
+            }, this)
 
             maxWeeklyTasksCount = Math.max(...Object.values(weeklyTasksCount))
 
@@ -61,13 +61,9 @@ class Staffing extends Component {
         return rows
     }
 
-    _getWeekOffset(week) {
-        return Staffing.WEEK_WIDTH * (week - this.props.weeks[0].format('w'))
-    }
-
     _calculateTaskOffsets(task, weeklyTasks) {
-        const startDate = moment(task.startDate, 'DD/MM/YYYY')
-        const endDate = moment(task.endDate, 'DD/MM/YYYY').startOf('week')
+        const startDate = moment(task.startDate)
+        const endDate = moment(task.endDate)
 
         const xoffset = this._calculateXOffset(task)
         let yoffset = Staffing.PLANNING_ROW_PADDING
@@ -90,11 +86,11 @@ class Staffing extends Component {
     }
 
     _calculateXOffset(task) {
-        return moment(task.startDate, 'DD/MM/YYYY').diff(this.props.weeks[0], 'days') * Staffing.DAY_WIDTH
+        return moment(task.startDate).diff(this.props.weeks[0], 'days') * Staffing.DAY_WIDTH
     }
 
     _calculateTaskWidth(task) {
-        const taskLength = moment(task.endDate, 'DD-MM-YYYY').diff(moment(task.startDate, 'DD-MM-YYYY'), 'days')
+        const taskLength = moment(task.endDate).diff(moment(task.startDate), 'days')
         
         return taskLength * Staffing.DAY_WIDTH - 10;
     }

@@ -42,7 +42,7 @@ export default class Planning extends Component {
                                 />
                             })
                         }
-                        <Standards user={row.user} weeks={this.props.weeks} weeklyTasksCount={row.weeklyTasksCount} />
+                        <Standards tasks={row.tasks} user={row.user} weeks={this.props.weeks} weeklyTasksCount={row.weeklyTasksCount} />
                     </div>
                 , this)
             }

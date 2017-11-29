@@ -12,7 +12,7 @@ export default class TopBar extends Component {
         <div className="topbar" style={style}>
             {
                 this.props.weeks.map((week) =>
-                    <Week key={week.format('X')} week={week} className={this._getWeekClassName(moment(week, 'DD/MM/YYYY'))} />
+                    <Week key={week.format('X')} week={week} className={this._getWeekClassName(moment(week))} />
                 , this)
             }
         </div>

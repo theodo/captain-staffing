@@ -14,10 +14,10 @@ describe('Staffing test suites', () => {
     }]
 
     const weeks = [
-        moment('07/08/2017', 'DD/MM/YYYY'), 
-        moment('14/08/2017', 'DD/MM/YYYY'),
-        moment('21/08/2017', 'DD/MM/YYYY'),
-        moment('28/08/2017', 'DD/MM/YYYY')
+        moment('2017-08-07'), 
+        moment('2017-08-14'),
+        moment('2017-08-21'),
+        moment('2017-08-28')
     ]
 
     const staffing = shallow(
@@ -34,8 +34,8 @@ describe('Staffing test suites', () => {
 
     it('should return the x and y offsets of a task', () => {
         const task = {
-            startDate: moment('07/08/2017', 'DD/MM/YYYY'),
-            endDate: moment('13/08/2017', 'DD/MM/YYYY')
+            startDate: moment('2017-08-07'),
+            endDate: moment('2017-08-13')
         }
 
         const weeklyTasks = {}
@@ -50,8 +50,8 @@ describe('Staffing test suites', () => {
 
     it('should return the x an y offsets of task starting on tuesday', () => {
         const task = {
-            startDate: moment('08/08/2017', 'DD/MM/YYYY'),
-            endDate: moment('13/08/2017', 'DD/MM/YYYY')
+            startDate: moment('2017-08-08'),
+            endDate: moment('2017-08-13')
         }
 
         const weeklyTasks = {}
@@ -66,8 +66,8 @@ describe('Staffing test suites', () => {
 
     it('should return the x and y offsets of a task overlaping another one', () => {
         const overlapingTask = {
-            startDate: moment('07/08/2017', 'DD/MM/YYYY'),
-            endDate: moment('21/08/2017', 'DD/MM/YYYY')
+            startDate: moment('2017-08-07'),
+            endDate: moment('2017-08-21')
         }
 
         const weeklyTasks = {32: 1}
@@ -80,7 +80,7 @@ describe('Staffing test suites', () => {
         expect(staffing.instance()._calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition)
     })
 
-    it('should  return the x and y offsets of a task overlaping two other tasks', () => {
+    it('should return the x and y offsets of a task overlaping two other tasks', () => {
         const overlapedPositions = {
             33: 2,
             34: 2

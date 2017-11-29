@@ -14,28 +14,28 @@ describe('Standards test suites', () => {
     }
 
     it('should render without throwing an error', () => {
-        const standards = shallow(<Standards user={user} weeks={[]} weeklyTasksCount={{}} />)
+        const standards = shallow(<Standards tasks={[]} user={user} weeks={[]} weeklyTasksCount={{}} />)
         expect(standards.is('.standards')).toBe(true)
     })
 
     it('should render a grey line if there is no standard violation', () => {
-        const weeks = [moment('14/08/2017', 'DD/MM/YYYY')]
+        const weeks = [moment('2017-08-14')]
         const weeklyTasksCount = {
             33: user.standards.projects
         }
 
-        const standards = render(<Standards user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />)
+        const standards = render(<Standards tasks={[]} user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />)
         const weekStandard = standards.children().first()
         expect(weekStandard.html().match(/error/)).toBeFalsy()
     })
     
     it('should render a red line if there is a standard violation', () => {
-        const weeks = [moment('14/08/2017', 'DD/MM/YYYY')]
+        const weeks = [moment('2017-08-14')]
         const weeklyTasksCount = {
             33: user.standards.projects + 1
         }
 
-        const standards = render(<Standards user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />)
+        const standards = render(<Standards tasks={[]} user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />)
         const weekStandard = standards.children().first()
         expect(weekStandard.html().match(/error/)).toBeTruthy()
     })

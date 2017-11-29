@@ -1,37 +1,39 @@
 {
+  "extends": ["airbnb", "plugin:flowtype/recommended"],
   "env": {
     "browser": true,
     "node": true,
-    "jest": true,
-    "es6": true
+    "es6": true,
+    "mocha": true
   },
-  "extends": "airbnb",
   "parser": "babel-eslint",
-  "rules": {
-    "arrow-body-style": [2, "always"],
-    "comma-dangle": [2, "always-multiline"],
-    "import/prefer-default-export": 0,
-    "import/first": 0,
-    "jsx-a11y/href-no-hash": 0,
-    "no-param-reassign": 0,
-    "no-underscore-dangle": 0,
-    "semi": [2, "never"],
-    "react/jsx-filename-extension": 0,
-    "react/jsx-no-bind": 0,
-    "react/forbid-prop-types": 0,
-    "react/sort-comp": 0,
-    "react/no-array-index-key": 0,
-    "react/prefer-stateless-function": 0,
-    "react/require-default-props": 0
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "moduleDirectory": [
-          "node_modules",
-          "src"
-        ]
-      }
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "plugins": [
+    "flowtype",
+    "import",
+    "jsx-a11y",
+    "react"
+  ],
+  "globals": {
+    "jest": false,
+    "expect": false
+  },
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prefer-stateless-function": 0,
+    "react/require-default-props": 0,
+    "react/prop-types": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1,
+    "flowtype/delimiter-dangle": [1, "always-multiline"],
+    "flowtype/semi": [1, "always"]
   }
 }

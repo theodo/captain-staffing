@@ -6,7 +6,7 @@ moment.locale('fr', {
     week: {
         dow: 1
     }
-});
+})
 
 const theodoers = [
     {
@@ -53,8 +53,8 @@ const timeline = [
         project: null,
         client: null,
         leave: true,
-        startDate: "31/07/2017",
-        endDate: "15/08/2017"
+        startDate: "2017-10-31",
+        endDate: "2018-12-15"
     },
     {
         id: 2,
@@ -62,8 +62,8 @@ const timeline = [
         project: "Ask'IT",
         client: "BNP ITG - Boost IT",
         leave: false,
-        startDate: "16/08/2017",
-        endDate: "01/09/2017"
+        startDate: "2017-12-16",
+        endDate: "2018-09-01"
     },
     {
         id: 9,
@@ -71,8 +71,8 @@ const timeline = [
         project: "Echoline",
         client: "Echoline",
         leave: false,
-        startDate: "15/05/2017",
-        endDate: "11/08/2017"
+        startDate: "2017-12-15",
+        endDate: "2018-08-11"
     },
     {
         id: 3,
@@ -80,8 +80,8 @@ const timeline = [
         project: "Allomatch",
         client: "Allomatch",
         leave: false,
-        startDate: "18/09/2017",
-        endDate: "23/10/2017"
+        startDate: "2017-09-18",
+        endDate: "2018-10-23"
     },
     {
         id: 4,
@@ -89,8 +89,8 @@ const timeline = [
         project: "WEFA",
         client: "Safran",
         leave: false,
-        startDate: "25/09/2017",
-        endDate: "16/10/2017"
+        startDate: "2017-12-25",
+        endDate: "2018-10-16"
     },
     {
         id: 5,
@@ -98,8 +98,8 @@ const timeline = [
         project: "B2B",
         client: "Fundshop",
         leave: false,
-        startDate: "09/10/2017",
-        endDate: "30/10/2017"
+        startDate: "2017-11-09",
+        endDate: "2018-10-30"
     },
     {
         id: 6,
@@ -107,8 +107,8 @@ const timeline = [
         project: "Projet Confidentiel",
         client: "SG - ITIM",
         leave: false,
-        startDate: "07/08/2017",
-        endDate: "30/10/2017"
+        startDate: "2017-08-07",
+        endDate: "2018-10-30"
     },
     {
         id: 7,
@@ -116,8 +116,8 @@ const timeline = [
         project: "Projet Confidentiel #2",
         client: "SG - ITIM",
         leave: false,
-        startDate: "07/08/2017",
-        endDate: "30/10/2017"
+        startDate: "2017-08-07",
+        endDate: "2018-10-30"
     },
     {
         id: 8,
@@ -125,8 +125,8 @@ const timeline = [
         project: "Fast IT - Filgood",
         client: "Fast IT",
         leave: false,
-        startDate: "07/08/2017",
-        endDate: "30/10/2017"
+        startDate: "2017-08-07",
+        endDate: "2018-10-30"
     },
     {
         id: 10,
@@ -134,8 +134,8 @@ const timeline = [
         project: "Robo Mroning Star",
         client: "BNP AM",
         leave: false,
-        startDate: "07/08/2017",
-        endDate: "30/10/2017"
+        startDate: "2017-08-07",
+        endDate: "2018-10-30"
     },
     {
         id: 11,
@@ -143,8 +143,8 @@ const timeline = [
         project: "Gouvernance",
         client: "BNP AM",
         leave: false,
-        startDate: "07/08/2017",
-        endDate: "30/10/2017"
+        startDate: "2017-08-07",
+        endDate: "2018-10-30"
     }
 ]
 
