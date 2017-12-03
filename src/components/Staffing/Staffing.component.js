@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import moment from 'moment';
 import Planning from '../Planning';
 import TopBar from '../TopBar';
 import LeftBar from '../LeftBar';
 
-export default class Staffing extends Component {
+type Props = {
+  users: Array<?Object>,
+  timeline: Array<?Object>,
+  weeks: Array<?Object>,
+};
+
+export default class Staffing extends React.Component<Props> {
   constructor(props) {
     super(props);
 
@@ -134,12 +141,6 @@ export default class Staffing extends Component {
     );
   }
 }
-
-Staffing.propTypes = {
-  users: PropTypes.array.isRequired,
-  timeline: PropTypes.array.isRequired,
-  weeks: PropTypes.array.isRequired,
-};
 
 Staffing.WEEK_WIDTH = 244; // todo: calculate it from the DOM node?
 Staffing.DAY_WIDTH = Staffing.WEEK_WIDTH / 7;
