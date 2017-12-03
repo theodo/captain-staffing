@@ -117,7 +117,6 @@ export default class Staffing extends Component {
         />
         <LeftBar
           yoffset={this.state.planningYOffset}
-          users={this.props.users}
           rows={this.state.rows}
         />
         <Planning
