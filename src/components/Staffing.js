@@ -62,8 +62,8 @@ class Staffing extends Component {
     }
 
     _calculateTaskOffsets(task, weeklyTasks) {
-        const startDate = moment(task.startDate)
-        const endDate = moment(task.endDate)
+        const startDate = moment(task.startDate, 'YYYY-MM-DD')
+        const endDate = moment(task.endDate, 'YYYY-MM-DD')
 
         const xoffset = this._calculateXOffset(task)
         let yoffset = Staffing.PLANNING_ROW_PADDING
@@ -86,7 +86,7 @@ class Staffing extends Component {
     }
 
     _calculateXOffset(task) {
-        return moment(task.startDate).diff(this.props.weeks[0], 'days') * Staffing.DAY_WIDTH
+        return moment(task.startDate, 'YYYY-MM-DD').diff(this.props.weeks[0], 'days') * Staffing.DAY_WIDTH
     }
 
     _calculateTaskWidth(task) {

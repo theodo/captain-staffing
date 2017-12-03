@@ -14,10 +14,10 @@ describe('Staffing test suites', () => {
     }]
 
     const weeks = [
-        moment('2017-08-07'), 
-        moment('2017-08-14'),
-        moment('2017-08-21'),
-        moment('2017-08-28')
+        moment('2017-08-07', 'YYYY-MM-DD'),
+        moment('2017-08-14', 'YYYY-MM-DD'),
+        moment('2017-08-21', 'YYYY-MM-DD'),
+        moment('2017-08-28', 'YYYY-MM-DD')
     ]
 
     const staffing = shallow(
@@ -34,8 +34,8 @@ describe('Staffing test suites', () => {
 
     it('should return the x and y offsets of a task', () => {
         const task = {
-            startDate: moment('2017-08-07'),
-            endDate: moment('2017-08-13')
+            startDate: moment('2017-08-07', 'YYYY-MM-DD'),
+            endDate: moment('2017-08-13', 'YYYY-MM-DD')
         }
 
         const weeklyTasks = {}
@@ -50,8 +50,8 @@ describe('Staffing test suites', () => {
 
     it('should return the x an y offsets of task starting on tuesday', () => {
         const task = {
-            startDate: moment('2017-08-08'),
-            endDate: moment('2017-08-13')
+            startDate: moment('2017-08-08', 'YYYY-MM-DD'),
+            endDate: moment('2017-08-13', 'YYYY-MM-DD')
         }
 
         const weeklyTasks = {}
@@ -66,8 +66,8 @@ describe('Staffing test suites', () => {
 
     it('should return the x and y offsets of a task overlaping another one', () => {
         const overlapingTask = {
-            startDate: moment('2017-08-07'),
-            endDate: moment('2017-08-21')
+            startDate: moment('2017-08-07', 'YYYY-MM-DD'),
+            endDate: moment('2017-08-21', 'YYYY-MM-DD')
         }
 
         const weeklyTasks = {32: 1}
@@ -81,7 +81,7 @@ describe('Staffing test suites', () => {
     })
 
     it('should return the x and y offsets of a task overlaping two other tasks', () => {
-        const overlapedPositions = {
+        const weeklyTasks = {
             33: 2,
             34: 2
         }
@@ -95,6 +95,6 @@ describe('Staffing test suites', () => {
             yoffset: Staffing.TASK_HEIGHT * 2 + Staffing.PLANNING_ROW_PADDING
         }
 
-        expect(staffing.instance()._calculateTaskOffsets(overlapingTask, overlapedPositions)).toMatchObject(expectedPosition)
+        expect(staffing.instance()._calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition)
     })
 })
