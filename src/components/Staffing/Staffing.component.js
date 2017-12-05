@@ -5,6 +5,8 @@ import moment from 'moment';
 import Planning from '../Planning';
 import TopBar from '../TopBar';
 import LeftBar from '../LeftBar';
+import StyledStaffing from './Staffing.style';
+
 
 type Props = {
   users: Array<?Object>,
@@ -106,15 +108,9 @@ export default class Staffing extends React.Component<Props> {
     return moment(task.startDate, 'YYYY-MM-DD').diff(this.props.weeks[0], 'days') * Staffing.DAY_WIDTH;
   }
 
-  calculateTaskWidth(task) {
-    const taskLength = moment(task.endDate).diff(moment(task.startDate), 'days');
-
-    return taskLength * Staffing.DAY_WIDTH - 10;
-  }
-
   render() {
     return (
-      <div className="scrollable-wrapper">
+      <StyledStaffing>
         <TopBar
           xoffset={this.state.planningXOffset}
           currentWeek={this.state.currentWeek}
@@ -137,7 +133,7 @@ export default class Staffing extends React.Component<Props> {
           alertWeek={this.state.alertWeek}
           handleScroll={this.handleScroll}
         />
-      </div>
+      </StyledStaffing>
     );
   }
 }
