@@ -16,12 +16,6 @@ type Props = {
 };
 
 export default class Staffing extends React.Component<Props> {
-  constructor(props) {
-    super(props);
-
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-
   state = {
     ticking: false,
     planningYOffset: 0,
@@ -37,7 +31,7 @@ export default class Staffing extends React.Component<Props> {
     this.setState({ rows: this.createRows() });
   }
 
-  handleScroll(event) {
+  handleScroll = (event) => {
     if (!this.state.ticking) {
       window.requestAnimationFrame(() => {
         this.setState({
