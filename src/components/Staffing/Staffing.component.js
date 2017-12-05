@@ -7,6 +7,7 @@ import TopBar from '../TopBar';
 import LeftBar from '../LeftBar';
 import StyledStaffing from './Staffing.style';
 
+import { calculateTaskWidth } from '../../services/Task';
 
 type Props = {
   users: Array<?Object>,
@@ -63,7 +64,7 @@ export default class Staffing extends React.Component<Props> {
           timelineTask,
           xoffset,
           yoffset,
-          width: this.calculateTaskWidth(timelineTask),
+          width: calculateTaskWidth(timelineTask),
         };
       }, this);
 
