@@ -98,4 +98,19 @@ describe('Staffing test suites', () => {
 
     expect(staffing.instance().calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition);
   });
+
+  it('should return correct offsets of a task than spans over 2 years', () => {
+    const weeklyTasks = {
+      52: 0,
+      53: 1,
+    };
+    const task = {
+      startDate: '25/12/2017',
+      endDate: '07/01/2018',
+    };
+    const expectedPosition = {
+      yoffset: Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING,
+    };
+    expect(staffing.instance().calculateTaskOffsets(task, weeklyTasks)).toMatchObject(expectedPosition);
+  });
 });
