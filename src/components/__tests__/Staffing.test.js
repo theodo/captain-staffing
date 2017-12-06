@@ -2,7 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import moment from 'moment';
 
-import Staffing from '../Staffing';
+import LeftBar from '../LeftBar';
+import Planning from '../Planning';
+import Staffing from '../Staffing/Staffing.component';
+import TopBar from '../TopBar';
 
 describe('Staffing test suites', () => {
   const users = [
@@ -25,7 +28,9 @@ describe('Staffing test suites', () => {
   const staffing = shallow(<Staffing users={users} weeks={weeks} timeline={[]} />);
 
   it('should render without throwing an error', () => {
-    expect(staffing.is('.scrollable-wrapper')).toBe(true);
+    expect(staffing.find(LeftBar).length).toEqual(1);
+    expect(staffing.find(Planning).length).toEqual(1);
+    expect(staffing.find(TopBar).length).toEqual(1);
   });
 
   it('should return the x and y offsets of a task', () => {
@@ -41,7 +46,7 @@ describe('Staffing test suites', () => {
       yoffset: Staffing.PLANNING_ROW_PADDING,
     };
 
-    expect(staffing.instance()._calculateTaskOffsets(task, weeklyTasks)).toMatchObject(expectedPosition);
+    expect(staffing.instance().calculateTaskOffsets(task, weeklyTasks)).toMatchObject(expectedPosition);
   });
 
   it('should return the x an y offsets of task starting on tuesday', () => {
@@ -57,7 +62,7 @@ describe('Staffing test suites', () => {
       yoffset: Staffing.PLANNING_ROW_PADDING,
     };
 
-    expect(staffing.instance()._calculateTaskOffsets(task, weeklyTasks)).toMatchObject(expectedPosition);
+    expect(staffing.instance().calculateTaskOffsets(task, weeklyTasks)).toMatchObject(expectedPosition);
   });
 
   it('should return the x and y offsets of a task overlaping another one', () => {
@@ -73,7 +78,7 @@ describe('Staffing test suites', () => {
       yoffset: Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING,
     };
 
-    expect(staffing.instance()._calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition);
+    expect(staffing.instance().calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition);
   });
 
   it('should return the x and y offsets of a task overlaping two other tasks', () => {
@@ -91,6 +96,6 @@ describe('Staffing test suites', () => {
       yoffset: Staffing.TASK_HEIGHT * 2 + Staffing.PLANNING_ROW_PADDING,
     };
 
-    expect(staffing.instance()._calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition);
+    expect(staffing.instance().calculateTaskOffsets(overlapingTask, weeklyTasks)).toMatchObject(expectedPosition);
   });
 });
