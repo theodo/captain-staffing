@@ -168,7 +168,11 @@ const initialState = {
   timeline,
   weeks,
 };
-const store = createStore(combineReducers({}), initialState);
+const store = createStore(
+  combineReducers({}),
+  initialState,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const rootEl = document.getElementById('app');
 
