@@ -48,12 +48,13 @@ export default class Staffing extends React.Component<Props> {
     const rows = [];
     this.props.users.forEach((user) => {
       const userTimeline = this.props.timeline.filter(task => task.userId === user.id);
-      const weeklyTasksCount = {};
+      let weeklyTasksCount = {};
       let maxWeeklyTasksCount = 0;
 
       const tasks = userTimeline.map((timelineTask) => {
         const { xoffset, yoffset } = this.calculateTaskOffsets(timelineTask, weeklyTasksCount);
 
+        weeklyTasksCount = this.calculateWeeklyTasks(timelineTask, weeklyTasksCount);
         return {
           timelineTask,
           xoffset,
@@ -79,24 +80,40 @@ export default class Staffing extends React.Component<Props> {
     const startDate = moment(task.startDate, 'YYYY-MM-DD');
     const endDate = moment(task.endDate, 'YYYY-MM-DD');
 
+    const startWeek = parseInt(startDate.format('w'));
+    const endWeek = parseInt(endDate.format('w')) + ( endDate.format('Y') === startDate.format('Y') ? 0 : 52);
+
     const xoffset = this.calculateXOffset(task);
-    let yoffset = Staffing.PLANNING_ROW_PADDING;
-    if (weeklyTasks.hasOwnProperty(startDate.format('w'))) {
-      yoffset = weeklyTasks[startDate.format('w')] * Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING;
-    }
 
-    const date = startDate.clone();
-    while (date <= endDate) {
-      if (!weeklyTasks.hasOwnProperty(date.format('w'))) {
-        weeklyTasks[date.format('w')] = 1;
-      } else {
-        weeklyTasks[date.format('w')] += 1;
+    let maxNbOfTasks = 0;
+    for (var week = startWeek; week <= endWeek; week+=1) {
+      if (weeklyTasks.hasOwnProperty(week)) {
+        maxNbOfTasks = maxNbOfTasks < weeklyTasks[week] ? weeklyTasks[week] : maxNbOfTasks;
       }
-
-      date.add(1, 'w');
     }
+    const yoffset = maxNbOfTasks * Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING;
 
     return { xoffset, yoffset };
+  }
+
+  calculateWeeklyTasks(task, weeklyTasks) {
+    const startDate = moment(task.startDate, 'YYYY-MM-DD');
+    const endDate = moment(task.endDate, 'YYYY-MM-DD');
+    const newWeeklyTasks = Object.assign(weeklyTasks);
+
+    let week = parseInt(startDate.format('w'));
+    const endWeek = parseInt(endDate.format('w')) + ( endDate.format('Y') === startDate.format('Y') ? 0 : 52);
+
+    while (week <= endWeek) {
+      if (!weeklyTasks.hasOwnProperty(week)) {
+        newWeeklyTasks[week] = 1;
+      } else {
+        newWeeklyTasks[week] += 1;
+      }
+      week += 1;
+    }
+
+    return newWeeklyTasks;
   }
 
   calculateXOffset(task) {

@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Task from '../Task';
-import Staffing from '../Staffing';
 import Standards from '../Standards';
+import {
+  PLANNING_ROW_PADDING,
+  TASK_HEIGHT,
+  WEEK_WIDTH,
+} from '../Staffing/constants';
 
 export default class Planning extends React.Component {
   componentDidMount() {
@@ -13,7 +17,7 @@ export default class Planning extends React.Component {
   }
 
   getWeekOffset(week) {
-    return Staffing.WEEK_WIDTH * (week - this.props.weeks[0].format('w'));
+    return WEEK_WIDTH * (week - this.props.weeks[0].format('w'));
   }
 
   initializeScroll() {
@@ -39,7 +43,7 @@ row =>
                 <div
                   key={row.user.username}
                   className="planning-row"
-                  style={{ height: `${row.maxWeeklyTasksCount * Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING}px` }}
+                  style={{ height: `${row.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}px` }}
                 >
                   {
                     row.tasks.map(task => (<Task

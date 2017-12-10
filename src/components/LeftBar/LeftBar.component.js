@@ -1,7 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import Staffing from '../Staffing';
+import {
+  PLANNING_ROW_PADDING,
+  TASK_HEIGHT,
+} from '../Staffing/constants';
 
 type Props = {
   rows: Array,
@@ -33,7 +36,7 @@ type UserProps = {
 class User extends React.Component<UserProps> {
   render() {
     const style = {
-      height: `${this.props.maxWeeklyTasksCount * Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING}px`,
+      height: `${this.props.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}px`,
     };
 
     return (
