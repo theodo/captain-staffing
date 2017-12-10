@@ -41,3 +41,23 @@ export const calculateTaskOffsets = (task, weeklyTasks, firstWeek) => {
 
   return { xoffset, yoffset };
 };
+
+export const calculateWeeklyTasks = (task, weeklyTasks) => {
+  const startDate = moment(task.startDate, 'YYYY-MM-DD');
+  const endDate = moment(task.endDate, 'YYYY-MM-DD');
+  const newWeeklyTasks = Object.assign(weeklyTasks);
+
+  let week = parseInt(startDate.format('w'), 10);
+  const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
+
+  while (week <= endWeek) {
+    if (!Object.prototype.hasOwnProperty.call(weeklyTasks, week)) {
+      newWeeklyTasks[week] = 1;
+    } else {
+      newWeeklyTasks[week] += 1;
+    }
+    week += 1;
+  }
+
+  return newWeeklyTasks;
+};

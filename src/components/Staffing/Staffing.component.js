@@ -10,6 +10,7 @@ import StyledStaffing from './Staffing.style';
 import {
   calculateTaskWidth,
   calculateTaskOffsets,
+  calculateWeeklyTasks,
 } from '../../services/Task';
 
 type Props = {
@@ -57,7 +58,7 @@ export default class Staffing extends React.Component<Props> {
       const tasks = userTimeline.map((timelineTask) => {
         const { xoffset, yoffset } = calculateTaskOffsets(timelineTask, weeklyTasksCount, this.props.weeks[0]);
 
-        weeklyTasksCount = this.calculateWeeklyTasks(timelineTask, weeklyTasksCount);
+        weeklyTasksCount = calculateWeeklyTasks(timelineTask, weeklyTasksCount);
         return {
           timelineTask,
           xoffset,
@@ -77,26 +78,6 @@ export default class Staffing extends React.Component<Props> {
     });
 
     return rows;
-  }
-
-  calculateWeeklyTasks(task, weeklyTasks) {
-    const startDate = moment(task.startDate, 'YYYY-MM-DD');
-    const endDate = moment(task.endDate, 'YYYY-MM-DD');
-    const newWeeklyTasks = Object.assign(weeklyTasks);
-
-    let week = parseInt(startDate.format('w'), 10);
-    const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
-
-    while (week <= endWeek) {
-      if (!Object.prototype.hasOwnProperty.call(weeklyTasks, week)) {
-        newWeeklyTasks[week] = 1;
-      } else {
-        newWeeklyTasks[week] += 1;
-      }
-      week += 1;
-    }
-
-    return newWeeklyTasks;
   }
 
   render() {
