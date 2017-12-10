@@ -80,8 +80,8 @@ export default class Staffing extends React.Component<Props> {
     const startDate = moment(task.startDate, 'YYYY-MM-DD');
     const endDate = moment(task.endDate, 'YYYY-MM-DD');
 
-    const startWeek = parseInt(startDate.format('w'));
-    const endWeek = parseInt(endDate.format('w')) + ( endDate.format('Y') === startDate.format('Y') ? 0 : 52);
+    const startWeek = parseInt(startDate.format('w'), 10);
+    const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
 
     const xoffset = this.calculateXOffset(task);
 
@@ -101,8 +101,8 @@ export default class Staffing extends React.Component<Props> {
     const endDate = moment(task.endDate, 'YYYY-MM-DD');
     const newWeeklyTasks = Object.assign(weeklyTasks);
 
-    let week = parseInt(startDate.format('w'));
-    const endWeek = parseInt(endDate.format('w')) + ( endDate.format('Y') === startDate.format('Y') ? 0 : 52);
+    let week = parseInt(startDate.format('w'), 10);
+    const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
 
     while (week <= endWeek) {
       if (!weeklyTasks.hasOwnProperty(week)) {
