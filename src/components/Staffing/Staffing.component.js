@@ -86,8 +86,8 @@ export default class Staffing extends React.Component<Props> {
     const xoffset = this.calculateXOffset(task);
 
     let maxNbOfTasks = 0;
-    for (var week = startWeek; week <= endWeek; week+=1) {
-      if (weeklyTasks.hasOwnProperty(week)) {
+    for (let week = startWeek; week <= endWeek; week += 1) {
+      if (Object.prototype.hasOwnProperty.call(weeklyTasks, week)) {
         maxNbOfTasks = maxNbOfTasks < weeklyTasks[week] ? weeklyTasks[week] : maxNbOfTasks;
       }
     }
@@ -105,7 +105,7 @@ export default class Staffing extends React.Component<Props> {
     const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
 
     while (week <= endWeek) {
-      if (!weeklyTasks.hasOwnProperty(week)) {
+      if (!Object.prototype.hasOwnProperty.call(weeklyTasks, week)) {
         newWeeklyTasks[week] = 1;
       } else {
         newWeeklyTasks[week] += 1;
