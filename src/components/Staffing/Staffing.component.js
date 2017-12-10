@@ -7,7 +7,10 @@ import TopBar from '../TopBar';
 import LeftBar from '../LeftBar';
 import StyledStaffing from './Staffing.style';
 
-import { calculateTaskWidth } from '../../services/Task';
+import {
+  calculateTaskWidth,
+  calculateTaskOffsets,
+} from '../../services/Task';
 
 type Props = {
   users: Array<?Object>,
@@ -52,7 +55,7 @@ export default class Staffing extends React.Component<Props> {
       let maxWeeklyTasksCount = 0;
 
       const tasks = userTimeline.map((timelineTask) => {
-        const { xoffset, yoffset } = this.calculateTaskOffsets(timelineTask, weeklyTasksCount);
+        const { xoffset, yoffset } = calculateTaskOffsets(timelineTask, weeklyTasksCount, this.props.weeks[0]);
 
         weeklyTasksCount = this.calculateWeeklyTasks(timelineTask, weeklyTasksCount);
         return {
@@ -76,26 +79,6 @@ export default class Staffing extends React.Component<Props> {
     return rows;
   }
 
-  calculateTaskOffsets(task, weeklyTasks) {
-    const startDate = moment(task.startDate, 'YYYY-MM-DD');
-    const endDate = moment(task.endDate, 'YYYY-MM-DD');
-
-    const startWeek = parseInt(startDate.format('w'), 10);
-    const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
-
-    const xoffset = this.calculateXOffset(task);
-
-    let maxNbOfTasks = 0;
-    for (let week = startWeek; week <= endWeek; week += 1) {
-      if (Object.prototype.hasOwnProperty.call(weeklyTasks, week)) {
-        maxNbOfTasks = maxNbOfTasks < weeklyTasks[week] ? weeklyTasks[week] : maxNbOfTasks;
-      }
-    }
-    const yoffset = maxNbOfTasks * Staffing.TASK_HEIGHT + Staffing.PLANNING_ROW_PADDING;
-
-    return { xoffset, yoffset };
-  }
-
   calculateWeeklyTasks(task, weeklyTasks) {
     const startDate = moment(task.startDate, 'YYYY-MM-DD');
     const endDate = moment(task.endDate, 'YYYY-MM-DD');
@@ -114,10 +97,6 @@ export default class Staffing extends React.Component<Props> {
     }
 
     return newWeeklyTasks;
-  }
-
-  calculateXOffset(task) {
-    return moment(task.startDate, 'YYYY-MM-DD').diff(this.props.weeks[0], 'days') * Staffing.DAY_WIDTH;
   }
 
   render() {
