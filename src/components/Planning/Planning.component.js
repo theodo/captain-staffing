@@ -41,7 +41,7 @@ export default class Planning extends React.Component {
 row =>
               (
                 <div
-                  key={row.user.username}
+                  key={row.person.username}
                   className="planning-row"
                   style={{ height: `${row.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}px` }}
                 >
@@ -56,7 +56,7 @@ row =>
                     }
                   <Standards
                     tasks={row.tasks}
-                    user={row.user}
+                    user={row.person}
                     weeks={this.props.weeks}
                     weeklyTasksCount={row.weeklyTasksCount}
                   />

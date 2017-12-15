@@ -14,9 +14,10 @@ import {
 } from '../../services/Task';
 
 type Props = {
-  users: Array<?Object>,
+  persons: Array<?Object>,
   timeline: Array<?Object>,
   weeks: Array<?Object>,
+  fetchAllPersons: () => void,
 };
 
 export default class Staffing extends React.Component<Props> {
@@ -31,8 +32,8 @@ export default class Staffing extends React.Component<Props> {
     rows: [],
   }
 
-  componentWillMount() {
-    this.setState({ rows: this.createRows() });
+  componentWillReceiveProps(newProps) {
+    this.setState({ rows: this.createRows(newProps.persons, newProps.timeline, newProps.weeks) });
   }
 
   handleScroll = (event) => {
@@ -48,15 +49,15 @@ export default class Staffing extends React.Component<Props> {
     this.ticking = true;
   }
 
-  createRows() {
+  createRows(persons, timeline, weeks) {
     const rows = [];
-    this.props.users.forEach((user) => {
-      const userTimeline = this.props.timeline.filter(task => task.userId === user.id);
+    persons.forEach((person) => {
+      const userTimeline = timeline.filter(task => task.userId === person.id);
       let weeklyTasksCount = {};
       let maxWeeklyTasksCount = 0;
 
       const tasks = userTimeline.map((timelineTask) => {
-        const { xoffset, yoffset } = calculateTaskOffsets(timelineTask, weeklyTasksCount, this.props.weeks[0]);
+        const { xoffset, yoffset } = calculateTaskOffsets(timelineTask, weeklyTasksCount, weeks[0]);
 
         weeklyTasksCount = calculateWeeklyTasks(timelineTask, weeklyTasksCount);
         return {
@@ -70,7 +71,7 @@ export default class Staffing extends React.Component<Props> {
       maxWeeklyTasksCount = Math.max(...Object.values(weeklyTasksCount));
 
       rows.push({
-        user,
+        person,
         tasks,
         maxWeeklyTasksCount,
         weeklyTasksCount,

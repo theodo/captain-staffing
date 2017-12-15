@@ -1,6 +1,7 @@
 // @flow
 import { connect } from 'react-redux';
 import Staffing from './Staffing.component';
+import { fetchAllPersonsRequest } from '../../entities/Persons/actions';
 import { createWeeks } from '../../services/Staffing';
 
 // @todo move this to a saga as it will be an API call
@@ -107,12 +108,14 @@ const timeline = [
 ];
 
 const mapStateToProps = state => ({
-  users: state.theodoers,
+  persons: state.persons,
   timeline,
   weeks: createWeeks(),
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchAllPersons: dispatch(fetchAllPersonsRequest()),
+});
 
 export default connect(
   mapStateToProps,

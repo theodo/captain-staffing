@@ -20,7 +20,7 @@ export default class LeftBar extends React.Component<Props> {
     return (
       <div className="leftbar" style={style}>
         {
-          this.props.rows.map(row => (<User key={row.user.username} user={row.user} maxWeeklyTasksCount={row.maxWeeklyTasksCount} />))
+          this.props.rows.map(row => (<User key={row.person.username} user={row.person} maxWeeklyTasksCount={row.maxWeeklyTasksCount} />))
         }
       </div>
     );
@@ -31,7 +31,7 @@ type UserProps = {
   user: {
     username: string,
   },
-}
+};
 
 class User extends React.Component<UserProps> {
   render() {
