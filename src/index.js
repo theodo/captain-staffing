@@ -153,16 +153,6 @@ const timeline = [
     endDate: '2018-10-30',
   },
 ];
-
-const weeks = [];
-for (let i = -4; i <= 16; i++) {
-  if (i < 0) {
-    weeks.push(moment().subtract(i * -1, 'w').startOf('week'));
-  } else {
-    weeks.push(moment().add(i, 'w').startOf('week'));
-  }
-}
-
 const initialState = {
   theodoers,
   timeline,
