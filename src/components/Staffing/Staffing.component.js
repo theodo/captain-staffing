@@ -7,16 +7,13 @@ import TopBar from '../TopBar';
 import LeftBar from '../LeftBar';
 import StyledStaffing from './Staffing.style';
 
-import {
-  calculateTaskWidth,
-  calculateTaskOffsets,
-  calculateWeeklyTasks,
-} from '../../services/Task';
+import { createRows } from '../../services/Staffing';
 
 type Props = {
-  users: Array<?Object>,
+  persons: Array<?Object>,
   timeline: Array<?Object>,
   weeks: Array<?Object>,
+  fetchAllPersons: () => void,
 };
 
 export default class Staffing extends React.Component<Props> {
@@ -31,8 +28,8 @@ export default class Staffing extends React.Component<Props> {
     rows: [],
   }
 
-  componentWillMount() {
-    this.setState({ rows: this.createRows() });
+  componentWillReceiveProps(newProps) {
+    this.setState({ rows: createRows(newProps.persons, newProps.timeline, newProps.weeks) });
   }
 
   handleScroll = (event) => {
@@ -46,38 +43,6 @@ export default class Staffing extends React.Component<Props> {
       });
     }
     this.ticking = true;
-  }
-
-  createRows() {
-    const rows = [];
-    this.props.users.forEach((user) => {
-      const userTimeline = this.props.timeline.filter(task => task.userId === user.id);
-      let weeklyTasksCount = {};
-      let maxWeeklyTasksCount = 0;
-
-      const tasks = userTimeline.map((timelineTask) => {
-        const { xoffset, yoffset } = calculateTaskOffsets(timelineTask, weeklyTasksCount, this.props.weeks[0]);
-
-        weeklyTasksCount = calculateWeeklyTasks(timelineTask, weeklyTasksCount);
-        return {
-          timelineTask,
-          xoffset,
-          yoffset,
-          width: calculateTaskWidth(timelineTask),
-        };
-      }, this);
-
-      maxWeeklyTasksCount = Math.max(...Object.values(weeklyTasksCount));
-
-      rows.push({
-        user,
-        tasks,
-        maxWeeklyTasksCount,
-        weeklyTasksCount,
-      });
-    });
-
-    return rows;
   }
 
   render() {

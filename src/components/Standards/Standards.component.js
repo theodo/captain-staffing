@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 
 export default class Standards extends Component {
   render() {
-    const standards = this.props.weeks.map((week) => {
+    const { weeklyTasksCount, user, weeks } = this.props;
+    const { projects } = user.standards;
+
+    const standards = weeks.map((week) => {
       const classNames = ['planning-cell', 'weekly-standard'];
 
-      if (Object.prototype.hasOwnProperty.call(this.props.weeklyTasksCount, week.format('w')) && this.props.weeklyTasksCount[week.format('w')] > this.props.user.standards.projects) {
+      if (Object.prototype.hasOwnProperty.call(weeklyTasksCount, week.format('w')) && weeklyTasksCount[week.format('w')] > projects) {
         classNames.push('error');
       }
 

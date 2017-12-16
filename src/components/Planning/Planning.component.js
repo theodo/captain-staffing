@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
 import Task from '../Task';
 import Standards from '../Standards';
@@ -21,11 +20,11 @@ export default class Planning extends React.Component {
   }
 
   initializeScroll() {
-    ReactDOM.findDOMNode(this.planning).scrollLeft = this.props.xoffset * -1; // eslint-disable-line react/no-find-dom-node
+    this.planning.scrollLeft = this.props.xoffset * -1;
   }
 
   attachScrollEvent() {
-    ReactDOM.findDOMNode(this.planning).addEventListener('scroll', this.props.handleScroll); // eslint-disable-line react/no-find-dom-node
+    this.planning.addEventListener('scroll', this.props.handleScroll);
   }
 
   render() {
@@ -41,7 +40,7 @@ export default class Planning extends React.Component {
 row =>
               (
                 <div
-                  key={row.user.username}
+                  key={row.person.username}
                   className="planning-row"
                   style={{ height: `${row.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}px` }}
                 >
@@ -56,7 +55,7 @@ row =>
                     }
                   <Standards
                     tasks={row.tasks}
-                    user={row.user}
+                    user={row.person}
                     weeks={this.props.weeks}
                     weeklyTasksCount={row.weeklyTasksCount}
                   />
