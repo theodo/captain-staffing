@@ -1,2 +1,4 @@
 build
 coverage
+src/registerServiceWorker.js
+*.snapshot.test.js

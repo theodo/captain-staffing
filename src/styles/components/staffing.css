@@ -1,0 +1,43 @@
+.planning-column {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+
+.standards {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    height: 5px;
+}
+
+.weekly-standard {
+    flex: 0 0 auto;
+    display: flex;
+    z-index: 3;
+}
+
+.daily-standard {
+    flex: 1 0 auto;
+}
+
+.error {
+    background-color: red;
+}
+
+.weeks {
+    font-size: 13px;
+    text-align: center;
+}
+
+.days {
+    font-size: 10px;
+    display: flex;
+}
+
+.day {
+    flex: 1 0 auto;
+    text-align: center;
+}
