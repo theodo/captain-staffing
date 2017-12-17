@@ -14,6 +14,6 @@ export const StyledColoredWeek = styled.div`
   top: 0;
   height: 100%;
   width: 244px;
-  background-color: ${props => colorizeWeek(props.weekType)}
+  background-color: ${props => colorizeWeek(props.weekType)};
 `;
 

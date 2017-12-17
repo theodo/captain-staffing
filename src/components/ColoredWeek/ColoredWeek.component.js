@@ -4,6 +4,7 @@ import { StyledColoredWeek } from './ColoredWeek.style';
 
 type Props = {
   xoffset: number,
+  weekType: string,
 };
 
 export default class ColoredWeek extends React.Component<Props> {
@@ -15,7 +16,7 @@ export default class ColoredWeek extends React.Component<Props> {
   }
   render() {
     return (
-      <StyledColoredWeek left={this.state.left} />
+      <StyledColoredWeek left={this.state.left} weekType={this.props.weekType} />
     );
   }
 }
