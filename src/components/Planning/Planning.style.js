@@ -20,3 +20,12 @@ export const StyledTimeline = styled.div`
   background-size: 244px 20px;
   border-top: #eee;
 `;
+
+export const StyledPlanningRow = styled.div`
+  height: ${props => props.height}px;
+  min-height: 40px;
+  padding: 5px;
+  display: flex;
+  position: relative;
+  box-shadow: inset 0 1px 0 0 #eee;
+`;

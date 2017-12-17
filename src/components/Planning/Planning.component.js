@@ -1,7 +1,11 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { StyledScrollableTimeline, StyledTimeline } from './Planning.style';
+import {
+  StyledScrollableTimeline,
+  StyledTimeline,
+  StyledPlanningRow,
+} from './Planning.style';
 import Task from '../Task';
 import Standards from '../Standards';
 import {
@@ -36,10 +40,9 @@ export default class Planning extends React.Component {
             this.props.rows.map(
 row =>
               (
-                <div
+                <StyledPlanningRow
                   key={row.person.username}
-                  className="planning-row"
-                  style={{ height: `${row.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}px` }}
+                  height={row.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}
                 >
                   {
                     row.tasks.map(task => (<Task
@@ -56,7 +59,7 @@ row =>
                     weeks={this.props.weeks}
                     weeklyTasksCount={row.weeklyTasksCount}
                   />
-                </div>)
+                </StyledPlanningRow>)
             , this,
 )
             }
