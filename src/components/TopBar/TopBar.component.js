@@ -1,45 +1,33 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import moment from 'moment';
 
-export default class TopBar extends Component {
-  getWeekClassName(week) {
-    let className = '';
-
+import { StyledTopBar } from './TopBar.style';
 import Week from '../Week';
 import { getWeekType } from '../../services/Week';
 
-    return className;
-  }
+type Props = {
+  weeks: Array,
+};
 
+export default class TopBar extends React.Component<Props> {
   render() {
-    const style = {
-      transform: `translate3D(${this.props.xoffset}px, 0px, 0px)`,
-    };
-
     return (
-      <div className="topbar" style={style}>
+      <StyledTopBar xoffset={this.props.xoffset}>
         {
           this.props.weeks.map(
             week => (
               <Week
                 key={week.format('X')}
                 week={week}
-                className={this.getWeekClassName(moment(week))}
+                weekType={getWeekType(moment(week))}
               />
             ),
             this,
           )
         }
-      </div>
+      </StyledTopBar>
     );
   }
 }
-
-TopBar.propTypes = {
-  xoffset: PropTypes.number.isRequired,
-  currentWeek: PropTypes.instanceOf(moment),
-  crisisWeek: PropTypes.instanceOf(moment),
-  alertWeek: PropTypes.instanceOf(moment),
-  weeks: PropTypes.array.isRequired,
-};

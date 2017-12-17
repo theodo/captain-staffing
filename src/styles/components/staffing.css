@@ -1,13 +1,3 @@
-.planning-cell,
-.topbar-cell {
-    width: 244px;
-}
-
-.topbar-cell {
-    border-right: 1px solid #eee;
-    flex: 0 0 auto;
-}
-
 .planning-column {
     position: absolute;
     left: 0;
@@ -47,17 +37,6 @@
 
 .error {
     background-color: red;
-}
-
-.topbar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 34px;
-    padding-left: 100px;
-    display: flex;
-    flex-wrap: nowrap;
-    background-color: #fff;
 }
 
 .weeks {
