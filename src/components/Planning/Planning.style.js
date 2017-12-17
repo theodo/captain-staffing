@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import planningBackground from '../../assets/planning-background.png';
 
 export const StyledScrollableTimeline = styled.div`
   position: relative;
@@ -15,7 +16,7 @@ export const StyledTimeline = styled.div`
   left: 0;
   width: ${props => props.width}px;
   min-height: 100px;
-  background-image: url('../../assets/planning-background.png');
+  background-image: url(${planningBackground});
   background-size: 244px 20px;
   border-top: #eee;
 `;
