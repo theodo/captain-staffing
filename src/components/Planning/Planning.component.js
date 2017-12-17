@@ -14,6 +14,11 @@ import {
   TASK_HEIGHT,
   WEEK_WIDTH,
 } from '../Staffing/constants';
+import {
+  CRISIS_WEEK,
+  ALERT_WEEK,
+  CURRENT_WEEK,
+} from '../Week/constants';
 
 export default class Planning extends React.Component {
   componentDidMount() {
@@ -64,9 +69,9 @@ row =>
             , this,
 )
             }
-          <ColoredWeek xoffset={this.props.xoffset * -1} weekType="current" />
-          <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} weekType="crisis" />
-          <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} weekType="alert" />
+          <ColoredWeek xoffset={this.props.xoffset * -1} weekType={CURRENT_WEEK} />
+          <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} weekType={CRISIS_WEEK} />
+          <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} weekType={ALERT_WEEK} />
         </StyledTimeline>
       </StyledScrollableTimeline>
     );

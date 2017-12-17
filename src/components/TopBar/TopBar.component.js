@@ -6,13 +6,8 @@ export default class TopBar extends Component {
   getWeekClassName(week) {
     let className = '';
 
-    if (week.isSame(this.props.currentWeek)) {
-      className = 'current-week';
-    } else if (week.isSame(this.props.crisisWeek)) {
-      className = 'crisis-week';
-    } else if (week.isSame(this.props.alertWeek)) {
-      className = 'alert-week';
-    }
+import Week from '../Week';
+import { getWeekType } from '../../services/Week';
 
     return className;
   }
@@ -48,28 +43,3 @@ TopBar.propTypes = {
   alertWeek: PropTypes.instanceOf(moment),
   weeks: PropTypes.array.isRequired,
 };
-
-class Week extends Component {
-  render() {
-    const classNames = `topbar-cell ${this.props.className}`;
-    const days = [];
-
-    for (let weekday = 0; weekday < 7; weekday++) {
-      const day = this.props.week.clone().add(weekday, 'days');
-      days.push(<div key={weekday} className="day">{day.format('dd D')}</div>);
-    }
-
-    return (<div className={classNames}>
-      <div className="weeks">{this.props.week.format('MMM W')}</div>
-      <div className="days">
-        { days }
-      </div>
-    </div>);
-  }
-}
-
-Week.propTypes = {
-  week: PropTypes.instanceOf(moment),
-  currentWeek: PropTypes.instanceOf(moment),
-};
-
