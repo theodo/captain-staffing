@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { StyledStandards, StyledWeeklyStandards } from './Standards.style';
+
 
 export default class Standards extends Component {
   render() {
@@ -7,19 +9,19 @@ export default class Standards extends Component {
     const { projects } = user.standards;
 
     const standards = weeks.map((week) => {
-      const classNames = ['planning-cell', 'weekly-standard'];
+      let isError = false;
 
       if (Object.prototype.hasOwnProperty.call(weeklyTasksCount, week.format('w')) && weeklyTasksCount[week.format('w')] > projects) {
-        classNames.push('error');
+        isError = true;
       }
 
       return (
-        <div key={week.format('w')} className={classNames.join(' ')} />
+        <StyledWeeklyStandards key={week.format('w')} isError={isError} />
       );
     });
 
     return (
-      <div className="standards">{standards}</div>
+      <StyledStandards>{standards}</StyledStandards>
     );
   }
 }

@@ -1,75 +1,33 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import moment from 'moment';
 
-export default class TopBar extends Component {
-  getWeekClassName(week) {
-    let className = '';
+import { StyledTopBar } from './TopBar.style';
+import Week from '../Week';
+import { getWeekType } from '../../services/Week';
 
-    if (week.isSame(this.props.currentWeek)) {
-      className = 'current-week';
-    } else if (week.isSame(this.props.crisisWeek)) {
-      className = 'crisis-week';
-    } else if (week.isSame(this.props.alertWeek)) {
-      className = 'alert-week';
-    }
+type Props = {
+  weeks: Array,
+};
 
-    return className;
-  }
-
+export default class TopBar extends React.Component<Props> {
   render() {
-    const style = {
-      transform: `translate3D(${this.props.xoffset}px, 0px, 0px)`,
-    };
-
     return (
-      <div className="topbar" style={style}>
+      <StyledTopBar xoffset={this.props.xoffset}>
         {
           this.props.weeks.map(
             week => (
               <Week
                 key={week.format('X')}
                 week={week}
-                className={this.getWeekClassName(moment(week))}
+                weekType={getWeekType(moment(week))}
               />
             ),
             this,
           )
         }
-      </div>
+      </StyledTopBar>
     );
   }
 }
-
-TopBar.propTypes = {
-  xoffset: PropTypes.number.isRequired,
-  currentWeek: PropTypes.instanceOf(moment),
-  crisisWeek: PropTypes.instanceOf(moment),
-  alertWeek: PropTypes.instanceOf(moment),
-  weeks: PropTypes.array.isRequired,
-};
-
-class Week extends Component {
-  render() {
-    const classNames = `topbar-cell ${this.props.className}`;
-    const days = [];
-
-    for (let weekday = 0; weekday < 7; weekday++) {
-      const day = this.props.week.clone().add(weekday, 'days');
-      days.push(<div key={weekday} className="day">{day.format('dd D')}</div>);
-    }
-
-    return (<div className={classNames}>
-      <div className="weeks">{this.props.week.format('MMM W')}</div>
-      <div className="days">
-        { days }
-      </div>
-    </div>);
-  }
-}
-
-Week.propTypes = {
-  week: PropTypes.instanceOf(moment),
-  currentWeek: PropTypes.instanceOf(moment),
-};
-

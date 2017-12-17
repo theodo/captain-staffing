@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.css';
-import './styles/main.css';
 
 import store from './app/store';
 import App from './App';

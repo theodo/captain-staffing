@@ -2,6 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import { StyledTask, StyledLeave } from './Task.style';
+
 export default class Task extends React.Component {
   static getTaskLabel(task) {
     let label = `(${moment(task.endDate).diff(moment(task.startDate), 'weeks')} weeks)`;
@@ -16,19 +18,25 @@ export default class Task extends React.Component {
   }
 
   render() {
-    const style = {
-      width: `${this.props.width}px`,
-      left: this.props.xoffset,
-      top: this.props.yoffset,
-    };
-
-    const classNames = ['task'];
     if (Object.prototype.hasOwnProperty.call(this.props.task, 'leave') && this.props.task.leave) {
-      classNames.push('leave');
+      return (
+        <StyledLeave
+          width={this.props.width}
+          left={this.props.xoffset}
+          top={this.props.yoffset}
+        >
+          {Task.getTaskLabel(this.props.task)}
+        </StyledLeave>);
     }
 
     return (
-      <div className={classNames.join(' ')} style={style}>{Task.getTaskLabel(this.props.task)}</div>
+      <StyledTask
+        width={this.props.width}
+        left={this.props.xoffset}
+        top={this.props.yoffset}
+      >
+        {Task.getTaskLabel(this.props.task)}
+      </StyledTask>
     );
   }
 }
