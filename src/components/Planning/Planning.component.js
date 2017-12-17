@@ -8,6 +8,7 @@ import {
 } from './Planning.style';
 import Task from '../Task';
 import Standards from '../Standards';
+import ColoredWeek from '../ColoredWeek';
 import {
   PLANNING_ROW_PADDING,
   TASK_HEIGHT,
@@ -63,9 +64,9 @@ row =>
             , this,
 )
             }
-          <ColoredWeek xoffset={this.props.xoffset * -1} className="current-week" />
-          <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} className="crisis-week" />
-          <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} className="alert-week" />
+          <ColoredWeek xoffset={this.props.xoffset * -1} weekType="current" />
+          <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} weekType="crisis" />
+          <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} weekType="alert" />
         </StyledTimeline>
       </StyledScrollableTimeline>
     );
@@ -87,30 +88,4 @@ Planning.propTypes = {
     weeklyTasksCount: PropTypes.object,
   })).isRequired,
   handleScroll: PropTypes.func.isRequired,
-};
-
-class ColoredWeek extends React.Component {
-    state = {
-      xoffset: 0,
-    }
-
-    componentWillMount() {
-      this.setState({ xoffset: this.props.xoffset });
-    }
-
-    render() {
-      const style = {
-        left: this.state.xoffset,
-      };
-
-      const classNames = `planning-column planning-cell ${this.props.className}`;
-
-      return (
-        <div className={classNames} style={style} />
-      );
-    }
-}
-
-ColoredWeek.propTypes = {
-  xoffset: PropTypes.number.isRequired,
 };
