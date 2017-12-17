@@ -1,6 +1,8 @@
 // @flow
 
 import * as React from 'react';
+import StyledLeftBar from './LeftBar.style';
+
 import {
   PLANNING_ROW_PADDING,
   TASK_HEIGHT,
@@ -13,16 +15,18 @@ type Props = {
 
 export default class LeftBar extends React.Component<Props> {
   render() {
-    const style = {
-      transform: `translate3D(0px, ${this.props.yoffset}px, 0px)`,
-    };
-
     return (
-      <div className="leftbar" style={style}>
+      <StyledLeftBar yoffset={this.props.yoffset}>
         {
-          this.props.rows.map(row => (<User key={row.person.username} user={row.person} maxWeeklyTasksCount={row.maxWeeklyTasksCount} />))
+          this.props.rows.map(row => (
+            <User
+              key={row.person.username}
+              user={row.person}
+              maxWeeklyTasksCount={row.maxWeeklyTasksCount}
+            />
+          ))
         }
-      </div>
+      </StyledLeftBar>
     );
   }
 }
