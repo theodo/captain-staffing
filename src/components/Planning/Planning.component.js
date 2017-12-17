@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { ScrollableTimeline } from './Planning.style';
+import { StyledScrollableTimeline, StyledTimeline } from './Planning.style';
 import Task from '../Task';
 import Standards from '../Standards';
 import {
@@ -29,13 +29,9 @@ export default class Planning extends React.Component {
   }
 
   render() {
-    const timelineStyles = {
-      width: `${this.props.width}px`,
-    };
-
     return (
-      <ScrollableTimeline innerRef={(planning) => { this.planning = planning; }}>
-        <div className="timeline" style={timelineStyles}>
+      <StyledScrollableTimeline innerRef={(planning) => { this.planning = planning; }}>
+        <StyledTimeline width={this.props.width}>
           {
             this.props.rows.map(
 row =>
@@ -67,8 +63,8 @@ row =>
           <ColoredWeek xoffset={this.props.xoffset * -1} className="current-week" />
           <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} className="crisis-week" />
           <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} className="alert-week" />
-        </div>
-      </ScrollableTimeline>
+        </StyledTimeline>
+      </StyledScrollableTimeline>
     );
   }
 }
