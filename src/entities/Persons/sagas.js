@@ -18,7 +18,7 @@ function* watchFetchAllPersons() {
   yield takeLatest(actionTypes.REQUEST.FETCH.START, fetchAllPersons);
 }
 
-export default function* () {
+export default function* (): Generator<any, any, any> {
   yield all([
     watchFetchAllPersons(),
   ]);

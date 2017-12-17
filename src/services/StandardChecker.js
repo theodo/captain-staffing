@@ -1,17 +1,19 @@
-import moment from 'moment'
+// @flow
 
-const Checker = {}
+import moment from 'moment';
+
+const Checker = {};
 
 Checker.isValid = function (day, standards, tasks) {
-    if (!moment.isMoment(day)) {
-        moment(day)
-    }
+  if (!moment.isMoment(day)) {
+    moment(day);
+  }
 
-    const todayTask = tasks.filter((task) => {
-        return moment(task.startDate).isSame(day)
-    })
+  const todayTask = tasks.filter((task) => {
+    moment(task.startDate).isSame(day);
+  });
 
-    return todayTask.length <= standards.projects
-}
+  return todayTask.length <= standards.projects;
+};
 
-export default Checker
+export default Checker;

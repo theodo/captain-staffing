@@ -8,7 +8,8 @@ import Week from '../Week';
 import { getWeekType } from '../../services/Week';
 
 type Props = {
-  weeks: Array,
+  weeks: Array<any>,
+  xoffset: number,
 };
 
 export default class TopBar extends React.Component<Props> {

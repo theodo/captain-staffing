@@ -1,5 +1,7 @@
 // @flow
 
+import moment from 'moment';
+
 import { createRows } from '../Staffing';
 
 describe('createRows tests', () => {
@@ -16,11 +18,11 @@ describe('createRows tests', () => {
       {
         id: 1,
         userId: 1,
-        project: null,
-        client: null,
-        leave: true,
-        startDate: '2017-01-01',
-        endDate: '2017-02-01',
+        project: 'Foo',
+        client: 'Bar',
+        leave: false,
+        startDate: moment('2017-01-01', 'YYYY-MM-DD'),
+        endDate: moment('2017-02-01', 'YYYY-MM-DD'),
       },
     ];
 

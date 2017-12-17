@@ -38,6 +38,14 @@ const persons = [
   },
 ];
 
-export function fetchAll() {
+export type Person = {
+  +id: number,
+  username: string,
+  standards: {
+    projects: number,
+  },
+};
+
+export function fetchAll(): Person[] {
   return persons;
 }

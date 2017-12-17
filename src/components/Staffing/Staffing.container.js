@@ -1,4 +1,5 @@
 // @flow
+
 import { connect } from 'react-redux';
 import Staffing from './Staffing.component';
 import { fetchAllPersonsRequest } from '../../entities/Persons/actions';

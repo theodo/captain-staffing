@@ -18,7 +18,7 @@ function* watchFetchAllTasks() {
   yield takeLatest(actionTypes.REQUEST.FETCH.START, fetchAllTasks);
 }
 
-export default function* () {
+export default function* (): Generator<any, any, any> {
   yield all([
     watchFetchAllTasks(),
   ]);

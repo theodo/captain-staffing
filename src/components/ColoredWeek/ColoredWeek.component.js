@@ -1,4 +1,5 @@
 // @flow
+
 import * as React from 'react';
 import { StyledColoredWeek } from './ColoredWeek.style';
 
@@ -7,8 +8,12 @@ type Props = {
   weekType: string,
 };
 
-export default class ColoredWeek extends React.Component<Props> {
-  constructor(props) {
+type State = {
+  left: number,
+};
+
+export default class ColoredWeek extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       left: this.props.xoffset,

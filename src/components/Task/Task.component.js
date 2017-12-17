@@ -1,14 +1,23 @@
+// @flow
+
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import { StyledTask, StyledLeave } from './Task.style';
+import type { Task as TaskType } from '../../entities/Tasks/api';
 
-export default class Task extends React.Component {
-  static getTaskLabel(task) {
-    let label = `(${moment(task.endDate).diff(moment(task.startDate), 'weeks')} weeks)`;
+type Props = {
+  task: TaskType,
+  xoffset: number,
+  yoffset: number,
+  width: number,
+};
 
-    if (!Object.prototype.hasOwnProperty.call(task, 'leave') || !task.leave) {
+export default class Task extends React.Component<Props> {
+  static getTaskLabel(task: TaskType) {
+    let label = `(${task.endDate.diff(task.startDate, 'weeks')} weeks)`;
+
+    if (!task.leave) {
       label = `${task.project} ${task.client} ${label}`;
     } else {
       label = `Leave ${label}`;
@@ -40,16 +49,3 @@ export default class Task extends React.Component {
     );
   }
 }
-
-Task.propTypes = {
-  task: PropTypes.shape({
-    leave: PropTypes.boolean,
-    project: PropTypes.string,
-    client: PropTypes.string,
-    startDate: PropTypes.string.isRequired,
-    endDate: PropTypes.string.isRequired,
-  }).isRequired,
-  xoffset: PropTypes.number.isRequired,
-  yoffset: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-};

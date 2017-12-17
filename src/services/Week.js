@@ -11,7 +11,7 @@ import {
   CURRENT_WEEK_COLOR,
 } from '../components/Week/constants';
 
-export const colorizeWeek = (weekType) => {
+export const colorizeWeek = (weekType: string): string => {
   switch (weekType) {
     case ALERT_WEEK: return ALERT_WEEK_COLOR;
     case CRISIS_WEEK: return CRISIS_WEEK_COLOR;
@@ -20,19 +20,20 @@ export const colorizeWeek = (weekType) => {
   }
 };
 
-export const getWeekType = (week: moment) => {
-  const currentWeek = moment().startOf('week');
-  const crisisWeek = moment().startOf('week').add(5, 'w');
-  const alertWeek = moment().startOf('week').add(10, 'w');
-
+export const getWeekType = (week: moment): string | null => {
   switch (true) {
-    case (week.isSame(currentWeek)):
+    case (week.isSame(getCurrentWeek())):
       return CURRENT_WEEK;
-    case (week.isSame(crisisWeek)):
+    case (week.isSame(getCrisisWeek())):
       return CRISIS_WEEK;
-    case (week.isSame(alertWeek)):
+    case (week.isSame(getAlertWeek())):
       return ALERT_WEEK;
     default:
       return null;
   }
 };
+
+export const getCurrentWeek = (): moment => moment().startOf('week');
+export const getCrisisWeek = (): moment => moment().startOf('week').add(5, 'w');
+export const getAlertWeek = (): moment => moment().startOf('week').add(10, 'w');
+

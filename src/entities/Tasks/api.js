@@ -1,14 +1,16 @@
 // @flow
 
+import moment from 'moment';
+
 const tasks = [
   {
     id: 1,
     userId: 1,
-    project: null,
-    client: null,
+    project: 'ZZ-Theodo',
+    client: 'ZZ-Congés',
     leave: true,
-    startDate: '2017-10-31',
-    endDate: '2018-12-15',
+    startDate: moment('2017-10-31', 'YYYY-MM-DD'),
+    endDate: moment('2018-12-15', 'YYYY-MM-DD'),
   },
   {
     id: 2,
@@ -16,8 +18,8 @@ const tasks = [
     project: "Ask'IT",
     client: 'BNP ITG - Boost IT',
     leave: false,
-    startDate: '2017-12-16',
-    endDate: '2018-09-01',
+    startDate: moment('2017-12-16', 'YYYY-MM-DD'),
+    endDate: moment('2018-09-01', 'YYYY-MM-DD'),
   },
   {
     id: 9,
@@ -25,8 +27,8 @@ const tasks = [
     project: 'Echoline',
     client: 'Echoline',
     leave: false,
-    startDate: '2017-12-15',
-    endDate: '2018-08-11',
+    startDate: moment('2017-12-15', 'YYYY-MM-DD'),
+    endDate: moment('2018-08-11', 'YYYY-MM-DD'),
   },
   {
     id: 3,
@@ -34,8 +36,8 @@ const tasks = [
     project: 'Allomatch',
     client: 'Allomatch',
     leave: false,
-    startDate: '2017-09-18',
-    endDate: '2018-10-23',
+    startDate: moment('2017-09-18', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-23', 'YYYY-MM-DD'),
   },
   {
     id: 4,
@@ -43,8 +45,8 @@ const tasks = [
     project: 'WEFA',
     client: 'Safran',
     leave: false,
-    startDate: '2017-12-25',
-    endDate: '2018-10-16',
+    startDate: moment('2017-12-25', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-16', 'YYYY-MM-DD'),
   },
   {
     id: 5,
@@ -52,8 +54,8 @@ const tasks = [
     project: 'B2B',
     client: 'Fundshop',
     leave: false,
-    startDate: '2017-11-09',
-    endDate: '2018-10-30',
+    startDate: moment('2017-11-09', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-30', 'YYYY-MM-DD'),
   },
   {
     id: 6,
@@ -61,8 +63,8 @@ const tasks = [
     project: 'Projet Confidentiel',
     client: 'SG - ITIM',
     leave: false,
-    startDate: '2017-08-07',
-    endDate: '2018-10-30',
+    startDate: moment('2017-08-07', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-30', 'YYYY-MM-DD'),
   },
   {
     id: 7,
@@ -70,8 +72,8 @@ const tasks = [
     project: 'Projet Confidentiel #2',
     client: 'SG - ITIM',
     leave: false,
-    startDate: '2017-08-07',
-    endDate: '2018-10-30',
+    startDate: moment('2017-08-07', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-30', 'YYYY-MM-DD'),
   },
   {
     id: 8,
@@ -79,8 +81,8 @@ const tasks = [
     project: 'Fast IT - Filgood',
     client: 'Fast IT',
     leave: false,
-    startDate: '2017-08-07',
-    endDate: '2018-10-30',
+    startDate: moment('2017-08-07', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-30', 'YYYY-MM-DD'),
   },
   {
     id: 10,
@@ -88,8 +90,8 @@ const tasks = [
     project: 'Robo Mroning Star',
     client: 'BNP AM',
     leave: false,
-    startDate: '2017-08-07',
-    endDate: '2018-10-30',
+    startDate: moment('2017-08-07', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-30', 'YYYY-MM-DD'),
   },
   {
     id: 11,
@@ -97,11 +99,21 @@ const tasks = [
     project: 'Gouvernance',
     client: 'BNP AM',
     leave: false,
-    startDate: '2017-08-07',
-    endDate: '2018-10-30',
+    startDate: moment('2017-08-07', 'YYYY-MM-DD'),
+    endDate: moment('2018-10-30', 'YYYY-MM-DD'),
   },
 ];
 
-export function fetchAll() {
+export type Task = {
+  +id: number,
+  userId: number,
+  project: string,
+  client: string,
+  leave: boolean,
+  startDate: moment,
+  endDate: moment,
+};
+
+export function fetchAll(): Task[] {
   return tasks;
 }

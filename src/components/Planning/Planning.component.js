@@ -1,6 +1,8 @@
+// @flow
+
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
+
 import {
   StyledScrollableTimeline,
   StyledTimeline,
@@ -19,23 +21,45 @@ import {
   ALERT_WEEK,
   CURRENT_WEEK,
 } from '../Week/constants';
+import type { Person } from '../../entities/Persons/api';
+import type { Task as TaskType } from '../../entities/Tasks/api';
+import { getCrisisWeek, getAlertWeek } from '../../services/Week';
 
-export default class Planning extends React.Component {
+type Props = {
+  xoffset: number,
+  yoffset: number,
+  width: number,
+  weeks: moment[],
+  rows: [{
+    person: Person[],
+    tasks: TaskType[],
+    maxWeeklyTasksCount: number,
+    weeklyTasksCount: { [number]: number },
+  }],
+  handleScroll: () => void,
+};
+export default class Planning extends React.Component<Props> {
+  planning: ?HTMLDivElement;
+
   componentDidMount() {
     this.initializeScroll();
     this.attachScrollEvent();
   }
 
-  getWeekOffset(week) {
+  getWeekOffset(week: number): number {
     return WEEK_WIDTH * (week - this.props.weeks[0].format('w'));
   }
 
   initializeScroll() {
-    this.planning.scrollLeft = this.props.xoffset * -1;
+    if (this.planning != null) {
+      this.planning.scrollLeft = this.props.xoffset * -1;
+    }
   }
 
   attachScrollEvent() {
-    this.planning.addEventListener('scroll', this.props.handleScroll);
+    if (this.planning != null) {
+      this.planning.addEventListener('scroll', this.props.handleScroll);
+    }
   }
 
   render() {
@@ -70,27 +94,10 @@ row =>
 )
             }
           <ColoredWeek xoffset={this.props.xoffset * -1} weekType={CURRENT_WEEK} />
-          <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} weekType={CRISIS_WEEK} />
-          <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} weekType={ALERT_WEEK} />
+          <ColoredWeek xoffset={this.getWeekOffset(getCrisisWeek())} weekType={CRISIS_WEEK} />
+          <ColoredWeek xoffset={this.getWeekOffset(getAlertWeek())} weekType={ALERT_WEEK} />
         </StyledTimeline>
       </StyledScrollableTimeline>
     );
   }
 }
-
-Planning.propTypes = {
-  xoffset: PropTypes.number.isRequired,
-  yoffset: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  currentWeek: PropTypes.instanceOf(moment),
-  crisisWeek: PropTypes.instanceOf(moment),
-  alertWeek: PropTypes.instanceOf(moment),
-  weeks: PropTypes.array.isRequired,
-  rows: PropTypes.arrayOf(PropTypes.shape({
-    user: PropTypes.object,
-    tasks: PropTypes.array,
-    maxWeeklyTasksCount: PropTypes.number,
-    weeklyTasksCount: PropTypes.object,
-  })).isRequired,
-  handleScroll: PropTypes.func.isRequired,
-};

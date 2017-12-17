@@ -1,7 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
-import Standards from './Standards.component';
+import LeftBarUser from './LeftBarUser.component';
 
 const mapStateToProps = () => ({});
 
@@ -10,5 +10,4 @@ const mapDispatchToProps = () => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Standards);
-
+)(LeftBarUser);

@@ -1,9 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import { StyledStandards, StyledWeeklyStandards } from './Standards.style';
 
+type Props = {
+  user: {
+    standards: {
+      projects: number,
+    },
+  },
+  weeks: Array<any>,
+  weeklyTasksCount: {},
+};
 
-export default class Standards extends Component {
+export default class Standards extends React.Component<Props> {
   render() {
     const { weeklyTasksCount, user, weeks } = this.props;
     const { projects } = user.standards;
@@ -25,14 +35,3 @@ export default class Standards extends Component {
     );
   }
 }
-
-Standards.propTypes = {
-  user: PropTypes.shape({
-    standards: PropTypes.shape({
-      projects: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
-  tasks: PropTypes.array.isRequired,
-  weeks: PropTypes.array.isRequired,
-  weeklyTasksCount: PropTypes.object.isRequired,
-};

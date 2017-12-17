@@ -7,6 +7,8 @@ import {
   calculateTaskOffsets,
   calculateWeeklyTasks,
 } from './Task';
+import type { Person } from '../entities/Persons/api';
+import type { Task } from '../entities/Tasks/api';
 
 
 /**
@@ -27,7 +29,23 @@ export function createWeeks(): Array<moment> {
   return weeks;
 }
 
-export function createRows(persons, timeline, weeks) {
+type Row = {
+  person: Person[],
+  tasks: {
+    timelineTask: (?Task)[],
+    xoffset: ?number,
+    yoffset: ?number,
+    width: ?number,
+  },
+  maxWeeklyTasksCount: number,
+  weeklyTasksCount: { [number]: number },
+};
+
+export function createRows(
+  persons: Person[],
+  timeline: Task[],
+  weeks: { [number]: number },
+): (?Row)[] {
   const rows = [];
   persons.forEach((person) => {
     const userTimeline = timeline.filter(task => task.userId === person.id);

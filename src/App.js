@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Provider } from 'react-redux';
+import type { Store } from 'redux';
 import Staffing from './components/Staffing';
 
 type Props = {

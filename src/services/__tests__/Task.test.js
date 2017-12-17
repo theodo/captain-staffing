@@ -5,6 +5,7 @@ import moment from 'moment';
 import {
   calculateTaskWidth,
   calculateTaskOffsets,
+  calculateWeeklyTasks,
 } from '../Task';
 import {
   DAY_WIDTH,
@@ -15,6 +16,11 @@ import {
 describe('calculateTaskWidth', () => {
   it('should return the length of a one week task', () => {
     const task = {
+      id: 1,
+      userId: 1,
+      project: 'Foo',
+      client: 'Bar',
+      leave: false,
       startDate: '2017-10-01',
       endDate: '2017-10-08',
     };
@@ -28,6 +34,11 @@ describe('calculateTaskOffsets', () => {
 
   it('should return the x and y offsets of a task', () => {
     const task = {
+      id: 1,
+      userId: 1,
+      project: 'Foo',
+      client: 'Bar',
+      leave: false,
       startDate: moment('2017-08-07', 'YYYY-MM-DD'), // week 32
       endDate: moment('2017-08-13', 'YYYY-MM-DD'), // week 32
     };
@@ -44,6 +55,11 @@ describe('calculateTaskOffsets', () => {
 
   it('should return the x an y offsets of task starting on tuesday', () => {
     const task = {
+      id: 1,
+      userId: 1,
+      project: 'Foo',
+      client: 'Bar',
+      leave: false,
       startDate: moment('2017-08-08', 'YYYY-MM-DD'),
       endDate: moment('2017-08-13', 'YYYY-MM-DD'),
     };
@@ -60,6 +76,11 @@ describe('calculateTaskOffsets', () => {
 
   it('should return the x and y offsets of a task overlaping another one', () => {
     const overlapingTask = {
+      id: 1,
+      userId: 1,
+      project: 'Foo',
+      client: 'Bar',
+      leave: false,
       startDate: moment('2017-08-07', 'YYYY-MM-DD'),
       endDate: moment('2017-08-21', 'YYYY-MM-DD'),
     };
@@ -81,6 +102,11 @@ describe('calculateTaskOffsets', () => {
     };
 
     const overlapingTask = {
+      id: 1,
+      userId: 1,
+      project: 'Foo',
+      client: 'Bar',
+      leave: false,
       startDate: '21/08/2017', // week 34
       endDate: '17/09/2017', // week 38
     };
@@ -98,6 +124,11 @@ describe('calculateTaskOffsets', () => {
       53: 1,
     };
     const task = {
+      id: 1,
+      userId: 1,
+      project: 'Foo',
+      client: 'Bar',
+      leave: false,
       startDate: '25/12/2017',
       endDate: '07/01/2018',
     };
@@ -106,5 +137,23 @@ describe('calculateTaskOffsets', () => {
     };
 
     expect(calculateTaskOffsets(task, weeklyTasks, firstWeek)).toMatchObject(expectedPosition);
+  });
+});
+
+describe('calculateWeeklyTasks', () => {
+  it('should return two task per week', () => {
+    const task = {
+      id: 1,
+      userId: 1,
+      project: 'Foo',
+      client: 'Bar',
+      leave: false,
+      startDate: moment('2018-01-01', 'YYYY-MM-DD'),
+      endDate: moment('2018-01-14', 'YYYY-MM-DD'),
+    };
+    const weeklyTasks = { 1: 1, 2: 1 };
+    const expectedWeeklyTasks = { 1: 2, 2: 2, 3: 1 };
+
+    expect(calculateWeeklyTasks(task, weeklyTasks)).toEqual(expectedWeeklyTasks);
   });
 });

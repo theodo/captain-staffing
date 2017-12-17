@@ -1,15 +1,23 @@
 // @flow
 
 import * as React from 'react';
-import StyledLeftBar from './LeftBar.style';
 
-import {
-  PLANNING_ROW_PADDING,
-  TASK_HEIGHT,
-} from '../Staffing/constants';
+import StyledLeftBar from './LeftBar.style';
+import LeftBarUser from '../LeftBarUser';
+import type { Person } from '../../entities/Persons/api';
+import type { Task } from '../../entities/Tasks/api';
 
 type Props = {
-  rows: Array,
+  rows: [
+    {
+      person: Person,
+      tasks: Array<Task>,
+      maxWeeklyTasksCount: number,
+      weeklyTasksCount: {
+        [number]: number,
+      },
+    },
+  ],
   yoffset: Array<?number>,
 };
 
@@ -19,7 +27,7 @@ export default class LeftBar extends React.Component<Props> {
       <StyledLeftBar yoffset={this.props.yoffset}>
         {
           this.props.rows.map(row => (
-            <User
+            <LeftBarUser
               key={row.person.username}
               user={row.person}
               maxWeeklyTasksCount={row.maxWeeklyTasksCount}
@@ -27,24 +35,6 @@ export default class LeftBar extends React.Component<Props> {
           ))
         }
       </StyledLeftBar>
-    );
-  }
-}
-
-type UserProps = {
-  user: {
-    username: string,
-  },
-};
-
-class User extends React.Component<UserProps> {
-  render() {
-    const style = {
-      height: `${this.props.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}px`,
-    };
-
-    return (
-      <div className="planning-row" style={style}>{this.props.user.username}</div>
     );
   }
 }
