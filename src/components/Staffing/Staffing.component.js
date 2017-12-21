@@ -6,6 +6,7 @@ import Planning from '../Planning';
 import TopBar from '../TopBar';
 import LeftBar from '../LeftBar';
 import StyledStaffing from './Staffing.style';
+import NewTaskForm from '../NewTaskForm';
 
 import { createRows } from '../../services/Staffing';
 
@@ -70,6 +71,7 @@ export default class Staffing extends React.Component<Props> {
           alertWeek={this.state.alertWeek}
           handleScroll={this.handleScroll}
         />
+        <NewTaskForm />
       </StyledStaffing>
     );
   }
