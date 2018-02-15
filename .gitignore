@@ -3,6 +3,7 @@ node_modules
 .DS_Store
 src/configs/config.js
 build
+.vscode
 
 # Errors
 npm-debug.log

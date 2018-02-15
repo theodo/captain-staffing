@@ -4,9 +4,12 @@
 export const actionTypes = {
   REQUEST: {
     FETCH: {
-      ERROR: 'TASKS.REQUEST.FECTH.ERROR',
-      START: 'TASKS.REQUEST.FECTH.START',
-      SUCCESS: 'TASKS.REQUEST.FECTH.SUCCESS',
+      ERROR: 'TASKS.REQUEST.FETCH.ERROR',
+      START: 'TASKS.REQUEST.FETCH.START',
+      SUCCESS: 'TASKS.REQUEST.FETCH.SUCCESS',
+    },
+    ADD: {
+      START: 'TASKS.REQUEST.ADD.START',
     },
   },
 };
@@ -14,4 +17,9 @@ export const actionTypes = {
 /* Action creators */
 export const fetchAllTasksRequest = () => ({
   type: actionTypes.REQUEST.FETCH.START,
+});
+
+export const addTask = (task) => ({
+  type: actionTypes.REQUEST.ADD.START,
+  task,
 });
