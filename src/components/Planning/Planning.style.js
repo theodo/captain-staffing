@@ -28,4 +28,5 @@ export const StyledPlanningRow = styled.div`
   display: flex;
   position: relative;
   box-shadow: inset 0 1px 0 0 #eee;
+  border: 1px black solid;
 `;

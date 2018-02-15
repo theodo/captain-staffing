@@ -7,6 +7,7 @@ import {
   StyledPlanningRow,
 } from './Planning.style';
 import Task from '../Task';
+import NewTaskRow from '../NewTaskRow';
 import Standards from '../Standards';
 import ColoredWeek from '../ColoredWeek';
 import {
@@ -48,7 +49,7 @@ row =>
               (
                 <StyledPlanningRow
                   key={row.person.username}
-                  height={row.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}
+                  height={((row.maxWeeklyTasksCount + 1) * TASK_HEIGHT) + PLANNING_ROW_PADDING}
                 >
                   {
                     row.tasks.map(task => (<Task
@@ -59,6 +60,11 @@ row =>
                       width={task.width}
                     />))
                     }
+                  <NewTaskRow
+                    numberOfTasks={row.tasks.length}
+                    numberOfWeeks={this.props.weeks.length}
+                    personId={row.person.id}
+                  />
                   <Standards
                     tasks={row.tasks}
                     user={row.person}
@@ -66,9 +72,7 @@ row =>
                     weeklyTasksCount={row.weeklyTasksCount}
                   />
                 </StyledPlanningRow>)
-            , this,
-)
-            }
+          )}
           <ColoredWeek xoffset={this.props.xoffset * -1} weekType={CURRENT_WEEK} />
           <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} weekType={CRISIS_WEEK} />
           <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} weekType={ALERT_WEEK} />
