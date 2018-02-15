@@ -5,7 +5,10 @@ import PropTypes from 'prop-types';
 export default class NewTaskRow extends React.Component {
   constructor(props) {
     super(props);
-    this.selecting = false;
+    this.state = {
+      selecting: false,
+      selectedDays: [],
+    };
   }
 
   render() {
@@ -19,24 +22,28 @@ export default class NewTaskRow extends React.Component {
         {days.map(day => (
           <div
             key={day}
-            onMouseDown={(e) => {
-              this.selecting = !this.selecting;
-              e.target.style.backgroundColor = 'green';
+            onMouseDown={() => {
+              this.setState({
+                selecting: !this.state.selecting,
+                selectedDays: [...this.state.selectedDays, day],
+              });
             }}
             onMouseUp={() => {
-              if (this.selecting) {
-                this.selecting = false;
+              if (this.state.selecting) {
+                this.setState({ selecting: false });
               }
+              alert(this.state.selectedDays);
             }}
-            onMouseOver={(e) => {
-              if (this.selecting) {
-                  console.log('key is', day, 'person is', this.props.personId);
-                  e.target.style.backgroundColor = 'green';
+            onMouseOver={() => {
+              if (this.state.selecting) {
+                  if (this.state.selectedDays.indexOf(day) === -1) {
+                    this.setState({ selectedDays: [...this.state.selectedDays, day] });
+                  }
               }
             }}
             style={{
               height: 30,
-              backgroundColor: 'rgba(0,0,255,0.1)',
+              backgroundColor: this.state.selectedDays.indexOf(day) !== -1 ? 'green' : 'rgba(0,0,255,0.1)',
               position: 'absolute',
               top: 5 + (35 * this.props.numberOfTasks),
               left: 34.9 * day,
