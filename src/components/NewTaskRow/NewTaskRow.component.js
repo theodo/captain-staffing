@@ -1,5 +1,8 @@
+import moment from 'moment';
 import * as React from 'react';
 import PropTypes from 'prop-types';
+
+import { WEEKS_PAST } from '../../services/Staffing';
 
 
 export default class NewTaskRow extends React.Component {
@@ -12,6 +15,7 @@ export default class NewTaskRow extends React.Component {
   }
 
   render() {
+    const dayZero = moment().subtract(-WEEKS_PAST, 'w').startOf('week');
     const numberOfDays = this.props.numberOfWeeks * 7;
     const days = [...new Array(numberOfDays).keys()];
     return (
@@ -29,10 +33,28 @@ export default class NewTaskRow extends React.Component {
               });
             }}
             onMouseUp={() => {
-              if (this.state.selecting) {
-                this.setState({ selecting: false });
-              }
-              alert(this.state.selectedDays);
+              const firstDay = moment(dayZero)
+                .add(this.state.selectedDays[0], 'd')
+                .format('YYYY-MM-DD');
+              const lastDay = moment(dayZero)
+                .add(this.state.selectedDays[this.state.selectedDays.length - 1], 'd')
+                .format('YYYY-MM-DD');
+
+              const task = {
+                userId: this.props.personId,
+                id: '42',
+                client: 'Amazing Client',
+                project: 'Perfect Project',
+                startDate: firstDay,
+                endDate: lastDay,
+                leave: false,
+              };
+              this.props.addTask(task);
+
+              this.setState({
+                selecting: false,
+                selectedDays: [],
+              });
             }}
             onMouseOver={() => {
               if (this.state.selecting) {

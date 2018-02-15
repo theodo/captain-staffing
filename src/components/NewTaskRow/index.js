@@ -1,1 +1,1 @@
-export { default } from './NewTaskRow.component';
+export { default } from './NewTaskRow.container';
