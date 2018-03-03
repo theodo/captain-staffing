@@ -8,6 +8,13 @@ import {
   PLANNING_ROW_PADDING,
 } from '../components/Staffing/constants';
 
+
+const START_YEAR = 2017;
+
+const getWeekNumber = date => (
+  parseInt(date.format('w'), 10) + (52 * (date.format('Y') - START_YEAR))
+);
+
 export const calculateTaskWidth = (task) => {
   const taskLength = moment(task.endDate).diff(moment(task.startDate), 'days');
   const length = taskLength * DAY_WIDTH;
@@ -26,8 +33,8 @@ export const calculateTaskOffsets = (task, weeklyTasks, firstWeek) => {
   const startDate = moment(task.startDate, 'YYYY-MM-DD');
   const endDate = moment(task.endDate, 'YYYY-MM-DD');
 
-  const startWeek = parseInt(startDate.format('w'), 10);
-  const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
+  const startWeek = getWeekNumber(startDate);
+  const endWeek = getWeekNumber(endDate);
 
   const xoffset = calculateXOffset(task, firstWeek);
 
@@ -47,9 +54,8 @@ export const calculateWeeklyTasks = (task, weeklyTasks) => {
   const endDate = moment(task.endDate, 'YYYY-MM-DD');
   const newWeeklyTasks = Object.assign(weeklyTasks);
 
-  let week = parseInt(startDate.format('w'), 10);
-  const endWeek = parseInt(endDate.format('w'), 10) + (endDate.format('Y') === startDate.format('Y') ? 0 : 52);
-
+  let week = getWeekNumber(startDate);
+  const endWeek = getWeekNumber(endDate);
   while (week <= endWeek) {
     if (!Object.prototype.hasOwnProperty.call(weeklyTasks, week)) {
       newWeeklyTasks[week] = 1;

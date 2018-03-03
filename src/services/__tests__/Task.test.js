@@ -83,8 +83,8 @@ describe('calculateTaskOffsets', () => {
     };
 
     const overlapingTask = {
-      startDate: '21/08/2017', // week 34
-      endDate: '17/09/2017', // week 38
+      startDate: moment('2017-08-21', 'YYYY-MM-DD'), // week 34
+      endDate: moment('2017-09-17', 'YYYY-MM-DD'), // week 38
     };
 
     const expectedPosition = {
@@ -102,13 +102,15 @@ describe('calculateTaskOffsets', () => {
       53: 1,
     };
     const task = {
-      startDate: '25/12/2017',
-      endDate: '07/01/2018',
+      startDate: moment('2017-12-25', 'YYYY-MM-DD'),
+      endDate: moment('2018-01-07', 'YYYY-MM-DD'),
     };
     const expectedPosition = {
       yoffset: TASK_HEIGHT + PLANNING_ROW_PADDING,
     };
 
-    expect(calculateTaskOffsets(task, weeklyTasks, firstWeek)).toMatchObject(expectedPosition);
+    expect(
+      calculateTaskOffsets(task, weeklyTasks, firstWeek)
+    ).toMatchObject(expectedPosition);
   });
 });
