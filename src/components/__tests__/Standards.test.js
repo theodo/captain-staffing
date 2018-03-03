@@ -1,8 +1,10 @@
-import React from 'react'
-import { shallow, render } from 'enzyme'
-import moment from 'moment'
 
-import Standards from '../Standards'
+import 'jest-styled-components';
+import moment from 'moment';
+import React from 'react';
+import renderer from 'react-test-renderer';
+
+import Standards from '../Standards/Standards.component';
 
 describe('Standards test suites', () => {
     const user = {
@@ -13,30 +15,27 @@ describe('Standards test suites', () => {
         }
     }
 
-    it('should render without throwing an error', () => {
-        const standards = shallow(<Standards tasks={[]} user={user} weeks={[]} weeklyTasksCount={{}} />)
-        expect(standards.is('.standards')).toBe(true)
-    })
-
     it('should render a grey line if there is no standard violation', () => {
         const weeks = [moment('2017-08-14')]
         const weeklyTasksCount = {
             33: user.standards.projects
         }
 
-        const standards = render(<Standards tasks={[]} user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />)
-        const weekStandard = standards.children().first()
-        expect(weekStandard.html().match(/error/)).toBeFalsy()
+        const standards = renderer.create(
+          <Standards tasks={[]} user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />
+        ).toJSON();
+        expect(standards).toMatchSnapshot();
     })
-    
+
     it('should render a red line if there is a standard violation', () => {
         const weeks = [moment('2017-08-14')]
         const weeklyTasksCount = {
             33: user.standards.projects + 1
         }
 
-        const standards = render(<Standards tasks={[]} user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />)
-        const weekStandard = standards.children().first()
-        expect(weekStandard.html().match(/error/)).toBeTruthy()
+        const standards = renderer.create(
+          <Standards tasks={[]} user={user} weeks={weeks} weeklyTasksCount={weeklyTasksCount} />
+        ).toJSON();
+        expect(standards).toMatchSnapshot();
     })
 })
