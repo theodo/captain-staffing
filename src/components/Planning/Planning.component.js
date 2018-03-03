@@ -71,8 +71,9 @@ row =>
                     weeks={this.props.weeks}
                     weeklyTasksCount={row.weeklyTasksCount}
                   />
-                </StyledPlanningRow>)
-          )}
+                </StyledPlanningRow>
+              )
+            )}
           <ColoredWeek xoffset={this.props.xoffset * -1} weekType={CURRENT_WEEK} />
           <ColoredWeek xoffset={this.getWeekOffset(this.props.crisisWeek.format('w'))} weekType={CRISIS_WEEK} />
           <ColoredWeek xoffset={this.getWeekOffset(this.props.alertWeek.format('w'))} weekType={ALERT_WEEK} />
@@ -84,12 +85,10 @@ row =>
 
 Planning.propTypes = {
   xoffset: PropTypes.number.isRequired,
-  yoffset: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  currentWeek: PropTypes.instanceOf(moment),
   crisisWeek: PropTypes.instanceOf(moment),
   alertWeek: PropTypes.instanceOf(moment),
-  weeks: PropTypes.array.isRequired,
+  weeks: PropTypes.arrayOf(PropTypes.shape).isRequired,
   rows: PropTypes.arrayOf(PropTypes.shape({
     user: PropTypes.object,
     tasks: PropTypes.array,

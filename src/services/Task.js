@@ -37,7 +37,7 @@ export const calculateTaskOffsets = (task, weeklyTasks, firstWeek) => {
       maxNbOfTasks = maxNbOfTasks < weeklyTasks[week] ? weeklyTasks[week] : maxNbOfTasks;
     }
   }
-  const yoffset = maxNbOfTasks * TASK_HEIGHT + PLANNING_ROW_PADDING;
+  const yoffset = (maxNbOfTasks * TASK_HEIGHT) + PLANNING_ROW_PADDING;
 
   return { xoffset, yoffset };
 };

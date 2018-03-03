@@ -32,7 +32,6 @@ Standards.propTypes = {
       projects: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
-  tasks: PropTypes.array.isRequired,
-  weeks: PropTypes.array.isRequired,
-  weeklyTasksCount: PropTypes.object.isRequired,
+  weeks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  weeklyTasksCount: PropTypes.shape().isRequired,
 };

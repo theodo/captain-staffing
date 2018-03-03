@@ -11,10 +11,7 @@ import NewTaskForm from '../NewTaskForm';
 import { createRows } from '../../services/Staffing';
 
 type Props = {
-  persons: Array<?Object>,
-  timeline: Array<?Object>,
   weeks: Array<?Object>,
-  fetchAllPersons: () => void,
 };
 
 export default class Staffing extends React.Component<Props> {

@@ -9,6 +9,7 @@ type Props = {
 
 export class NewTaskForm extends React.Component<Props> {
   constructor(props) {
+    /* eslint-disable react/no-unused-state */
     super(props);
     this.state = {
       userId: '',
@@ -19,11 +20,12 @@ export class NewTaskForm extends React.Component<Props> {
       endDate: '',
       leave: false,
     };
+    /* eslint-disable react/no-unused-state */
   }
 
   handleChange = (event) => {
-    const name = event.target.name;
-    let value = event.target.value;
+    const { name } = event.target;
+    let { value } = event.target;
     value = name === 'id' || name === 'userId' ? parseInt(value, 10) : value;
     this.setState({ [name]: value });
   };
@@ -40,8 +42,9 @@ export class NewTaskForm extends React.Component<Props> {
         Date: yyyy-mm-dd
         <form>
           {
-            ['userId', 'id', 'client', 'project', 'startDate', 'endDate'].map(taskProp =>
-              <input key={taskProp} placeholder={taskProp} name={taskProp} type="text" onChange={this.handleChange} />
+            ['userId', 'id', 'client', 'project', 'startDate', 'endDate'].map(
+              taskProp =>
+                <input key={taskProp} placeholder={taskProp} name={taskProp} type="text" onChange={this.handleChange} />
             )
           }
           <button onClick={this.handleSubmit}>

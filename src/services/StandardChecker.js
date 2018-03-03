@@ -1,17 +1,17 @@
-import moment from 'moment'
+import moment from 'moment';
 
-const Checker = {}
+const Checker = {};
 
-Checker.isValid = function (day, standards, tasks) {
-    if (!moment.isMoment(day)) {
-        moment(day)
-    }
+Checker.isValid = (day, standards, tasks) => {
+  if (!moment.isMoment(day)) {
+    moment(day);
+  }
 
-    const todayTask = tasks.filter((task) => {
-        return moment(task.startDate).isSame(day)
-    })
+  const todayTask = tasks.filter(task => (
+    moment(task.startDate).isSame(day)
+  ));
 
-    return todayTask.length <= standards.projects
-}
+  return todayTask.length <= standards.projects;
+};
 
-export default Checker
+export default Checker;

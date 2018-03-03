@@ -71,7 +71,9 @@ describe('calculateTaskOffsets', () => {
       yoffset: TASK_HEIGHT + PLANNING_ROW_PADDING,
     };
 
-    expect(calculateTaskOffsets(overlapingTask, weeklyTasks, firstWeek)).toMatchObject(expectedPosition);
+    expect(calculateTaskOffsets(
+      overlapingTask, weeklyTasks, firstWeek
+    )).toMatchObject(expectedPosition);
   });
 
   it('should return the x and y offsets of a task overlaping two other tasks', () => {
@@ -86,10 +88,12 @@ describe('calculateTaskOffsets', () => {
     };
 
     const expectedPosition = {
-      yoffset: TASK_HEIGHT * 2 + PLANNING_ROW_PADDING,
+      yoffset: (TASK_HEIGHT * 2) + PLANNING_ROW_PADDING,
     };
 
-    expect(calculateTaskOffsets(overlapingTask, weeklyTasks, firstWeek)).toMatchObject(expectedPosition);
+    expect(calculateTaskOffsets(
+      overlapingTask, weeklyTasks, firstWeek
+    )).toMatchObject(expectedPosition);
   });
 
   it('should return correct offsets of a task than spans over 2 years', () => {

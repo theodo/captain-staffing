@@ -19,7 +19,7 @@ export const fetchAllTasksRequest = () => ({
   type: actionTypes.REQUEST.FETCH.START,
 });
 
-export const addTask = (task) => ({
+export const addTask = task => ({
   type: actionTypes.REQUEST.ADD.START,
   task,
 });

@@ -18,7 +18,7 @@ export default class User extends React.Component<UserProps> {
   render() {
     const style = {
       border: '1px black solid',
-      height: `${this.props.maxWeeklyTasksCount * TASK_HEIGHT + PLANNING_ROW_PADDING}px`,
+      height: `${(this.props.maxWeeklyTasksCount * TASK_HEIGHT) + PLANNING_ROW_PADDING}px`,
     };
 
     return (

@@ -4,4 +4,4 @@ export default {
   spreadsheetId: '1NLisLo69DDGc8SXEwOuCCX9X24kKoTsnAM5p82tyx6Y',
   trelloBoardId: '55e4146d6855749323241a48',
   trelloListId: '55e4148cc1d7e44b58d0561f',
-}
+};
